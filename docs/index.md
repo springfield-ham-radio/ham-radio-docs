@@ -3,23 +3,24 @@
 layout: home
 
 hero:
-  name: "Ham Radio"
-  text: "Software for ham radio"
-  tagline: My great project tagline
+  name: "Springfield Ham Radio"
+  text: "Software ecosystem for amateur radio"
+  tagline: Discover, configure, and manage radio modules with ease
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Registry Documentation
+      link: /registry/
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: View on GitHub
+      link: https://github.com/springfield-ham-radio
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Radio Module Registry
+    details: Discover and manage radio configurations from npm modules. Support for both official and third-party radio modules with automatic discovery and validation.
+  - title: Plugin Architecture
+    details: Extensible plugin system that allows third-party developers to create and distribute radio configurations. Standardized module structure with shared components.
+  - title: Codec Support
+    details: Flexible codec system with factory pattern support. Share codecs across related radio models and implement custom encoding/decoding logic.
+  - title: Security First
+    details: Built-in security validation, sandboxed codec execution, and tamper detection to ensure safe loading of third-party modules.
 ---
-

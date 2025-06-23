@@ -2,7 +2,9 @@
   "name": "ham-radio-docs",
   "packageManager": "yarn@4.6.0",
   "devDependencies": {
-    "vitepress": "^2.0.0-alpha.6"
+    "mermaid": "^11.7.0",
+    "vitepress": "^2.0.0-alpha.6",
+    "vitepress-plugin-mermaid": "^2.0.17"
   },
   "scripts": {
     "dev": "vitepress dev",
