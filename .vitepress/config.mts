@@ -14,12 +14,8 @@ export default withMermaid(defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Overview', link: '/overview' },
-      { text: 'Architecture', link: '/architecture' },
-      { text: 'Development', link: '/development-guide' },
-      { text: 'Registry', link: '/registry/' },
-      { text: 'Protocols', link: '/protocols/' }
+      { text: 'Getting Started', link: '/overview' },
+      { text: 'Developer Guide', link: '/reference/' }
     ],
 
     sidebar: {
@@ -27,34 +23,84 @@ export default withMermaid(defineConfig({
         {
           text: 'Getting Started',
           items: [
-            { text: 'Documentation Guide', link: '/documentation-guide' },
             { text: 'Overview', link: '/overview' },
-            { text: 'Architecture', link: '/architecture' },
-            { text: 'Module Comparison', link: '/module-comparison' },
-            { text: 'Development Guide', link: '/development-guide' }
+            { text: 'Quick Start Guide', link: '/getting-started' },
+            { text: 'Architecture Overview', link: '/architecture-overview' }
           ]
         }
       ],
-      '/registry/': [
+      '/getting-started': [
         {
-          text: 'Ham Radio Registry',
+          text: 'Getting Started',
           items: [
-            { text: 'Overview', link: '/registry/' },
-            { text: 'Why Registry?', link: '/registry/why-registry' },
-            { text: 'Architecture', link: '/registry/architecture' },
-            { text: 'Getting Started', link: '/registry/getting-started' },
-            { text: 'Plugin Development', link: '/registry/plugin-development' },
-            { text: 'API Reference', link: '/registry/api-reference' },
-            { text: 'Examples', link: '/registry/examples' }
+            { text: 'Overview', link: '/overview' },
+            { text: 'Quick Start Guide', link: '/getting-started' },
+            { text: 'Architecture Overview', link: '/architecture-overview' }
           ]
         }
       ],
-      '/protocols/': [
+      '/reference/': [
+        {
+          text: 'Developer Documentation',
+          link: '/reference/developer-docs',
+        },
+        {
+          text: 'Radio Module Development',
+          link: '/reference/radio-module-dev',
+        },
+        {
+          text: 'Architecture & Standards',
+          items: [
+            {
+              text: 'Architecture Reference',
+              link: '/reference/architecture',
+              items: [
+                { text: 'Registry Architecture', link: '/reference/registry/architecture' },
+                { text: 'Why Registry?', link: '/reference/registry/why-registry' },
+                { text: 'Plugin Development', link: '/reference/registry/plugin-development' },
+                { text: 'Registry Examples', link: '/reference/registry/examples' },
+                { text: 'Registry API Reference', link: '/reference/registry/api-reference' },
+                { text: 'Registry Getting Started', link: '/reference/registry/getting-started' },
+                { text: 'Protocols Overview', link: '/reference/protocols/' },
+                { text: 'Protocol DSL', link: '/reference/protocols/dsl' }
+              ]
+            },
+            { text: 'Module Comparison', link: '/reference/module-comparison' },
+            { text: 'Documentation Standards', link: '/reference/documentation-guide' }
+          ]
+        },
+        {
+          text: 'Registry System',
+          collapsed: true,
+          items: [
+            { text: 'Overview', link: '/reference/registry/' },
+            { text: 'Why Registry?', link: '/reference/registry/why-registry' },
+            { text: 'Architecture', link: '/reference/registry/architecture' },
+            { text: 'Getting Started', link: '/reference/registry/getting-started' },
+            { text: 'Plugin Development', link: '/reference/registry/plugin-development' },
+            { text: 'API Reference', link: '/reference/registry/api-reference' },
+            { text: 'Examples', link: '/reference/registry/examples' },
+            { text: 'Configuration', link: '/reference/registry/configuration' }
+          ]
+        },
         {
           text: 'Protocols & DSL',
+          collapsed: true,
           items: [
-            { text: 'Overview', link: '/protocols/' },
-            { text: 'Protocol DSL', link: '/protocols/dsl' }
+            { text: 'Overview', link: '/reference/protocols/' },
+            { text: 'Protocol DSL', link: '/reference/protocols/dsl' }
+          ]
+        },
+        {
+          text: 'Configuration Format',
+          link: '/reference/configuration/overview'
+        }
+      ],
+      '/configuration/': [
+        {
+          text: 'Configuration',
+          items: [
+            { text: 'Overview', link: '/configuration/overview' }
           ]
         }
       ]

@@ -50,6 +50,6 @@ The [Protocol DSL](./dsl) documentation provides comprehensive coverage of:
 ## Next Steps
 
 - Learn the [Protocol DSL](./dsl) in detail to understand all available features
-- See how protocols integrate with the [Registry Architecture](/registry/architecture)
+- See how protocols integrate with the [Registry Architecture](/reference/registry/architecture)
 - Explore the [Development Guide](/development-guide) for implementation details
 - Try creating your own protocol definitions for new radio types 

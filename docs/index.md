@@ -9,16 +9,19 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /overview
+      link: /getting-started
     - theme: alt
-      text: Architecture Overview
-      link: /architecture
+      text: Developer Documentation
+      link: /developer-docs
     - theme: alt
-      text: Development Guide
-      link: /development-guide
+      text: Radio Module Development
+      link: /radio-module-dev
     - theme: alt
-      text: Registry Documentation
+      text: Registry System
       link: /registry/
+    - theme: alt
+      text: Protocol DSL
+      link: /protocols/dsl
     - theme: alt
       text: View on GitHub
       link: https://github.com/springfield-ham-radio

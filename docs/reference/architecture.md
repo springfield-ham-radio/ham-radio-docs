@@ -1,6 +1,8 @@
-# Springfield Ham Radio Architecture
+# Springfield Ham Radio Architecture Reference
 
-This document provides a comprehensive overview of the Springfield Ham Radio software ecosystem architecture, analyzing the purpose and relationships between all modules.
+> **Looking for a high-level introduction?** See the [Architecture Overview](/architecture-overview) in the Getting Started section.
+
+This document provides a comprehensive technical reference for the Springfield Ham Radio software ecosystem architecture, including detailed analysis of module responsibilities, APIs, data flow, design patterns, security, performance, and extensibility.
 
 ## System Overview
 
