@@ -2,25 +2,23 @@
 
 This page documents the JSON-based Domain Specific Language (DSL) for defining radio communication protocols in the Springfield Ham Radio ecosystem. The DSL enables generic, radio-independent drivers and makes it easy to add support for new radios by providing protocol definitions in configuration files.
 
----
-
-# Radio Protocol DSL Design Document
-
 ## Overview
 
-This document describes a Domain Specific Language (DSL) for defining radio communication protocols in a declarative, JSON-based format. The DSL allows for radio-independent driver implementations that can support multiple radio types through configuration rather than hard-coded protocol logic.
+The Protocol DSL is a declarative, JSON-based Domain Specific Language that describes radio communication protocols. It allows for radio-independent driver implementations that can support multiple radio types through configuration rather than hard-coded protocol logic.
 
 ## Problem Statement
 
-The current `BaofengDriver` implementation is tightly coupled to the Baofeng UV-5R radio protocol. To support additional radio types, new driver classes must be created with duplicated protocol logic. This approach doesn't scale well and makes it difficult to maintain consistency across different radio implementations.
+Traditional radio driver implementations are tightly coupled to specific radio protocols. To support additional radio types, new driver classes must be created with duplicated protocol logic. This approach doesn't scale well and makes it difficult to maintain consistency across different radio implementations.
 
 ## Solution
 
-Create a declarative DSL that describes the communication protocol for each radio type. The driver implementation becomes a generic interpreter that executes protocol steps defined in JSON configuration files.
+The DSL creates a declarative approach where communication protocols are defined in JSON configuration files. The driver implementation becomes a generic interpreter that executes protocol steps defined in these configuration files.
 
 ## DSL Structure
 
 ### Root Configuration
+
+Each protocol definition starts with a root configuration object that defines the radio model, serial settings, memory layout, and protocol steps.
 
 ```json
 {
@@ -60,11 +58,13 @@ Create a declarative DSL that describes the communication protocol for each radi
 }
 ```
 
-### Protocol Steps
+## Protocol Steps
 
 Each step in the protocol is defined as an object with a single key representing the step type and a value containing the step configuration.
 
-#### 1. Send/Receive Step
+### 1. Send/Receive Step
+
+Combines sending data and receiving a response in a single step.
 
 ```json
 {
@@ -81,7 +81,9 @@ Each step in the protocol is defined as an object with a single key representing
 }
 ```
 
-#### 2. Send Only Step
+### 2. Send Only Step
+
+Sends data without expecting a response.
 
 ```json
 {
@@ -92,7 +94,9 @@ Each step in the protocol is defined as an object with a single key representing
 }
 ```
 
-#### 3. Receive Only Step
+### 3. Receive Only Step
+
+Receives data without sending anything first.
 
 ```json
 {
@@ -104,7 +108,9 @@ Each step in the protocol is defined as an object with a single key representing
 }
 ```
 
-#### 4. Read Segment Command
+### 4. Read Segment Command
+
+Handles reading memory segments with automatic iteration through all segments.
 
 ```json
 {
@@ -135,7 +141,9 @@ Each step in the protocol is defined as an object with a single key representing
 }
 ```
 
-#### 5. Write Segment Command
+### 5. Write Segment Command
+
+Handles writing memory segments with automatic iteration through all segments.
 
 ```json
 {
@@ -153,7 +161,9 @@ Each step in the protocol is defined as an object with a single key representing
 }
 ```
 
-#### 6. Variable Assignment
+### 6. Variable Assignment
+
+Sets variables for use in subsequent steps.
 
 ```json
 {
@@ -164,7 +174,9 @@ Each step in the protocol is defined as an object with a single key representing
 }
 ```
 
-## Complete Example: Baofeng UV-5R Read Protocol
+## Complete Examples
+
+### Baofeng UV-5R Read Protocol
 
 ```json
 {
@@ -259,7 +271,7 @@ Each step in the protocol is defined as an object with a single key representing
 }
 ```
 
-## Write Protocol Example
+### Write Protocol Example
 
 ```json
 {
@@ -326,6 +338,8 @@ Each step in the protocol is defined as an object with a single key representing
 ## Receive Pattern Types
 
 ### 1. Exact Match
+Expects a specific value of a specific length.
+
 ```json
 {
   "type": "exact",
@@ -335,6 +349,8 @@ Each step in the protocol is defined as an object with a single key representing
 ```
 
 ### 2. Variable Length
+Receives a fixed number of bytes.
+
 ```json
 {
   "type": "variable",
@@ -343,6 +359,8 @@ Each step in the protocol is defined as an object with a single key representing
 ```
 
 ### 3. Pattern Match
+Receives data matching a specific pattern with variable-sized fields.
+
 ```json
 {
   "type": "pattern",
@@ -371,6 +389,8 @@ Each step in the protocol is defined as an object with a single key representing
 - **Simple Protocol**: `[ACK][data...]` (data length = segment.chunkSize)
 
 ### 4. Any Value
+Accepts any value of a specific length.
+
 ```json
 {
   "type": "any",
@@ -409,7 +429,7 @@ The old format assumed all placeholders were 1 byte each, which was too restrict
 
 ## Multi-Byte Expression Format
 
-The DSL now supports multi-byte expressions using the `expression:size` format. This allows for proper handling of addresses and other multi-byte values in radio protocols.
+The DSL supports multi-byte expressions using the `expression:size` format. This allows for proper handling of addresses and other multi-byte values in radio protocols.
 
 ### Format Specification
 - **Syntax**: `"expression:size"` where:
