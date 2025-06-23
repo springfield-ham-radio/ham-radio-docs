@@ -1,0 +1,12 @@
+{
+  "name": "ham-radio-docs",
+  "packageManager": "yarn@4.6.0",
+  "devDependencies": {
+    "vitepress": "^2.0.0-alpha.6"
+  },
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  }
+}
