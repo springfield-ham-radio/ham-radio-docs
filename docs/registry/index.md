@@ -64,24 +64,6 @@ const program = {
 const memory = codec.encode(program);
 ```
 
-## Module Structure
-
-Radio modules follow a standardized structure:
-
-```
-radio-module-manufacturer/
-├── configs/              # Radio configuration files
-│   └── model.json        # Complete configuration
-├── src/                  # Module source code
-│   ├── shared/           # Shared components
-│   │   ├── schemas/      # JSON schemas
-│   │   ├── protocols/    # Protocol definitions
-│   │   └── codecs/       # Codec implementations
-│   ├── index.ts          # Main entry point
-│   └── codec-factory.ts  # Codec factory
-└── package.json
-```
-
 ## Key Features
 
 ### 1. **Automatic Discovery**

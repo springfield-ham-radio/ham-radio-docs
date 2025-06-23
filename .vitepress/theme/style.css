@@ -1,0 +1,179 @@
+:root {
+  /* VitePress 2 layout width customization */
+  --vp-layout-max-width: 100%;
+  --vp-sidebar-width: 18rem;
+  --vp-content-width: 100%;
+  --vp-nav-height: 64px;
+  --vp-nav-height-mobile: 56px;
+
+  /* Additional VitePress 2 variables */
+  --vp-c-brand: #646cff;
+  --vp-c-brand-light: #747bff;
+  --vp-c-brand-dark: #535bf2;
+  --vp-c-brand-hover: #535bf2;
+
+  /* Layout specific variables */
+  --vp-layout-max-width: 100%;
+  --vp-content-width: 100%;
+  --vp-sidebar-width: 18rem;
+  --vp-aside-width: 18rem;
+}
+
+/* Ensure full width layout */
+.VPDoc:not(.has-sidebar) .container {
+  max-width: 100% !important;
+}
+
+.VPDoc:not(.has-sidebar) .content {
+  max-width: 100% !important;
+}
+
+.VPDoc.has-aside .content-container {
+  max-width: 100% !important;
+}
+
+/* Hero section full width overrides */
+.VPHero {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.VPHero .container {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.VPHero .container .main {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.VPHero .container .main .heading {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.VPHero .container .main .heading .name {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.VPHero .container .main .tagline {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.VPHero .container .main .text {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.VPHero .container .main .actions {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Additional VitePress 2 specific overrides */
+.VPContent {
+  max-width: 100% !important;
+}
+
+.VPDoc .content {
+  max-width: 100% !important;
+}
+
+.VPDoc .content-container {
+  max-width: 100% !important;
+}
+
+/* Ensure the main layout container uses full width */
+.VPLayout {
+  max-width: 100% !important;
+}
+
+.VPLayout .container {
+  max-width: 100% !important;
+}
+
+/* Additional VitePress 2 layout overrides */
+.VPDoc .content-container {
+  max-width: 100% !important;
+  padding: 0 24px;
+}
+
+.VPDoc .content {
+  max-width: 100% !important;
+  margin: 0;
+}
+
+/* Ensure the main content area uses full width */
+.VPContentDoc {
+  max-width: 100% !important;
+}
+
+.VPContentDoc .container {
+  max-width: 100% !important;
+}
+
+/* Override any default max-width constraints */
+.VPDoc .content-container .content {
+  max-width: 100% !important;
+}
+
+/* Ensure the layout wrapper doesn't constrain width */
+.VPLayout .content {
+  max-width: 100% !important;
+}
+
+/* Additional VitePress 2 specific selectors */
+.VPDoc .container {
+  max-width: 100% !important;
+}
+
+.VPDoc .content-container {
+  max-width: 100% !important;
+}
+
+/* Target the main wrapper */
+.VPLayout {
+  max-width: 100% !important;
+}
+
+/* Target the content wrapper */
+.VPContent {
+  max-width: 100% !important;
+}
+
+/* Target the doc wrapper */
+.VPDoc {
+  max-width: 100% !important;
+}
+
+/* Force all containers to use full width */
+.VPLayout .container,
+.VPContent .container,
+.VPDoc .container {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Override any responsive breakpoints */
+@media (min-width: 960px) {
+  .VPDoc .content-container {
+    max-width: 100% !important;
+  }
+  
+  .VPHero .container {
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .VPDoc .content-container {
+    max-width: 100% !important;
+  }
+  
+  .VPHero .container {
+    max-width: 100% !important;
+  }
+}

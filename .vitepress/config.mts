@@ -4,19 +4,37 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 // https://vitepress.dev/reference/site-config
 export default withMermaid(defineConfig({
   srcDir: "docs",
-  
+
   title: "Springfield Ham Radio",
   description: "Documentation for Springfield Ham Radio software ecosystem",
+
+  // Appearance configuration for VitePress 2
+  appearance: true,
+
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Overview', link: '/overview' },
+      { text: 'Architecture', link: '/architecture' },
+      { text: 'Development', link: '/development-guide' },
       { text: 'Registry', link: '/registry/' },
-      { text: 'Protocols', link: '/protocols/' },
-      { text: 'Examples', link: '/examples/' }
+      { text: 'Protocols', link: '/protocols/' }
     ],
 
     sidebar: {
+      '/': [
+        {
+          text: 'Getting Started',
+          items: [
+            { text: 'Documentation Guide', link: '/documentation-guide' },
+            { text: 'Overview', link: '/overview' },
+            { text: 'Architecture', link: '/architecture' },
+            { text: 'Module Comparison', link: '/module-comparison' },
+            { text: 'Development Guide', link: '/development-guide' }
+          ]
+        }
+      ],
       '/registry/': [
         {
           text: 'Ham Radio Registry',
@@ -37,15 +55,6 @@ export default withMermaid(defineConfig({
           items: [
             { text: 'Overview', link: '/protocols/' },
             { text: 'Protocol DSL', link: '/protocols/dsl' }
-          ]
-        }
-      ],
-      '/examples/': [
-        {
-          text: 'Examples',
-          items: [
-            { text: 'Markdown Examples', link: '/examples/markdown-examples' },
-            { text: 'Runtime API Examples', link: '/examples/api-examples' }
           ]
         }
       ]

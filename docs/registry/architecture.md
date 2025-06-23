@@ -1,6 +1,8 @@
-# Architecture
+# Registry Architecture
 
-The Ham Radio Registry is built with a modular, extensible architecture that supports both official and third-party radio modules. This page explains the technical design and how the components work together.
+> **Note**: This document focuses specifically on the Registry module architecture. For a comprehensive overview of the entire Springfield Ham Radio ecosystem architecture, see the [Architecture Overview](/architecture).
+
+The Ham Radio Registry is built with a modular, extensible architecture that supports both official and third-party radio modules. This page explains the technical design and how the registry components work together.
 
 ## System Overview
 
