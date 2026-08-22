@@ -55,21 +55,20 @@ const radioConfig = await registry.getConfiguration('baofeng-uv5r');
 ### Protocol DSL Examples
 ```json
 {
-  "sendReceive": {
-    "send": [0x50, 0xbb, 0xff, 0x20, 0x12, 0x07, 0x25],
-    "receive": {
-      "type": "exact",
-      "value": 0x06,
-      "length": 1
-    }
-  }
+  "description": "Send magic number",
+  "send": ["0x50", "0xBB", "0xFF", "0x20", "0x12", "0x07", "0x25"],
+  "expect": "0x06"
 }
 ```
 
 ### Configuration Structure
 ```json
 {
-  "radioModel": "example-radio",
+  "id": {
+    "model": "example-radio",
+    "name": "Example Radio",
+    "manufacturer": "Example"
+  },
   "version": "1.0.0",
   "manufacturer": "Example",
   "serialConfig": { ... },

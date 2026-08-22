@@ -14,7 +14,7 @@ The core communication protocol that defines how to read from and write to the r
 **Key Elements**:
 - `readMemory`: Array of protocol steps for reading radio memory
 - `writeMemory`: Array of protocol steps for writing radio memory
-- Step types: `sendReceive`, `send`, `receive`, `readSegment`, `writeSegment`, `setVariable`
+- Step types: exchange (`send` / `expect`), `read`, `write`
 
 ### 2. Serial Configuration
 Communication settings for the serial connection to the radio.
@@ -30,10 +30,8 @@ Layout and organization of the radio's memory structure.
 
 **Key Elements**:
 - `chunkSize`: Size of memory chunks for read/write operations
-- `segments`: Named memory regions with address ranges
-  - `startAddress`: Starting address of the segment
-  - `endAddress`: Ending address of the segment
-  - `description`: Human-readable description of the segment
+- `addressSize` / `addressEndianness`: How `$address` is encoded on the wire
+- `segments`: Named memory regions with inclusive `startAddress`–`endAddress` ranges
 
 ### 4. Schema Definitions
 JSON schemas that define the structure and validation rules for radio data.
@@ -166,6 +164,8 @@ Here's a complete example for a Baofeng UV-5R radio module:
   },
   "memoryConfig": {
     "chunkSize": 64,
+    "addressSize": 2,
+    "addressEndianness": "big",
     "segments": {
       "channels": {
         "startAddress": 0,
@@ -181,87 +181,45 @@ Here's a complete example for a Baofeng UV-5R radio module:
   },
   "readMemory": [
     {
-      "sendReceive": {
-        "send": [80, 187, 255, 32, 18, 7, 37],
-        "receive": {
-          "type": "exact",
-          "value": 6,
-          "length": 1
-        },
-        "description": "Send magic number"
-      }
+      "description": "Send magic number",
+      "send": ["0x50", "0xBB", "0xFF", "0x20", "0x12", "0x07", "0x25"],
+      "expect": "0x06"
     },
     {
-      "sendReceive": {
-        "send": [2],
-        "receive": {
-          "type": "variable",
-          "length": 8
-        },
-        "description": "Get radio identifier"
-      }
+      "description": "Get radio identifier",
+      "send": ["0x02"],
+      "expect": { "bytes": 8 }
     },
     {
-      "sendReceive": {
-        "send": [6],
-        "receive": {
-          "type": "exact",
-          "value": 6,
-          "length": 1
-        },
-        "description": "Begin clone operation"
-      }
+      "description": "Begin clone operation",
+      "send": ["0x06"],
+      "expect": "0x06"
     },
     {
-      "readSegment": {
+      "description": "Read memory",
+      "read": {
         "segments": ["channels", "settings"],
-        "startChunk": {
-          "send": ["S", "address:2", "segment.chunkSize"],
-          "receive": {
-            "type": "pattern",
-            "pattern": [
-              "X",
-              { "field": "address", "size": 2 },
-              { "field": "length", "size": 1 },
-              { "field": "data", "size": 0 }
-            ]
-          }
-        },
-        "endChunk": {
-          "send": [6],
-          "receive": {
-            "type": "exact",
-            "value": 6,
-            "length": 1
-          }
-        },
-        "description": "Read all memory segments"
+        "send": ["S", "$address", "$chunkSize"],
+        "expect": ["X", "$address", "$length", "$data"],
+        "ack": {
+          "send": ["0x06"],
+          "expect": "0x06"
+        }
       }
     }
   ],
   "writeMemory": [
     {
-      "sendReceive": {
-        "send": [80, 187, 255, 32, 18, 7, 37],
-        "receive": {
-          "type": "exact",
-          "value": 6,
-          "length": 1
-        },
-        "description": "Send magic number"
-      }
+      "description": "Send magic number",
+      "send": ["0x50", "0xBB", "0xFF", "0x20", "0x12", "0x07", "0x25"],
+      "expect": "0x06"
     },
     {
-      "writeSegment": {
+      "description": "Write memory",
+      "write": {
         "segments": ["channels", "settings"],
-        "send": ["X", "segment.startAddress:2", "segment.chunkSize"],
-        "data": "segment.data",
-        "receive": {
-          "type": "exact",
-          "value": 6,
-          "length": 1
-        },
-        "description": "Write all memory segments"
+        "send": ["X", "$address", "$chunkSize", "$data"],
+        "expect": "0x06"
       }
     }
   ],
@@ -391,7 +349,11 @@ Used by the radio driver for direct protocol execution.
 
 ```json
 {
-  "radioModel": "baofeng-uv5r",
+  "id": {
+    "model": "baofeng-uv5r",
+    "name": "Baofeng UV-5R",
+    "manufacturer": "Baofeng"
+  },
   "version": "1.0.0",
   "description": "Baofeng UV-5R radio configuration",
   "serialConfig": { ... },
@@ -450,6 +412,8 @@ Here's a complete example showing all configuration components:
   },
   "memoryConfig": {
     "chunkSize": 64,
+    "addressSize": 2,
+    "addressEndianness": "big",
     "segments": {
       "channels": {
         "startAddress": 0,
@@ -465,66 +429,35 @@ Here's a complete example showing all configuration components:
   },
   "readMemory": [
     {
-      "sendReceive": {
-        "send": [80, 187, 255, 32, 18, 7, 37],
-        "receive": {
-          "type": "exact",
-          "value": 6,
-          "length": 1
-        },
-        "description": "Send magic number"
-      }
+      "description": "Send magic number",
+      "send": ["0x50", "0xBB", "0xFF", "0x20", "0x12", "0x07", "0x25"],
+      "expect": "0x06"
     },
     {
-      "readSegment": {
+      "description": "Read memory",
+      "read": {
         "segments": ["channels", "settings"],
-        "startChunk": {
-          "send": ["S", "address:2", "segment.chunkSize"],
-          "receive": {
-            "type": "pattern",
-            "pattern": [
-              "X",
-              { "field": "address", "size": 2 },
-              { "field": "length", "size": 1 },
-              { "field": "data", "size": 0 }
-            ]
-          }
-        },
-        "endChunk": {
-          "send": [6],
-          "receive": {
-            "type": "exact",
-            "value": 6,
-            "length": 1
-          }
-        },
-        "description": "Read all memory segments"
+        "send": ["S", "$address", "$chunkSize"],
+        "expect": ["X", "$address", "$length", "$data"],
+        "ack": {
+          "send": ["0x06"],
+          "expect": "0x06"
+        }
       }
     }
   ],
   "writeMemory": [
     {
-      "sendReceive": {
-        "send": [80, 187, 255, 32, 18, 7, 37],
-        "receive": {
-          "type": "exact",
-          "value": 6,
-          "length": 1
-        },
-        "description": "Send magic number"
-      }
+      "description": "Send magic number",
+      "send": ["0x50", "0xBB", "0xFF", "0x20", "0x12", "0x07", "0x25"],
+      "expect": "0x06"
     },
     {
-      "writeSegment": {
+      "description": "Write memory",
+      "write": {
         "segments": ["channels", "settings"],
-        "send": ["X", "segment.startAddress:2", "segment.chunkSize"],
-        "data": "segment.data",
-        "receive": {
-          "type": "exact",
-          "value": 6,
-          "length": 1
-        },
-        "description": "Write all memory segments"
+        "send": ["X", "$address", "$chunkSize", "$data"],
+        "expect": "0x06"
       }
     }
   ],

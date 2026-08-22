@@ -39,11 +39,10 @@ The registry automatically discovers and manages radio modules:
 - Supports plugin installation and management
 
 ### Protocol DSL
-A declarative language for defining radio communication protocols:
-- JSON-based configuration
-- Step-by-step protocol definition
-- Expression resolution and pattern matching
-- Extensible executor system
+A JSON language for clone-style serial I/O:
+- Send bytes and expect a reply (ACK, opaque length, or a framed pattern)
+- Repeat an exchange across memory segments for read/write
+- Hex tokens (`"0x50"`) and placeholders (`$address`, `$data`)
 
 ## Next Steps
 
