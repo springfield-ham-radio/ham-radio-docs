@@ -1,14 +1,14 @@
 # Memory-Map DSL
 
-The Memory-Map DSL is a JSON language for radio EEPROM *layout*: which bytes become which settings. A generic codec in `@springfield/ham-radio-utils` decode/encodes it. Radio modules ship a map next to the [Protocol DSL](./dsl) so a new radio can expose settings **without a TypeScript decoder**.
+The Memory-Map DSL is a JSON language for radio EEPROM *layout*: which bytes become which settings and channels. A generic codec in `@springfield/ham-radio-utils` decode/encodes it. Radio modules ship a map next to the [Protocol DSL](./dsl) so a new radio can expose settings and channels **without a TypeScript decoder**.
 
 ## Mental model
 
 | Layer | Responsibility |
 | --- | --- |
 | Protocol DSL | Serial handshake + chunked read/write of named segments |
-| Memory-Map DSL | Bytes in the image → nested settings object (and back) |
-| Channel codec (optional) | Per-channel records until those are also expressed in the map |
+| Memory-Map DSL | Bytes in the image → nested bag (and back) |
+| Channel bindings | Project channel structs into portable `RadioChannel` + slot `settings` |
 
 Addresses in the map are **radio EEPROM addresses**, not Chirp image offsets.
 
@@ -24,6 +24,7 @@ Examples:
 
 | Struct | Chirp image | Radio address |
 | --- | --- | --- |
+| Channel records | `0x0008` | `0x0000` |
 | Channel names | `0x1008` | `0x1000` |
 | User settings | `0x0E28` | `0x0E20` |
 | Power-on message | `0x1828` | `0x1EE0` (in aux segment) |
@@ -44,18 +45,21 @@ A sparse buffer whose length covers the highest segment end address (`8192` for 
 ```json
 {
   "version": "1.0.0",
-  "description": "Baofeng UV-5R settings",
-  "structs": [
-    {
-      "id": "settings",
-      "seek": "0x0E20",
-      "fields": []
-    }
-  ]
+  "description": "Baofeng UV-5R channels + settings",
+  "channelBindings": {
+    "records": "channels",
+    "names": "names",
+    "nameField": "name",
+    "receiveFrequency": "rxfreq",
+    "transmitFrequency": "txfreq",
+    "receiveTone": "rxtone",
+    "transmitTone": "txtone"
+  },
+  "structs": []
 }
 ```
 
-Optional: `count` + `stride` on a struct for repeated records (PTT-ID codes).
+Optional on a struct: `count` + `stride` for repeated records; `emptyWhen` / `clearEmpty` for channel occupancy.
 
 ## Fields
 
@@ -63,8 +67,8 @@ Sequential layout from `seek`. Bitfields pack **MSB-first** within a byte (Chirp
 
 | `type` | Meaning |
 | --- | --- |
-| `u8` | One byte (or multi-byte via `value.length` for ascii/digits/dtmf/bbcd) |
-| `u16` | Little-endian 16-bit (Chirp `ul16`) |
+| `u8` | One byte (or multi-byte via `value.length` for ascii/digits/dtmf/bbcd/lbcd) |
+| `u16` | Little-endian 16-bit (Chirp `ul16`); also used with `tone` |
 | `bits` | Bitfield; requires `width` (1–8) |
 
 Set `"reserved": true` for padding. Reserved fields advance the cursor but are omitted from decode output.
@@ -80,78 +84,66 @@ Set `"reserved": true` for padding. Reserved fields advance the cursor but are o
 | `digits` | Decimal digit bytes → number × `scale` (VFO freq uses `scale: 10`) |
 | `dtmf` | Index into `charset` (default `0123456789 *#ABCD`), `0xFF` terminates |
 | `bbcd` | Packed BCD → integer (band limits) |
+| `lbcd` | Chirp little-endian “hex digits are decimal” → Hz (`scale`, default 10) |
+| `tone` | UV-5R tone word: none / CTCSS (`>= ctcssMin`) / DCS index into `values` (+ `reverseOffset` for R) |
+
+### Occupancy
+
+For repeated structs (channels):
+
+```json
+{
+  "emptyWhen": { "equals": 255 },
+  "clearEmpty": true
+}
+```
+
+- Decode: if the first byte of the instance equals `equals`, the slot is `null`.
+- Encode: missing/`null` instances are filled with `0xFF` for `stride` bytes when `clearEmpty` is true (Chirp-like clear).
 
 ### UI metadata
 
-Non-reserved fields should include `ui` for schema-driven forms:
-
-```json
-{
-  "id": "squelch",
-  "type": "u8",
-  "value": { "kind": "integer", "min": 0, "max": 9 },
-  "ui": {
-    "group": "basic",
-    "label": "Carrier Squelch Level",
-    "widget": "integer",
-    "description": "…",
-    "writable": true
-  }
-}
-```
+Non-reserved fields should include `ui` for schema-driven **radio-wide** settings forms. Channel-bound structs are skipped by `collectMemoryMapUiFields`.
 
 Widgets: `integer`, `select`, `switch`, `text`, `number`. Set `writable: false` for firmware / read-only messages.
 
-## Example (excerpt)
+## Channel bindings and reusable RadioChannel
 
-```json
-{
-  "id": "settings",
-  "seek": "0x0E20",
-  "fields": [
-    {
-      "id": "squelch",
-      "type": "u8",
-      "value": { "kind": "integer", "min": 0, "max": 9 },
-      "ui": { "group": "basic", "label": "Carrier Squelch Level", "widget": "integer" }
-    },
-    { "id": "_unknown1", "type": "u8", "reserved": true },
-    {
-      "id": "save",
-      "type": "u8",
-      "value": { "kind": "enum", "values": ["Off", "1:1", "1:2", "1:3", "1:4"] },
-      "ui": { "group": "basic", "label": "Battery Saver", "widget": "select" }
-    }
-  ]
-}
-```
+`channelBindings` maps decoded record fields onto the portable [`RadioChannel`](https://github.com/springfield-ham-radio/ham-radio-api) core:
 
-Decoded object:
+| Portable (`RadioChannel`) | Map field roles |
+| --- | --- |
+| `name` | `names` struct + `nameField` |
+| `receiveFrequency` / `transmitFrequency` | Hz from `lbcd` |
+| `receiveTone` / `transmitTone` | From `tone` |
 
-```json
-{
-  "settings": {
-    "squelch": 3,
-    "save": "1:2"
-  }
-}
-```
+Everything else on the channel record (power, wide/NFM, scan skip, PTT-ID, BCL, …) lands in `RadioProgrammedChannel.settings`.
+
+Duplex, offset, and Chirp `tmode` are **derived** from RX/TX + tones in the UI if needed—they are not EEPROM fields. Store absolute frequencies and concrete tones so a future channel library can reuse `RadioChannel` across radios.
+
+Helpers:
+
+- `decodeRadioProgram` / `encodeRadioProgram` — full program round-trip
+- `bindingsToChannels` / `programToChannelSettings` — bag ↔ channels
 
 ## Adding a radio without codec code
 
 1. Write Protocol DSL `readMemory` / `writeMemory` and `memoryConfig.segments`.
-2. Author `memory-maps/<model>-settings.json` with radio addresses and UI groups.
-3. Reference it from the radio config (`memoryMap.$ref`) and/or ship it with a thin codec that calls `decodeMemoryMap` / `encodeMemoryMap`.
+2. Author `memory-maps/<model>-settings.json` with radio addresses, channel structs, bindings, and UI groups.
+3. Reference it from the radio config (`memoryMap.$ref`) and call `decodeRadioProgram` / `encodeRadioProgram` from a thin codec.
 4. Validate with `SchemaValidator.validateMemoryMap` (`radio-memory-map-schema.json` in `@springfield/ham-radio-utils`).
-
-Channel tables can move onto the same map later (`memory[128]`-style structs). Until then, a small channel codec may remain.
 
 ## UV-5R reference map
 
-Shipped as [`uv5r-settings.json`](https://gitlab.com/springfield-ham-radio/drivers/radio-module-baofeng/-/blob/main/src/shared/memory-maps/uv5r-settings.json) in `@springfield/radio-module-baofeng`. Groups: basic, advanced, workmode, dtmf, other, service.
+Shipped as [`uv5r-settings.json`](https://github.com/springfield-ham-radio/radio-module-baofeng/blob/main/src/shared/memory-maps/uv5r-settings.json) in `@springfield/radio-module-baofeng`.
+
+Includes:
+
+- `channels` / `names` (128 × 16) with full Chirp channel bitfields
+- Radio-wide groups: basic, advanced, workmode, dtmf, other, service
 
 ## API
 
-- Types: `@springfield/ham-radio-api` — `RadioMemoryMap`, nested `RadioSettings`
-- Engine: `decodeMemoryMap`, `encodeMemoryMap`, `radioAddressToBufferOffset`
-- UI helpers: `collectMemoryMapUiFields`, `groupMemoryMapUiFields`
+- Types: `@springfield/ham-radio-api` — `RadioMemoryMap`, `channelBindings`, nested `RadioSettings`
+- Engine: `decodeMemoryMap`, `encodeMemoryMap`, `decodeRadioProgram`, `encodeRadioProgram`, `radioAddressToBufferOffset`
+- UI helpers: `collectMemoryMapUiFields`, `groupMemoryMapUiFields` (skips channel-bound structs)
