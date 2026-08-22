@@ -152,12 +152,15 @@ export class ProtocolInterpreter {
 - UI logging and progress reporting
 - Test data factories and utilities
 - Band plan and frequency management
+- Operator-class mapping for FCC / Callook license lookups
 
 **Core Components**:
 - **Memory Utilities**: `SegmentedMemory`, memory data conversion functions
 - **Schema Validation**: JSON schema validation using Ajv
 - **UI Logging**: Progress reporting and command-level logging
 - **Data Conversion**: BCD conversion, hex formatting, frequency display
+- **Band Plan**: Band lookup and license-class privilege checks (`BandPlan.hasPrivilege`)
+- **License Mapping**: `operatorClassToLicenseClassId` for Callook / FCC operator classes
 - **Test Utilities**: Factory classes for generating test data
 
 **Key Features**:

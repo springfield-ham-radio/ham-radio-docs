@@ -66,6 +66,7 @@ export default withMermaid(defineConfig({
               ]
             },
             { text: 'Module Comparison', link: '/reference/module-comparison' },
+            { text: 'License Lookup', link: '/reference/license-lookup' },
             { text: 'Documentation Standards', link: '/reference/documentation-guide' }
           ]
         },
