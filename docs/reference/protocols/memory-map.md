@@ -103,7 +103,10 @@ For repeated structs (channels):
 
 ### UI metadata
 
-Non-reserved fields should include `ui` for schema-driven **radio-wide** settings forms. Channel-bound structs are skipped by `collectMemoryMapUiFields`.
+Non-reserved fields should include `ui` for schema-driven forms and tables.
+
+- **Radio-wide settings:** `collectMemoryMapUiFields` (skips channel-bound structs).
+- **Per-channel extras:** put `ui` on fields of the `channelBindings.records` struct; `collectChannelMemoryMapUiFields` returns them for Channels-table columns. Bound RadioChannel fields (`rxfreq`, tones, …) are omitted. Use `formatMemoryMapFieldValue` for read-only cell text.
 
 Widgets: `integer`, `select`, `switch`, `text`, `number`. Set `writable: false` for firmware / read-only messages.
 
