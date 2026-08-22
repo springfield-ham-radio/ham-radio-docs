@@ -62,7 +62,8 @@ export default withMermaid(defineConfig({
                 { text: 'Registry API Reference', link: '/reference/registry/api-reference' },
                 { text: 'Registry Getting Started', link: '/reference/registry/getting-started' },
                 { text: 'Protocols Overview', link: '/reference/protocols/' },
-                { text: 'Protocol DSL', link: '/reference/protocols/dsl' }
+                { text: 'Protocol DSL', link: '/reference/protocols/dsl' },
+                { text: 'Memory-Map DSL', link: '/reference/protocols/memory-map' }
               ]
             },
             { text: 'Module Comparison', link: '/reference/module-comparison' },
@@ -89,7 +90,8 @@ export default withMermaid(defineConfig({
           collapsed: true,
           items: [
             { text: 'Overview', link: '/reference/protocols/' },
-            { text: 'Protocol DSL', link: '/reference/protocols/dsl' }
+            { text: 'Protocol DSL', link: '/reference/protocols/dsl' },
+            { text: 'Memory-Map DSL', link: '/reference/protocols/memory-map' }
           ]
         },
         {

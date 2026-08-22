@@ -1,30 +1,37 @@
 # Protocols & DSL Overview
 
-The Springfield Ham Radio ecosystem uses a JSON protocol language to describe clone-style serial I/O. A single driver interprets the steps, so new radios are added with configuration rather than a new driver class.
+The Springfield Ham Radio ecosystem uses JSON languages to describe clone-style serial I/O and EEPROM layout. A generic driver and codec interpret the data, so new radios are added with configuration rather than new TypeScript classes.
 
-## Why a Protocol DSL?
+## Two DSLs
+
+| DSL | Purpose |
+| --- | --- |
+| [Protocol DSL](./dsl) | Serial handshake and chunked memory transfer |
+| [Memory-Map DSL](./memory-map) | EEPROM bytes ↔ radio settings (and UI metadata) |
+
+## Why declarative radio support?
 
 - **Radio independence**: One interpreter supports many radios.
-- **Declarative**: Handshake and memory transfer are data, not TypeScript.
-- **Testable**: Protocol JSON can be validated against a schema.
+- **Declarative**: Handshake, layout, and menus are data, not TypeScript.
+- **Testable**: Protocol and memory-map JSON validate against schemas.
 
-## Core ideas
+## Protocol DSL (I/O)
 
 - **Exchange**: `send` bytes and `expect` a reply (exact ACK, N opaque bytes, or a framed pattern).
 - **Chunk loop**: `read` / `write` repeats an exchange across named memory segments.
 - **Placeholders**: `$address`, `$chunkSize`, `$length`, `$data` are filled in at runtime.
-- **Hex tokens**: `"0x50"` and `"S"` are valid JSON stand-ins for hex and ASCII opcodes.
 
-## Step types
+## Memory-Map DSL (settings)
 
-- **Exchange**: top-level `send` and/or `expect`
-- **Read**: `{ "read": { "segments", "send", "expect", "ack?" } }`
-- **Write**: `{ "write": { "segments", "send", "expect" } }`
+- **Structs** at radio EEPROM `seek` addresses with sequential fields.
+- **Encodings**: integers, enums, booleans, ASCII, digit arrays, DTMF, BCD, bitfields.
+- **UI metadata**: group, label, widget — enough for a schema-driven Settings tab.
 
-See the [Protocol DSL](./dsl) reference for the full language, placeholders, and a Baofeng UV-5R example.
+See the [Memory-Map DSL](./memory-map) for UV-5R address conversion (Chirp image − 8) and the “no code” path for a new radio.
 
 ## Next steps
 
 - Learn the [Protocol DSL](./dsl) in detail
+- Learn the [Memory-Map DSL](./memory-map) in detail
 - See how protocols load through the [Registry Architecture](/reference/registry/architecture)
 - Explore the [Development Guide](/development-guide) for implementation details
