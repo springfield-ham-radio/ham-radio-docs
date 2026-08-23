@@ -131,7 +131,7 @@ Helpers:
 
 ## Adding a radio without codec code
 
-1. Write Protocol DSL `readMemory` / `writeMemory` and `memoryConfig.segments`.
+1. Write Protocol DSL `readMemory` / `writeMemory` and `memoryConfig.segments`. UV-5R write uses 16-byte blocks, a 50ms pause, and two skipped calibration holes — see the [Protocol DSL](./dsl).
 2. Author `memory-maps/<model>-settings.json` with radio addresses, channel structs, bindings, and UI groups.
 3. Reference it from the radio config (`memoryMap.$ref`) and call `decodeRadioProgram` / `encodeRadioProgram` from a thin codec.
 4. Validate with `SchemaValidator.validateMemoryMap` (`radio-memory-map-schema.json` in `@springfield/ham-radio-utils`).

@@ -70,8 +70,9 @@ In `send` and `expect` arrays:
 | `"0x50"` | Hex literal |
 | `"S"` | Single-character ASCII opcode |
 | `"$address"` | Current chunk address (`addressSize` + `addressEndianness`) |
-| `"$chunkSize"` | `memoryConfig.chunkSize` as one byte |
+| `"$chunkSize"` | Current chunk size as one byte (`write.chunkSize` or `memoryConfig.chunkSize`) |
 | `"$length"` | Current chunk length as one byte |
+
 | `"$data"` | Chunk payload (see read/write) |
 
 JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` / `83`.
@@ -112,12 +113,28 @@ JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` /
 
 `write` repeats the exchange for every chunk. `$data` in `send` emits the current chunk from the memory buffer.
 
+Optional fields:
+
+| Field | Meaning |
+| --- | --- |
+| `chunkSize` | Override `memoryConfig.chunkSize` for this write |
+| `delay` | Milliseconds to wait after each accepted block |
+| `skip` | Inclusive radio-address ranges that must not be uploaded |
+
+`$length` is the current payload size. Use it on write when the block size may differ from the read chunk size.
+
 ```json
 {
   "description": "Write memory",
   "write": {
     "segments": ["channels", "settings"],
-    "send": ["X", "$address", "$chunkSize", "$data"],
+    "chunkSize": 16,
+    "delay": 50,
+    "skip": [
+      { "startAddress": 3312, "endAddress": 3327 },
+      { "startAddress": 3568, "endAddress": 3583 }
+    ],
+    "send": ["X", "$address", "$length", "$data"],
     "expect": "0x06"
   }
 }
@@ -163,6 +180,8 @@ JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` /
 
 ### Write
 
+Chirp's UV-5R upload (`_ident_radio` then `_send_block`) is the same handshake as read, then 16-byte `X` blocks. Two 16-byte calibration holes in the main block are not written (`0x0CF0–0x0CFF` and `0x0DF0–0x0DFF`). Each block waits 50ms after the radio ACKs.
+
 ```json
 {
   "writeMemory": [
@@ -172,10 +191,26 @@ JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` /
       "expect": "0x06"
     },
     {
+      "description": "Get radio identifier",
+      "send": ["0x02"],
+      "expect": { "bytes": 8 }
+    },
+    {
+      "description": "Begin clone operation",
+      "send": ["0x06"],
+      "expect": "0x06"
+    },
+    {
       "description": "Write memory",
       "write": {
         "segments": ["channels", "settings"],
-        "send": ["X", "$address", "$chunkSize", "$data"],
+        "chunkSize": 16,
+        "delay": 50,
+        "skip": [
+          { "startAddress": 3312, "endAddress": 3327 },
+          { "startAddress": 3568, "endAddress": 3583 }
+        ],
+        "send": ["X", "$address", "$length", "$data"],
         "expect": "0x06"
       }
     }
@@ -183,7 +218,7 @@ JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` /
 }
 ```
 
-Handshake is three exchanges. Memory transfer is one `read` or `write` over both segments.
+Handshake is three exchanges. Memory transfer is one `read` (64-byte `S` blocks) or `write` (16-byte `X` blocks) over both segments.
 
 ## Execution
 

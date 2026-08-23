@@ -215,10 +215,26 @@ Here's a complete example for a Baofeng UV-5R radio module:
       "expect": "0x06"
     },
     {
+      "description": "Get radio identifier",
+      "send": ["0x02"],
+      "expect": { "bytes": 8 }
+    },
+    {
+      "description": "Begin clone operation",
+      "send": ["0x06"],
+      "expect": "0x06"
+    },
+    {
       "description": "Write memory",
       "write": {
         "segments": ["channels", "settings"],
-        "send": ["X", "$address", "$chunkSize", "$data"],
+        "chunkSize": 16,
+        "delay": 50,
+        "skip": [
+          { "startAddress": 3312, "endAddress": 3327 },
+          { "startAddress": 3568, "endAddress": 3583 }
+        ],
+        "send": ["X", "$address", "$length", "$data"],
         "expect": "0x06"
       }
     }
@@ -453,10 +469,26 @@ Here's a complete example showing all configuration components:
       "expect": "0x06"
     },
     {
+      "description": "Get radio identifier",
+      "send": ["0x02"],
+      "expect": { "bytes": 8 }
+    },
+    {
+      "description": "Begin clone operation",
+      "send": ["0x06"],
+      "expect": "0x06"
+    },
+    {
       "description": "Write memory",
       "write": {
         "segments": ["channels", "settings"],
-        "send": ["X", "$address", "$chunkSize", "$data"],
+        "chunkSize": 16,
+        "delay": 50,
+        "skip": [
+          { "startAddress": 3312, "endAddress": 3327 },
+          { "startAddress": 3568, "endAddress": 3583 }
+        ],
+        "send": ["X", "$address", "$length", "$data"],
         "expect": "0x06"
       }
     }

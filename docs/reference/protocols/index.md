@@ -20,6 +20,7 @@ The Springfield Ham Radio ecosystem uses JSON languages to describe clone-style 
 - **Exchange**: `send` bytes and `expect` a reply (exact ACK, N opaque bytes, or a framed pattern).
 - **Chunk loop**: `read` / `write` repeats an exchange across named memory segments.
 - **Placeholders**: `$address`, `$chunkSize`, `$length`, `$data` are filled in at runtime.
+- **Write extras**: optional `chunkSize`, `delay`, and `skip` on a `write` step (UV-5R clone uses 16-byte blocks).
 
 ## Memory-Map DSL (settings)
 
