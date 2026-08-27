@@ -136,21 +136,15 @@ radio-module-baofeng/
 ├── configs/
 │   └── baofeng-uv5r.json
 ├── src/
-│   ├── index.ts
-│   ├── codec-factory.ts
 │   └── shared/
-│       ├── codecs/
-│       │   ├── baofeng-codec.ts
-│       │   ├── baofeng-encoder.ts
-│       │   └── baofeng-decoder.ts
-│       └── schemas/
-│           ├── channel-schema.json
-│           └── settings-schema.json
+│       ├── schemas/
+│       │   ├── channel-schema.json
+│       │   └── settings-schema.json
+│       └── memory-maps/
+│           └── uv5r-settings.json
 └── test/
     ├── integration/
-    │   └── baofeng-module.test.ts
     └── unit/
-        └── codec-factory.test.ts
 ```
 
 ### Package.json
@@ -369,12 +363,14 @@ npm publish --access public
 ```
 
 ### Installation
-Users can install your module:
+Desktop users install modules from the app (**Preferences → Radios**). See [Installing Radio Modules](/reference/installing-radio-modules).
+
+Developers can still install via npm:
 ```bash
 yarn add @springfield/radio-module-example
 ```
 
-The registry will automatically discover and make your radio configuration available.
+Publish a JSON-only GitHub Release zip (`yarn pack:release` in official modules) and update the official catalog for in-app install.
 
 ## Getting Help
 

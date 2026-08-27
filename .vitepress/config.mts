@@ -49,6 +49,10 @@ export default withMermaid(defineConfig({
           link: '/reference/radio-module-dev',
         },
         {
+          text: 'Installing Radio Modules',
+          link: '/reference/installing-radio-modules',
+        },
+        {
           text: 'Architecture & Standards',
           items: [
             {

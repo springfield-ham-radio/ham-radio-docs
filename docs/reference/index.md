@@ -13,6 +13,7 @@ This section provides comprehensive reference documentation for the Springfield 
 
 ### Architecture Reference
 - **[Architecture Reference](/reference/architecture)**: Complete system architecture, design patterns, and implementation details
+- **[Installing Radio Modules](/reference/installing-radio-modules)**: Official catalog install, local file install, and developer npm install
 - **[Module Comparison](/module-comparison)**: Detailed comparison of different module types and their purposes
 - **[Documentation Standards](/documentation-guide)**: Standards and practices for writing documentation
 - **[License Lookup](/reference/license-lookup)**: Callook call-sign mapping and band privilege checks
