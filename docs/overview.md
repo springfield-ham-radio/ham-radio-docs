@@ -165,10 +165,11 @@ Advanced memory handling capabilities:
    }
    ```
 
-3. **Publish to NPM**
+3. **Publish a GitHub Release zip**
    ```bash
-   npm publish
+   yarn pack:release
    ```
+   Attach the zip to the GitHub Release and list it in `radio-module-catalog`. Radio modules are not published to npm.
 
 ## Supported Radio Models
 

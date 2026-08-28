@@ -12,11 +12,9 @@ yarn add @springfield/ham-radio-registry
 
 ## 2. Install Radio Modules
 
-You can install official or third-party radio modules from npm. For example, to install the official Baofeng module:
+The desktop app installs official modules from GitHub Releases via the [radio-module catalog](https://github.com/springfield-ham-radio/radio-module-catalog). Radio modules are JSON packages and are not published to npm.
 
-```sh
-yarn add @springfield/radio-module-baofeng
-```
+For local development, clone the module repository and load its `configs/` JSON (and sibling `$ref` files).
 
 ## 3. Create a Registry Instance
 

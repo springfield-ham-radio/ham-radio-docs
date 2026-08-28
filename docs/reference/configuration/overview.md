@@ -68,7 +68,7 @@ If you're developing a radio module to support a new radio model, this section p
 1. **Create your module structure** (see directory structure below)
 2. **Write your radio configuration** (see complete example below)
 3. **Add package.json configuration** (see package.json example below)
-4. **Publish to npm** with the `radio-module-` prefix
+4. **Publish a GitHub Release zip** and add the module to `radio-module-catalog`
 
 ### Complete Radio Module Example
 
@@ -335,7 +335,7 @@ export { BaofengCodecFactory as CodecFactory };
 - [ ] Configure package.json with springfield plugin settings
 - [ ] Test configuration with radio driver
 - [ ] Test module discovery with registry
-- [ ] Publish to npm with appropriate naming
+- [ ] Publish a GitHub Release zip and update radio-module-catalog
 
 ### Testing Your Module
 

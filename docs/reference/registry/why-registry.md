@@ -175,10 +175,7 @@ yarn add @springfield/ham-radio-registry
 
 ### 2. **Install Radio Modules**
 
-```bash
-yarn add radio-module-baofeng
-yarn add radio-module-yaesu
-```
+Radio modules are JSON zips from GitHub Releases, not npm packages. The desktop app installs them from the official catalog.
 
 ### 3. **Use the API**
 

@@ -350,27 +350,11 @@ describe('BaofengCodecFactory', () => {
 
 ## Distribution
 
-### Publishing to npm
-```bash
-# Build the package
-yarn build
+### GitHub Release zip
 
-# Publish to npm
-npm publish
+Official modules ship a JSON-only zip (`configs/`, `src/shared/schemas/`, `src/shared/memory-maps/`) on GitHub Releases (`yarn pack:release`). They are not published to npm.
 
-# Or publish with scope
-npm publish --access public
-```
-
-### Installation
-Desktop users install modules from the app (**Preferences → Radios**). See [Installing Radio Modules](/reference/installing-radio-modules).
-
-Developers can still install via npm:
-```bash
-yarn add @springfield/radio-module-example
-```
-
-Publish a JSON-only GitHub Release zip (`yarn pack:release` in official modules) and update the official catalog for in-app install.
+Update the official catalog after each release. Desktop users install from the app (**Preferences → Radios**). See [Installing Radio Modules](/reference/installing-radio-modules).
 
 ## Getting Help
 

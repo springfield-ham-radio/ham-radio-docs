@@ -22,18 +22,7 @@ Before install, the app shows an **at your own risk** warning. Local installs ar
 
 Offline first launch: the official catalog may be unreachable; local file install still works.
 
-## Developer install (npm)
-
-Module authors and Node tooling continue to use npm:
-
-```bash
-yarn add @springfield/radio-module-baofeng
-```
-
-The desktop app does **not** run `yarn add` at runtime. See [Radio Module Development](/reference/radio-module-dev) for packaging.
-
 ## Publishing a module for the app
 
-1. Publish the npm package as usual.
-2. Attach a JSON-only zip (`configs/`, `src/shared/schemas/`, `src/shared/memory-maps/`) to the GitHub Release (`yarn pack:release` / semantic-release).
-3. Update [`radio-module-catalog`](https://github.com/springfield-ham-radio/radio-module-catalog) `catalog.json` with `version`, `downloadUrl`, `integrity`, and `minApiVersion`.
+1. Attach a JSON-only zip (`configs/`, `src/shared/schemas/`, `src/shared/memory-maps/`) to the GitHub Release (`yarn pack:release` / semantic-release). Radio modules are not published to npm.
+2. Update [`radio-module-catalog`](https://github.com/springfield-ham-radio/radio-module-catalog) `catalog.json` with `version`, `downloadUrl`, `integrity`, and `minApiVersion`.

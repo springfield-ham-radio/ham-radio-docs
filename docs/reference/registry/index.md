@@ -21,10 +21,7 @@ yarn add @springfield/ham-radio-registry
 
 ### 2. Install Radio Modules
 
-```bash
-yarn add radio-module-baofeng
-yarn add radio-module-yaesu
-```
+Radio modules are JSON zips from GitHub Releases, not npm packages. The desktop app installs them from the official catalog. For local development, clone the module repo and load its `configs/` JSON.
 
 ### 3. Use the API
 
@@ -212,7 +209,7 @@ The registry implements comprehensive security measures:
 2. **Implement Codecs**: Create encoder/decoder for your radio
 3. **Define Schemas**: Create JSON schemas for validation
 4. **Test Thoroughly**: Ensure your module works correctly
-5. **Publish to npm**: Make your module available to others
+5. **Publish a GitHub Release zip**: Add the module to `radio-module-catalog` (not npm)
 
 ### Documentation
 
