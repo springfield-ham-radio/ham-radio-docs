@@ -48,13 +48,23 @@ Protocol steps live on the radio config next to serial and memory settings:
 
 ## Exchange
 
-An exchange has optional `send`, optional `expect`, and optional `description` / `timeout` (milliseconds, default 5000). At least one of `send` or `expect` is required.
+An exchange has optional `send`, optional `expect`, optional `setBaudRate`, and optional `description` / `timeout` (milliseconds, default 5000). At least one of `send`, `expect`, or `setBaudRate` is required.
 
 ```json
 {
   "description": "Send magic number",
   "send": ["0x50", "0xBB", "0xFF", "0x20", "0x12", "0x07", "0x25"],
   "expect": "0x06"
+}
+```
+
+Kenwood TH-D74 clone mode enters programming at 9600 baud then transfers at 57600:
+
+```json
+{
+  "description": "Switch to clone baud",
+  "setBaudRate": 57600,
+  "expect": { "bytes": 1 }
 }
 ```
 
@@ -69,7 +79,8 @@ In `send` and `expect` arrays:
 | `6` | Literal byte 0–255 |
 | `"0x50"` | Hex literal |
 | `"S"` | Single-character ASCII opcode |
-| `"$address"` | Current chunk address (`addressSize` + `addressEndianness`) |
+| `"$address"` | Current chunk **byte** address (`addressSize` + `addressEndianness`) |
+| `"$block"` | Current chunk **index** (`floor(byteAddress / chunkSize)`), same width/endianness as `$address`. Kenwood TH-D74 clone headers use this. |
 | `"$chunkSize"` | Current chunk size as one byte (`write.chunkSize` or `memoryConfig.chunkSize`) |
 | `"$length"` | Current chunk length as one byte |
 
@@ -219,6 +230,20 @@ Chirp's UV-5R upload (`_ident_radio` then `_send_block`) is the same handshake a
 ```
 
 Handshake is three exchanges. Memory transfer is one `read` (64-byte `S` blocks) or `write` (16-byte `X` blocks) over both segments.
+
+## Kenwood TH-D74 (clone mode)
+
+The TH-D74 is a 256-byte block clone, not a Baofeng-style `S`/`X` dump:
+
+1. ASCII `0M PROGRAM\r` at 9600 baud; radio replies `0M\r`.
+2. Switch to 57600 baud and discard one sync byte.
+3. Read: send `R` + `$block` + `0x0000`, expect `W` + `$block` + `0x0000` + 256 data bytes, then ACK `0x06`/`0x06`.
+4. Write: send `W` + `$block` + `0x0000` + 256 data bytes, expect `0x06`. Skip the last two blocks.
+5. Send `E` to leave programming mode.
+
+Enable `serialConfig.rtscts` (hardware flow control). macOS USB CDC needs it.
+
+`$block` is the chunk index (`0, 1, 2, …`), not the byte address. A 2-byte big-endian `$address` at byte 256 would be `0x0100` (block 256) instead of `0x0001` (block 1).
 
 ## Execution
 

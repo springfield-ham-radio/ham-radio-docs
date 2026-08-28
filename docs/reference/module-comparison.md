@@ -10,7 +10,8 @@ This document provides a quick reference comparison of all modules in the Spring
 | `@springfield/ham-radio-driver` | Protocol interpreter and serial communication | `RadioDriver`, `ProtocolInterpreter` | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils`, `serialport` | Driver |
 | `@springfield/ham-radio-utils` | Shared utilities and helper functions | `SegmentedMemory`, `UILogger`, validation functions | `@springfield/ham-radio-api`, `ajv`, `fishery` | Utilities |
 | `@springfield/ham-radio-registry` | Plugin discovery and management | `RadioConfigRegistry`, `NpmBasedConfigRegistry` | `@springfield/ham-radio-api`, `loglayer` | Registry |
-| `radio-module-baofeng` | Baofeng radio-specific implementation | `BaofengCodec`, `CodecFactory` | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils` | Radio Module |
+| `radio-module-baofeng` | Baofeng radio-specific implementation | JSON configs + memory maps | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils` | Radio Module |
+| `radio-module-kenwood` | Kenwood TH-F6 (live) and TH-D74 (clone) | JSON configs + memory maps | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils` | Radio Module |
 
 ## Module Details
 

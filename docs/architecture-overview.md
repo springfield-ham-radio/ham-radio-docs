@@ -31,6 +31,7 @@ graph TB
     end
     subgraph "Radio Modules"
         BAOFENG[radio-module-baofeng]
+        KENWOOD[radio-module-kenwood]
         OTHER[Other Radio Modules...]
     end
     subgraph "Applications"
@@ -42,6 +43,7 @@ graph TB
     API --> UTILS
     API --> REGISTRY
     API --> BAOFENG
+    API --> KENWOOD
     DRIVER --> API
     UTILS --> API
     REGISTRY --> API
@@ -50,6 +52,7 @@ graph TB
     CLI --> API
     API_SERVER --> API
     REGISTRY --> BAOFENG
+    REGISTRY --> KENWOOD
     REGISTRY --> OTHER
 ```
 

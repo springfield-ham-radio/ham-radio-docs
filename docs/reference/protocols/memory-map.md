@@ -59,7 +59,7 @@ A sparse buffer whose length covers the highest segment end address (`8192` for 
 }
 ```
 
-Optional on a struct: `count` + `stride` for repeated records; `emptyWhen` / `clearEmpty` for channel occupancy.
+Optional on a struct: `count` + `stride` for repeated records; `groupSize` + `groupPad` when records are packed into clone blocks with padding (Kenwood TH-D74: 6 × 40-byte memories + 16 pad = 256); `emptyWhen` / `clearEmpty` for channel occupancy.
 
 ## Fields
 
@@ -69,6 +69,7 @@ Sequential layout from `seek`. Bitfields pack **MSB-first** within a byte (Chirp
 | --- | --- |
 | `u8` | One byte (or multi-byte via `value.length` for ascii/digits/dtmf/bbcd/lbcd) |
 | `u16` | Little-endian 16-bit (Chirp `ul16`); also used with `tone` |
+| `u32` | Little-endian 32-bit (Chirp `ul32`; Kenwood TH-D74 frequencies in Hz) |
 | `bits` | Bitfield; requires `width` (1–8) |
 
 Set `"reserved": true` for padding. Reserved fields advance the cursor but are omitted from decode output.
@@ -86,6 +87,8 @@ Set `"reserved": true` for padding. Reserved fields advance the cursor but are o
 | `bbcd` | Packed BCD → integer (band limits) |
 | `lbcd` | Chirp little-endian “hex digits are decimal” → Hz (`scale`, default 10) |
 | `tone` | UV-5R tone word: none / CTCSS (`>= ctcssMin`) / DCS index into `values` (+ `reverseOffset` for R) |
+| `ctcss-index` | CTCSS stored as an index into `values` (Hz × 10). Kenwood TH-D74 `rtone` / `ctone`. |
+| `dcs-index` | DCS stored as an index into `values`. Kenwood TH-D74 `dtcs_code`. |
 
 ### Occupancy
 
