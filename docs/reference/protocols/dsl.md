@@ -245,6 +245,21 @@ Enable `serialConfig.rtscts` (hardware flow control). macOS USB CDC needs it.
 
 `$block` is the chunk index (`0, 1, 2, …`), not the byte address. A 2-byte big-endian `$address` at byte 256 would be `0x0100` (block 256) instead of `0x0001` (block 1).
 
+## Kenwood TM-D710A (clone mode)
+
+The TM-D710A stays at 9600 baud and addresses blocks by **byte address**, not block index:
+
+1. ASCII `ID\r`; radio replies `ID D710\r` (not `D710G`).
+2. ASCII `0M PROGRAM\r`; radio replies `0M\r`.
+3. Read: send `R` + `$address` + `$chunkSize`, expect `W` + `$address` + `$chunkSize` + data, then ACK `0x06`/`0x06`. `$chunkSize` as one byte is `0` for a 256-byte block.
+4. Write: send `W` + `$address` + `$chunkSize` + data, expect `0x06`.
+5. Do not clone radio block `0x7F` (`0x7F00–0x7FFF`). After the 256-byte image, read/write `0xFEF0` (16 bytes) and `0xFF00` (144 bytes).
+6. Send `E` to leave programming mode.
+
+Connect to the PC port on the TX/RX body, not the control-head Com port. Hardware flow control is off.
+
+This layout is not the TM-D710G clone image.
+
 ## Execution
 
 The driver walks `readMemory` or `writeMemory` in order:

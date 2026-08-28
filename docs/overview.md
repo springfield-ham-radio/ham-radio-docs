@@ -176,6 +176,9 @@ Advanced memory handling capabilities:
 Currently supported radio models include:
 
 - **Baofeng UV-5R** - Full support with memory management and configuration
+- **Kenwood TH-F6** - Live CAT programming
+- **Kenwood TH-D74** - Clone-mode programming
+- **Kenwood TM-D710A** - Clone-mode programming
 - **More coming soon** - The plugin architecture makes it easy to add new models
 
 ## Documentation Structure

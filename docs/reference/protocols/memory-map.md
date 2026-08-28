@@ -59,7 +59,7 @@ A sparse buffer whose length covers the highest segment end address (`8192` for 
 }
 ```
 
-Optional on a struct: `count` + `stride` for repeated records; `groupSize` + `groupPad` when records are packed into clone blocks with padding (Kenwood TH-D74: 6 × 40-byte memories + 16 pad = 256); `emptyWhen` / `clearEmpty` for channel occupancy.
+Optional on a struct: `count` + `stride` for repeated records; `groupSize` + `groupPad` when records are packed into clone blocks with padding (Kenwood TH-D74: 6 × 40-byte memories + 16 pad = 256); `emptyWhen` / `clearEmpty` for channel occupancy. Kenwood TM-D710A memories are a flat 16-byte stride at `0x1700` (no group padding).
 
 ## Fields
 
