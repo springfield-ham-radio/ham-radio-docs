@@ -1,12 +1,12 @@
-# Springfield Ham Radio Architecture Reference
+# HamBench Architecture Reference
 
 > **Looking for a high-level introduction?** See the [Architecture Overview](/architecture-overview) in the Getting Started section.
 
-This document provides a comprehensive technical reference for the Springfield Ham Radio software ecosystem architecture, including detailed analysis of module responsibilities, APIs, data flow, design patterns, security, performance, and extensibility.
+This document provides a comprehensive technical reference for the HamBench software ecosystem architecture, including detailed analysis of module responsibilities, APIs, data flow, design patterns, security, performance, and extensibility.
 
 ## System Overview
 
-The Springfield Ham Radio ecosystem is designed as a modular, extensible platform for amateur radio programming and management. It consists of five core modules that work together to provide a complete solution for radio configuration, communication, and data management.
+The HamBench ecosystem is designed as a modular, extensible platform for amateur radio programming and management. It consists of five core modules that work together to provide a complete solution for radio configuration, communication, and data management.
 
 ```mermaid
 graph TB
@@ -415,4 +415,4 @@ The architecture is designed for maximum extensibility:
 
 ## Conclusion
 
-The Springfield Ham Radio ecosystem provides a robust, extensible platform for amateur radio programming. The modular architecture allows for easy addition of new radio models while maintaining type safety and performance. The registry system enables a rich ecosystem of third-party modules, while the driver layer provides reliable communication with physical radio hardware. 
+The HamBench ecosystem provides a robust, extensible platform for amateur radio programming. The modular architecture allows for easy addition of new radio models while maintaining type safety and performance. The registry system enables a rich ecosystem of third-party modules, while the driver layer provides reliable communication with physical radio hardware. 

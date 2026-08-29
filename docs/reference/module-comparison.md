@@ -1,6 +1,6 @@
 # Module Comparison
 
-This document provides a quick reference comparison of all modules in the Springfield Ham Radio ecosystem.
+This document provides a quick reference comparison of all modules in the HamBench ecosystem.
 
 ## Quick Reference Table
 

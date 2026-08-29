@@ -1,6 +1,6 @@
 # Protocols & DSL Overview
 
-The Springfield Ham Radio ecosystem uses JSON languages to describe clone-style serial I/O and EEPROM layout. A generic driver and codec interpret the data, so new radios are added with configuration rather than new TypeScript classes.
+The HamBench ecosystem uses JSON languages to describe clone-style serial I/O and EEPROM layout. A generic driver and codec interpret the data, so new radios are added with configuration rather than new TypeScript classes.
 
 ## Two DSLs
 

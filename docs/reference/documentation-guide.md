@@ -1,6 +1,6 @@
 # Documentation Guide
 
-This guide helps you navigate the Springfield Ham Radio documentation and find the information you need quickly.
+This guide helps you navigate the HamBench documentation and find the information you need quickly.
 
 ## Documentation Structure
 
@@ -16,7 +16,7 @@ This guide helps you navigate the Springfield Ham Radio documentation and find t
 
 ## Finding What You Need
 
-### I'm new to Springfield Ham Radio
+### I'm new to HamBench
 **Start with**: [Overview](/overview)
 - Learn what the ecosystem does and its key benefits
 - Understand the high-level architecture

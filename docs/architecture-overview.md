@@ -1,6 +1,6 @@
 # Architecture Overview
 
-Welcome to the Springfield Ham Radio ecosystem! This overview introduces the major components, their relationships, and how they work together to provide a modular, extensible platform for amateur radio programming and management.
+Welcome to the HamBench ecosystem! This overview introduces the major components, their relationships, and how they work together to provide a modular, extensible platform for amateur radio programming and management.
 
 ## System Layers
 

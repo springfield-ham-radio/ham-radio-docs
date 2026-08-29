@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Springfield Ham Radio"
+  name: "HamBench"
   text: "Software ecosystem for amateur radio"
   tagline: Discover, configure, and manage radio modules with ease
   actions:

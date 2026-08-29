@@ -1,6 +1,6 @@
 # Radio Configuration Overview
 
-This document provides an overview of the complete radio configuration system in the Springfield Ham Radio ecosystem. Radio configurations are JSON files that define all aspects of a radio's communication protocol, memory layout, data structures, and metadata.
+This document provides an overview of the complete radio configuration system in the HamBench ecosystem. Radio configurations are JSON files that define all aspects of a radio's communication protocol, memory layout, data structures, and metadata.
 
 ## Configuration Components
 

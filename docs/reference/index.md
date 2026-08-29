@@ -1,6 +1,6 @@
 # Reference Documentation
 
-This section provides comprehensive reference documentation for the Springfield Ham Radio ecosystem. These documents contain detailed technical information, specifications, and complete API references.
+This section provides comprehensive reference documentation for the HamBench ecosystem. These documents contain detailed technical information, specifications, and complete API references.
 
 ## Quick Access
 

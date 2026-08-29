@@ -1,10 +1,10 @@
-# Springfield Ham Radio Overview
+# HamBench Overview
 
-Welcome to the Springfield Ham Radio software ecosystem - a comprehensive, modular platform designed for amateur radio programming and management. This project provides everything you need to discover, configure, and manage radio modules with ease.
+Welcome to the HamBench software ecosystem - a comprehensive, modular platform designed for amateur radio programming and management. This project provides everything you need to discover, configure, and manage radio modules with ease.
 
-## What is Springfield Ham Radio?
+## What is HamBench?
 
-Springfield Ham Radio is an open-source software ecosystem that simplifies the process of programming and managing amateur radio equipment. It provides a standardized way to communicate with different radio models, manage configurations, and extend support for new radio types through a plugin architecture.
+HamBench is an open-source software ecosystem that simplifies the process of programming and managing amateur radio equipment. It provides a standardized way to communicate with different radio models, manage configurations, and extend support for new radio types through a plugin architecture.
 
 ### Key Benefits
 

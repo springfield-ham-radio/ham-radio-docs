@@ -5,8 +5,8 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 export default withMermaid(defineConfig({
   srcDir: "docs",
 
-  title: "Springfield Ham Radio",
-  description: "Documentation for Springfield Ham Radio software ecosystem",
+  title: "HamBench",
+  description: "Documentation for HamBench",
 
   // Appearance configuration for VitePress 2
   appearance: true,

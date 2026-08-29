@@ -1,6 +1,6 @@
 # Development Guide
 
-This guide provides practical information for developers working with the Springfield Ham Radio ecosystem.
+This guide provides practical information for developers working with the HamBench ecosystem.
 
 ## Getting Started
 

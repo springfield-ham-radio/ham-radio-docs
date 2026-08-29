@@ -1,11 +1,11 @@
 # Developer Documentation
 
-This section provides comprehensive documentation for developers working with the Springfield Ham Radio ecosystem.
+This section provides comprehensive documentation for developers working with the HamBench ecosystem.
 
 ## Core Architecture
 
 ### System Overview
-The Springfield Ham Radio ecosystem is built on a modular architecture with clear separation of concerns:
+The HamBench ecosystem is built on a modular architecture with clear separation of concerns:
 
 - **API Layer**: Core interfaces and types
 - **Driver Layer**: Generic radio driver implementation

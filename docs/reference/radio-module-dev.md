@@ -1,6 +1,6 @@
 # Radio Module Development
 
-This section provides everything you need to create radio modules for the Springfield Ham Radio ecosystem.
+This section provides everything you need to create radio modules for the HamBench ecosystem.
 
 ## Quick Start
 

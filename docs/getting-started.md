@@ -1,10 +1,10 @@
 # Getting Started
 
-Welcome to the Springfield Ham Radio software ecosystem! This guide will help you get up and running quickly.
+Welcome to the HamBench software ecosystem! This guide will help you get up and running quickly.
 
 ## Quick Overview
 
-Springfield Ham Radio is a modular software ecosystem for amateur radio that provides:
+HamBench is a modular software ecosystem for amateur radio that provides:
 
 - **Generic Radio Driver**: Single driver implementation that supports multiple radio types through configuration
 - **Protocol DSL**: Domain-specific language for defining radio communication protocols
@@ -13,7 +13,7 @@ Springfield Ham Radio is a modular software ecosystem for amateur radio that pro
 
 ## Choose Your Path
 
-### 🚀 New to Springfield Ham Radio?
+### 🚀 New to HamBench?
 Start with the [Overview](/overview) to understand the system architecture and key concepts.
 
 ### 🏗️ Understanding the Architecture
