@@ -249,7 +249,7 @@ Enable `serialConfig.rtscts` (hardware flow control). macOS USB CDC needs it.
 
 The TM-D710A stays at 9600 baud and addresses blocks by **byte address**, not block index:
 
-1. ASCII `ID\r`; radio replies `ID D710\r` (not `D710G`).
+1. ASCII `ID\r`; radio replies `ID TM-D710\r` (not `TM-D710G`).
 2. ASCII `0M PROGRAM\r`; radio replies `0M\r`.
 3. Read: send `R` + `$address` + `$chunkSize`, expect `W` + `$address` + `$chunkSize` + data, then ACK `0x06`/`0x06`. `$chunkSize` as one byte is `0` for a 256-byte block.
 4. Write: send `W` + `$address` + `$chunkSize` + data, expect `0x06`.
