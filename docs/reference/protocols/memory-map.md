@@ -38,7 +38,7 @@ The driver **packs** segments (channels then settings) into a contiguous buffer.
 - Main-block addresses (`0x0E20`) stay at the same offset in a packed buffer.
 - Aux addresses (`0x1EC0+`) land in the packed tail: `6144 + (addr - 7872)` for UV-5R.
 
-A sparse buffer whose length covers the highest segment end address (`8192` for UV-5R) uses absolute radio addresses as offsets. Encode **patches in place**; it must not wipe unread bytes with `0xFF`.
+A sparse buffer whose length covers the highest segment end address (`8192` for UV-5R) uses absolute radio addresses as offsets. Encode **patches in place**; it must not wipe unread bytes with `0xFF`, and it must not grow or shrink the image. A packed driver read stays packed; a sparse image stays sparse. Padding a packed clone out to the sparse size misaligns segments that skip a hole (Kenwood TM-D710A block `0x7F`).
 
 ## Root shape
 

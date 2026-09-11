@@ -20,7 +20,8 @@ The core communication protocol that defines how to read from and write to the r
 Communication settings for the serial connection to the radio.
 
 **Key Elements**:
-- `baudRate`: Communication speed (e.g., 9600)
+- `baudRate`: Default communication speed used to open the programming port (e.g., 9600)
+- `baudRates`: Optional list of baud rates the radio accepts. When more than one value is listed, HamBench lets the user choose on import and write. `baudRate` is the default selection.
 - `dataBits`: Number of data bits (typically 8)
 - `stopBits`: Number of stop bits (typically 1)
 - `parity`: Parity setting (typically "none")

@@ -46,6 +46,8 @@ Protocol steps live on the radio config next to serial and memory settings:
 
 `addressSize` and `addressEndianness` control how `$address` is encoded on the wire.
 
+`serialConfig.baudRate` is the default speed used to **open** the programming port. Radios that accept more than one PC/COM baud list them as `serialConfig.baudRates` (the default must be one of those values). HamBench shows a baud selector on import and write in that case. Mid-session changes still use a protocol step with `setBaudRate` (for example TH-D74 clone transfers at 57600 after `0M PROGRAM`).
+
 ## Exchange
 
 An exchange has optional `send`, optional `expect`, optional `setBaudRate`, and optional `description` / `timeout` (milliseconds, default 5000). At least one of `send`, `expect`, or `setBaudRate` is required.

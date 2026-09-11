@@ -77,13 +77,15 @@ Create `configs/example-radio.json`:
 }
 ```
 
+If the radio's programming port accepts more than one baud rate, list them as `serialConfig.baudRates` and set `baudRate` to the default. HamBench shows a selector on import and write when more than one value is listed.
+
 ## Core Concepts
 
 ### Radio Configuration
 A complete radio configuration includes:
 
 - **Protocol Definition**: Communication protocol using the DSL
-- **Serial Configuration**: Communication settings
+- **Serial Configuration**: Communication settings (`baudRate` default, optional `baudRates` list for radios that accept more than one programming speed)
 - **Memory Configuration**: Memory layout and segments
 - **Schema Definitions**: Data structure validation
 - **Codec Configuration**: Data encoding/decoding
