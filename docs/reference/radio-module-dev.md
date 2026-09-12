@@ -308,7 +308,7 @@ export default BaofengCodecFactory;
 
 ### Best Practices
 - **Naming**: Use `radio-module-{manufacturer}` naming convention
-- **Versioning**: Follow semantic versioning for releases
+- **Versioning**: Follow semantic versioning for module releases. Radio JSON `version` is stamped from the package version on release; do not bump it by hand.
 - **Testing**: Include both unit and integration tests
 - **Documentation**: Provide clear examples and documentation
 - **Validation**: Use JSON schemas for data validation
@@ -355,6 +355,8 @@ describe('BaofengCodecFactory', () => {
 ### GitHub Release zip
 
 Official modules ship a JSON-only zip (`configs/`, `src/shared/schemas/`, `src/shared/memory-maps/`) on GitHub Releases (`yarn pack:release`). They are not published to npm.
+
+Each radio JSON has a top-level `version` field. That is the **module** version HamBench shows when you install a config from a file. Do not edit it by hand. `yarn pack:release` and semantic-release stamp `package.json`'s version into every `configs/*.json` before the zip is built, and the release commit includes those files.
 
 Update the official catalog after each release. Desktop users install from the app (**Preferences → Radios**). See [Installing Radio Modules](/reference/installing-radio-modules).
 

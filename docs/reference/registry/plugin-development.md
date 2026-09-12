@@ -42,6 +42,8 @@ radio-module-manufacturer/
 
 Each radio model should have a configuration file in `configs/` that describes its capabilities, memory layout, protocols, and references to shared components.
 
+The top-level `version` field is the module package version, not a separate per-radio schema version. Release tooling stamps it from `package.json`; do not bump it in the JSON by hand.
+
 Example:
 ```json
 {
