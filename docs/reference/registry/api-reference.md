@@ -60,6 +60,7 @@ interface RegistryRadio {
   version: string;
   description: string;
   capabilities: RadioCapabilities;
+  cat?: RadioCatConfig;
   serialConfig: SerialConfig;
   memoryConfig: MemoryConfig;
   readMemory: ProtocolStep[];
@@ -117,6 +118,18 @@ interface RadioCapabilities {
   memoryWrite: boolean;
   channelProgramming: boolean;
   settingsProgramming: boolean;
+  liveControl: boolean;
+}
+```
+
+`liveControl` is live VFO / mode / PTT on the programming PC port. It is independent of memory protocol: a radio may clone EEPROM and still set `liveControl`. Omit it or set `false` when the port has no computer control. When it is `true`, add a `cat` block (`protocol`, optional `dialect`) so HamBench knows which command family to speak.
+
+### RadioCatConfig
+
+```typescript
+interface RadioCatConfig {
+  protocol: string;
+  dialect?: string;
 }
 ```
 

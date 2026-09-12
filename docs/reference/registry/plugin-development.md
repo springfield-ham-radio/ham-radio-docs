@@ -57,7 +57,8 @@ Example:
     "memoryRead": true,
     "memoryWrite": true,
     "channelProgramming": true,
-    "settingsProgramming": true
+    "settingsProgramming": true,
+    "liveControl": false
   },
   "serialConfig": { ... },
   "memoryConfig": { ... },
