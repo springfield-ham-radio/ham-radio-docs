@@ -122,16 +122,27 @@ interface RadioCapabilities {
 }
 ```
 
-`liveControl` is live VFO / mode / PTT on the programming PC port. It is independent of memory protocol: a radio may clone EEPROM and still set `liveControl`. Omit it or set `false` when the port has no computer control. When it is `true`, add a `cat` block (`protocol`, optional `dialect`) so HamBench knows which command family to speak.
+`liveControl` is live VFO / mode / PTT on the programming PC port. It is independent of memory protocol: a radio may clone EEPROM and still set `liveControl`. Omit it or set `false` when the port has no computer control. When it is `true`, add a `cat` block so HamBench knows the command family and the per-radio layout (VFO count, frequency command, mode and power names).
 
 ### RadioCatConfig
 
 ```typescript
 interface RadioCatConfig {
   protocol: string;
-  dialect?: string;
+  wakeCr?: boolean;
+  vfoCount?: number;
+  frequencyCommands?: string[];
+  frequencyWidth?: number;
+  vfoChannel?: boolean;
+  modes?: string[];
+  powers?: string[];
+  modeCommand?: string;
+  powerBandIndex?: boolean;
+  bandControl?: boolean;
 }
 ```
+
+Kenwood modules set `protocol` to `kenwood` and fill in the rest. Power labels must match the radio faceplate (`High` / `Medium` / `Low` on a TM-D710A). HamBench does not infer that from the model name.
 
 ## Example Usage
 
