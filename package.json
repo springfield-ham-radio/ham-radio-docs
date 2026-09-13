@@ -8,7 +8,7 @@
   },
   "homepage": "https://springfield-ham-radio.github.io/ham-radio-docs/",
   "devDependencies": {
-    "mermaid": "^11.7.0",
+    "mermaid": "^12.0.0",
     "vitepress": "^2.0.0-alpha.6",
     "vitepress-plugin-mermaid": "^2.0.17"
   },
