@@ -28,6 +28,10 @@ Every import and write captures serial bytes. Inspect traffic on the **Debug** t
 
 **Radio → Hex Dump** shows the loaded image next to the memory map. Click a mapped byte to select that field.
 
+## Settings
+
+The **Settings** tab shows radio-wide options grouped by the driver. Pick a main group in the list (or the menu on a narrow window). Related fields in that group appear as headed sections in the panel. Groups, sub-groups, labels, and any warnings come from the radio’s memory map.
+
 ## Channels on the radio
 
 Click a channel in the Radio channels table to edit name, frequencies, tones, and radio-specific settings. Drag the grip to move a channel into another occupied slot. **Add channel** programs an unused slot; **Remove** clears slots. **Save to library** copies selected memories into the [channel library](/guide/channels).

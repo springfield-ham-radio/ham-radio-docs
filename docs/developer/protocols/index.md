@@ -26,7 +26,7 @@ The HamBench ecosystem uses JSON languages to describe clone-style serial I/O an
 
 - **Structs** at radio EEPROM `seek` addresses with sequential fields.
 - **Encodings**: integers, enums, booleans, ASCII, digit arrays, DTMF, BCD, bitfields.
-- **UI metadata**: group, label, widget — enough for a schema-driven Settings tab.
+- **UI metadata**: `groups` (left nav), nested sub-groups (panel sections), plus per-field group, label, widget.
 
 See the [Memory-Map DSL](./memory-map) for UV-5R address conversion (Chirp image − 8) and the “no code” path for a new radio.
 

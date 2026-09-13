@@ -46,6 +46,17 @@ A sparse buffer whose length covers the highest segment end address (`8192` for 
 {
   "version": "1.0.0",
   "description": "Baofeng UV-5R channels + settings",
+  "groups": [
+    {
+      "id": "basic",
+      "label": "Basic Settings",
+      "icon": "i-lucide-sliders-horizontal",
+      "groups": [
+        { "id": "receive", "label": "Receive" },
+        { "id": "display", "label": "Display" }
+      ]
+    }
+  ],
   "channelBindings": {
     "records": "channels",
     "names": "names",
@@ -109,9 +120,26 @@ For repeated structs (channels):
 Non-reserved fields should include `ui` for schema-driven forms and tables.
 
 - **Radio-wide settings:** `collectMemoryMapUiFields` (skips channel-bound structs).
+- **Settings groups:** declare a top-level `groups` array. Each group has `id` and `label`, and may include `description`, `icon` (Iconify name), and `warning` (`title` + `description`). Field `ui.group` must match a group `id`. Declaration order is the left-nav order on the Settings tab.
+- **Settings sub-groups:** a group may include nested `groups`. Those become headed sections in the settings panel. Set field `ui.subgroup` to the nested group `id`. Fields without `subgroup` stay at the top of the panel. `collectMemoryMapUiGroups` applies this metadata and omits empty groups and empty sub-groups. Fields whose `ui.group` is not declared still appear after the declared groups.
 - **Per-channel extras:** put `ui` on fields of the `channelBindings.records` struct; `collectChannelMemoryMapUiFields` returns them for Channels-table columns. Bound RadioChannel fields (`rxfreq`, tones, …) are omitted. Use `formatMemoryMapFieldValue` for read-only cell text.
 
 Widgets: `integer`, `select`, `switch`, `text`, `number`. Set `writable: false` for firmware / read-only messages.
+
+```json
+{
+  "id": "squelch",
+  "type": "u8",
+  "value": { "kind": "integer", "min": 0, "max": 9 },
+  "ui": {
+    "group": "basic",
+    "subgroup": "receive",
+    "label": "Carrier Squelch Level",
+    "widget": "integer",
+    "description": "How strong a received signal must be before the speaker unmutes."
+  }
+}
+```
 
 ## Channel bindings and reusable RadioChannel
 
@@ -146,10 +174,10 @@ Shipped as [`uv5r-settings.json`](https://github.com/springfield-ham-radio/radio
 Includes:
 
 - `channels` / `names` (128 × 16) with full Chirp channel bitfields
-- Radio-wide groups: basic, advanced, workmode, dtmf, other, service
+- Radio-wide groups: basic, dtmf, advanced, workmode, other, service (declared in `groups`, with panel sub-groups and a calibration warning on service)
 
 ## API
 
-- Types: `@springfield/ham-radio-api` — `RadioMemoryMap`, `channelBindings`, nested `RadioSettings`
+- Types: `@springfield/ham-radio-api` — `RadioMemoryMap`, `RadioMemoryMapGroup`, `RadioMemoryMapSubgroup`, `channelBindings`, nested `RadioSettings`
 - Engine: `decodeMemoryMap`, `encodeMemoryMap`, `decodeRadioProgram`, `encodeRadioProgram`, `radioAddressToBufferOffset`
-- UI helpers: `collectMemoryMapUiFields`, `groupMemoryMapUiFields` (skips channel-bound structs)
+- UI helpers: `collectMemoryMapUiFields`, `collectMemoryMapUiGroups`, `groupMemoryMapUiFields` (skips channel-bound structs)
