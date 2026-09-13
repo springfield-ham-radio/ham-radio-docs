@@ -1,6 +1,12 @@
 {
   "name": "ham-radio-docs",
+  "private": true,
   "packageManager": "yarn@4.6.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/springfield-ham-radio/ham-radio-docs.git"
+  },
+  "homepage": "https://springfield-ham-radio.github.io/ham-radio-docs/",
   "devDependencies": {
     "mermaid": "^11.7.0",
     "vitepress": "^2.0.0-alpha.6",

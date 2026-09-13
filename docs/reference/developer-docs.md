@@ -15,7 +15,7 @@ The HamBench ecosystem is built on a modular architecture with clear separation 
 
 ### Architecture Documentation
 - **[Architecture Overview](/reference/architecture)**: Complete system architecture and design patterns
-- **[Module Comparison](/module-comparison)**: Comparison of different module types and their purposes
+- **[Module Comparison](/reference/module-comparison)**: Comparison of different module types and their purposes
 - **[Development Guide](/development-guide)**: Detailed development practices and patterns
 
 ## Core Components
@@ -32,18 +32,18 @@ The registry provides automatic discovery and management of radio modules:
 The Domain-Specific Language for defining radio communication protocols:
 
 - **[Protocol DSL](/reference/protocols/dsl)**: Complete language reference and examples
-- **[Configuration Overview](/configuration/overview)**: How protocols fit into the overall configuration
+- **[Configuration Overview](/reference/configuration/overview)**: How protocols fit into the overall configuration
 
 ### Configuration System
 Understanding how radio configurations are structured and managed:
 
-- **[Configuration Overview](/configuration/overview)**: Complete configuration structure and components
-- **[For Radio Module Developers](/configuration/overview#for-radio-module-developers)**: Quick start guide for module development
+- **[Configuration Overview](/reference/configuration/overview)**: Complete configuration structure and components
+- **[For Radio Module Developers](/reference/configuration/overview#for-radio-module-developers)**: Quick start guide for module development
 
 ## Development Resources
 
 ### Documentation Standards
-- **[Documentation Guide](/documentation-guide)**: Standards and practices for writing documentation
+- **[Documentation Guide](/reference/documentation-guide)**: Standards and practices for writing documentation
 - **API Documentation**: Comprehensive API references for all components
 - **Code Examples**: Working examples for common use cases
 
@@ -135,4 +135,4 @@ Creating third-party radio modules:
 
 ---
 
-Ready to create radio modules? Check out the [Radio Module Development](/radio-module-dev) section for step-by-step guides and examples. 
+Ready to create radio modules? Check out the [Radio Module Development](/reference/radio-module-dev) section for step-by-step guides and examples. 

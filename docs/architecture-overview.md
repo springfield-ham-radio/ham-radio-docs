@@ -75,5 +75,5 @@ graph TB
 ## Next Steps
 
 - Explore the [Getting Started Guide](/getting-started) for hands-on setup.
-- Dive into the [Developer Documentation](/developer-docs) for deeper technical details.
+- Dive into the [Developer Documentation](/reference/developer-docs) for deeper technical details.
 - See the [Reference Documentation](/reference/) for in-depth API and module information. 

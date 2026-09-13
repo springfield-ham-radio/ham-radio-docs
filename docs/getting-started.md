@@ -59,4 +59,4 @@ A JSON language for clone-style serial I/O:
 
 ---
 
-Ready to start building? Check out the [Radio Module Development](/radio-module-dev) section to create your first radio module! 
+Ready to start building? Check out the [Radio Module Development](/reference/radio-module-dev) section to create your first radio module! 

@@ -325,7 +325,7 @@ export { BaofengCodecFactory as CodecFactory };
 ### Key Development Resources
 
 - **[Protocol DSL Documentation](../protocols/dsl.md)**: Complete guide to writing protocol definitions
-- **[Registry Configuration Guide](../registry/configuration.md)**: Detailed registry format specification
+- **[Registry Configuration Guide](/reference/configuration/overview)**: Detailed registry format specification
 - **[Plugin Development Guide](../registry/plugin-development.md)**: Step-by-step plugin development tutorial
 - **[Registry Architecture](../registry/architecture.md)**: Understanding how the registry system works
 
@@ -385,7 +385,7 @@ Used by the radio driver for direct protocol execution.
 ### Registry Format
 Enhanced format used by the ham-radio-registry module for npm module distribution.
 
-**Documentation**: [Registry Configuration](../registry/configuration.md)
+**Documentation**: [Registry Configuration](/reference/configuration/overview)
 
 ```json
 {
@@ -565,7 +565,7 @@ Radio configurations are distributed as npm modules with a standardized structur
 ## Related Documentation
 
 - **[Protocol DSL](../protocols/dsl.md)**: Detailed documentation of the protocol definition language
-- **[Registry Configuration](../registry/configuration.md)**: Documentation of the registry-specific configuration format
+- **[Registry Configuration](/reference/configuration/overview)**: Documentation of the registry-specific configuration format
 - **[Registry Architecture](../registry/architecture.md)**: Overview of the registry system architecture
 - **[Plugin Development](../registry/plugin-development.md)**: Guide for developing radio module plugins
 

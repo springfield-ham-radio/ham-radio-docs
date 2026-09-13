@@ -12,16 +12,16 @@ hero:
       link: /getting-started
     - theme: alt
       text: Developer Documentation
-      link: /developer-docs
+      link: /reference/developer-docs
     - theme: alt
       text: Radio Module Development
-      link: /radio-module-dev
+      link: /reference/radio-module-dev
     - theme: alt
       text: Registry System
-      link: /registry/
+      link: /reference/registry/
     - theme: alt
       text: Protocol DSL
-      link: /protocols/dsl
+      link: /reference/protocols/dsl
     - theme: alt
       text: View on GitHub
       link: https://github.com/springfield-ham-radio

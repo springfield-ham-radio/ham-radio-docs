@@ -4,7 +4,7 @@ This guide provides practical information for developers working with the HamBen
 
 ## Getting Started
 
-Before diving into development, we recommend reading the [Architecture Overview](/reference/architecture) to understand the overall system design and the [Module Comparison](/module-comparison) to understand the purpose of each module.
+Before diving into development, we recommend reading the [Architecture Overview](/reference/architecture) to understand the overall system design and the [Module Comparison](/reference/module-comparison) to understand the purpose of each module.
 
 ## Development Environment Setup
 
@@ -410,6 +410,6 @@ Ensure proper build configuration:
 ## Resources
 
 - [Architecture Overview](/reference/architecture) - Complete system architecture
-- [Module Comparison](/module-comparison) - Quick reference for all modules
+- [Module Comparison](/reference/module-comparison) - Quick reference for all modules
 - [Registry Documentation](/reference/registry/) - Plugin system details
-- [API Examples](/api-examples) - Code examples and patterns 
+- [Registry Examples](/reference/registry/examples) - Code examples and patterns 

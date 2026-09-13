@@ -7,7 +7,7 @@ This guide helps you navigate the HamBench documentation and find the informatio
 ### Getting Started
 - **[Overview](/overview)** - High-level introduction to the ecosystem and its key features
 - **[Architecture](/reference/architecture)** - Comprehensive system architecture and module relationships
-- **[Module Comparison](/module-comparison)** - Detailed reference for all modules and their purposes
+- **[Module Comparison](/reference/module-comparison)** - Detailed reference for all modules and their purposes
 - **[Development Guide](/development-guide)** - Practical development information and patterns
 
 ### Specialized Documentation
@@ -29,7 +29,7 @@ This guide helps you navigate the HamBench documentation and find the informatio
 - Design patterns and security considerations
 
 ### I need to choose which modules to use
-**Reference**: [Module Comparison](/module-comparison)
+**Reference**: [Module Comparison](/reference/module-comparison)
 - Quick reference table of all modules
 - Detailed module descriptions and use cases
 - Dependency relationships and performance characteristics
@@ -84,7 +84,7 @@ When contributing to documentation:
 |---------------|---------------|
 | High-level overview | [Overview](/overview) |
 | System architecture | [Architecture](/reference/architecture) |
-| Module details | [Module Comparison](/module-comparison) |
+| Module details | [Module Comparison](/reference/module-comparison) |
 | Development patterns | [Development Guide](/development-guide) |
 | Plugin system | [Registry Documentation](/reference/registry/) |
 | Communication protocols | [Protocol DSL](/reference/protocols/) |

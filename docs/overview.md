@@ -68,7 +68,7 @@ graph TB
 | **ham-radio-registry** | Plugin discovery and management | NPM-based discovery, configuration validation, shared components |
 | **radio-module-* ** | Radio-specific implementations | Model-specific codecs, protocols, and configurations |
 
-For detailed module information, see the [Module Comparison](/module-comparison) guide.
+For detailed module information, see the [Module Comparison](/reference/module-comparison) guide.
 
 ## Key Features
 
@@ -183,11 +183,11 @@ Currently supported radio models include:
 
 ## Documentation Structure
 
-- **[Architecture](./architecture.md)** - Detailed system architecture and module relationships
-- **[Module Comparison](./module-comparison.md)** - Quick reference for all modules
+- **[Architecture](/architecture-overview)** - Detailed system architecture and module relationships
+- **[Module Comparison](/reference/module-comparison)** - Quick reference for all modules
 - **[Development Guide](./development-guide.md)** - Comprehensive development documentation
-- **[Registry Documentation](./registry/)** - Plugin system and registry management
-- **[Protocol DSL](./protocols/)** - Protocol definition language documentation
+- **[Registry Documentation](/reference/registry/)** - Plugin system and registry management
+- **[Protocol DSL](/reference/protocols/)** - Protocol definition language documentation
 
 ## Contributing
 
@@ -212,4 +212,4 @@ This project is open source and available under the MIT License. See the LICENSE
 
 ---
 
-Ready to get started? Check out the [Architecture Overview](./architecture.md) for a detailed look at how everything works together, or jump into the [Development Guide](./development-guide.md) to start building with the ecosystem. 
+Ready to get started? Check out the [Architecture Overview](/architecture-overview) for a detailed look at how everything works together, or jump into the [Development Guide](/development-guide) to start building with the ecosystem. 

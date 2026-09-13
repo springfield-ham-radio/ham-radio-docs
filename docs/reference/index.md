@@ -5,17 +5,17 @@ This section provides comprehensive reference documentation for the HamBench eco
 ## Quick Access
 
 ### Core System Documentation
-- **[Registry System](/registry/)** - Module discovery, management, and plugin architecture
-- **[Protocol DSL](/protocols/dsl)** - Domain-specific language for radio communication protocols
-- **[Configuration Format](/configuration/overview)** - Radio configuration structure and components
+- **[Registry System](/reference/registry/)** - Module discovery, management, and plugin architecture
+- **[Protocol DSL](/reference/protocols/dsl)** - Domain-specific language for radio communication protocols
+- **[Configuration Format](/reference/configuration/overview)** - Radio configuration structure and components
 
 ## Reference Documentation
 
 ### Architecture Reference
 - **[Architecture Reference](/reference/architecture)**: Complete system architecture, design patterns, and implementation details
 - **[Installing Radio Modules](/reference/installing-radio-modules)**: Official catalog install, local file install, and developer npm install
-- **[Module Comparison](/module-comparison)**: Detailed comparison of different module types and their purposes
-- **[Documentation Standards](/documentation-guide)**: Standards and practices for writing documentation
+- **[Module Comparison](/reference/module-comparison)**: Detailed comparison of different module types and their purposes
+- **[Documentation Standards](/reference/documentation-guide)**: Standards and practices for writing documentation
 - **[License Lookup](/reference/license-lookup)**: Callook call-sign mapping and band privilege checks
 
 ## System Components
@@ -23,25 +23,25 @@ This section provides comprehensive reference documentation for the HamBench eco
 ### Registry System
 The registry provides automatic discovery and management of radio modules:
 
-- **[Registry Overview](/registry/)**: System overview and key concepts
-- **[Registry Architecture](/registry/architecture)**: Detailed architecture and implementation
-- **[Why Registry?](/registry/why-registry)**: Design rationale and benefits
-- **[Getting Started](/registry/getting-started)**: Quick start guide for registry usage
-- **[Plugin Development](/registry/plugin-development)**: Guide for creating plugins
-- **[API Reference](/registry/api-reference)**: Complete API documentation
-- **[Examples](/registry/examples)**: Working examples and use cases
+- **[Registry Overview](/reference/registry/)**: System overview and key concepts
+- **[Registry Architecture](/reference/registry/architecture)**: Detailed architecture and implementation
+- **[Why Registry?](/reference/registry/why-registry)**: Design rationale and benefits
+- **[Getting Started](/reference/registry/getting-started)**: Quick start guide for registry usage
+- **[Plugin Development](/reference/registry/plugin-development)**: Guide for creating plugins
+- **[API Reference](/reference/registry/api-reference)**: Complete API documentation
+- **[Examples](/reference/registry/examples)**: Working examples and use cases
 
 ### Protocol DSL
 The Domain-Specific Language for defining radio communication protocols:
 
-- **[Protocol DSL](/protocols/dsl)**: Complete language reference with examples
-- **[Protocol Overview](/protocols/)**: High-level overview and concepts
+- **[Protocol DSL](/reference/protocols/dsl)**: Complete language reference with examples
+- **[Protocol Overview](/reference/protocols/)**: High-level overview and concepts
 
 ### Configuration Format
 Understanding how radio configurations are structured and managed:
 
-- **[Configuration Overview](/configuration/overview)**: Complete configuration structure and components
-- **[For Radio Module Developers](/configuration/overview#for-radio-module-developers)**: Quick start guide for module development
+- **[Configuration Overview](/reference/configuration/overview)**: Complete configuration structure and components
+- **[For Radio Module Developers](/reference/configuration/overview#for-radio-module-developers)**: Quick start guide for module development
 
 ## Quick Reference
 

@@ -109,7 +109,7 @@ The registry automatically discovers and manages your module:
 ## Development Guide
 
 ### 1. Configuration Overview
-Start with the [Configuration Overview](/configuration/overview) to understand the complete configuration structure and how all components work together.
+Start with the [Configuration Overview](/reference/configuration/overview) to understand the complete configuration structure and how all components work together.
 
 ### 2. Protocol DSL
 Learn the [Protocol DSL](/reference/protocols/dsl) for defining radio communication protocols:
@@ -118,7 +118,7 @@ Learn the [Protocol DSL](/reference/protocols/dsl) for defining radio communicat
 - Complete examples and best practices
 
 ### 3. Registry Configuration
-Understand [Registry Configuration](/reference/registry/configuration) for module discovery and management:
+Understand [Registry Configuration](/reference/configuration/overview) for module discovery and management:
 - Package.json plugin configuration
 - Capabilities and metadata
 - Module directory structure
@@ -296,9 +296,9 @@ export default BaofengCodecFactory;
 ## Development Resources
 
 ### Documentation
-- **[Configuration Overview](/configuration/overview)**: Complete configuration structure
+- **[Configuration Overview](/reference/configuration/overview)**: Complete configuration structure
 - **[Protocol DSL](/reference/protocols/dsl)**: Protocol definition language
-- **[Registry Configuration](/reference/registry/configuration)**: Module discovery and management
+- **[Registry Configuration](/reference/configuration/overview)**: Module discovery and management
 - **[Plugin Development](/reference/registry/plugin-development)**: Advanced development guide
 
 ### Examples
@@ -379,4 +379,4 @@ Update the official catalog after each release. Desktop users install from the a
 
 ---
 
-Ready to start? Check out the [Configuration Overview](/configuration/overview#for-radio-module-developers) for a detailed quick start guide! 
+Ready to start? Check out the [Configuration Overview](/reference/configuration/overview#for-radio-module-developers) for a detailed quick start guide! 

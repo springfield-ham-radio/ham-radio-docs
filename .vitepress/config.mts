@@ -4,6 +4,7 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 // https://vitepress.dev/reference/site-config
 export default withMermaid(defineConfig({
   srcDir: "docs",
+  base: "/ham-radio-docs/",
 
   title: "HamBench",
   description: "Documentation for HamBench",
@@ -86,7 +87,7 @@ export default withMermaid(defineConfig({
             { text: 'Plugin Development', link: '/reference/registry/plugin-development' },
             { text: 'API Reference', link: '/reference/registry/api-reference' },
             { text: 'Examples', link: '/reference/registry/examples' },
-            { text: 'Configuration', link: '/reference/registry/configuration' }
+            { text: 'Configuration', link: '/reference/configuration/overview' }
           ]
         },
         {
@@ -107,7 +108,7 @@ export default withMermaid(defineConfig({
         {
           text: 'Configuration',
           items: [
-            { text: 'Overview', link: '/configuration/overview' }
+            { text: 'Overview', link: '/reference/configuration/overview' }
           ]
         }
       ]
