@@ -9,9 +9,9 @@ HamBench does not bundle every radio. You install **JSON radio modules** for the
 3. Select modules and click **Install**.
 4. The app downloads each module zip from GitHub Releases, checks `sha256:…` integrity, extracts JSON under the app data directory, and adds radios to the local catalog as source `installed`.
 
-Later, open **Preferences → Radios → Install radios…** to add more.
+Later, open **Preferences → Radios**. Installed and available radios are grouped by manufacturer, with each model listed underneath. **Install** on a model adds only that radio from the manufacturer zip. Official modules show a marker when a newer version is available; **Update** downloads that module.
 
-After a driver update that adds CAT fields, **reinstall** the module so the catalog picks up the new `cat` profile.
+After a driver update that adds CAT fields, **Update** (or reinstall) the module so the catalog picks up the new `cat` profile.
 
 ## Local file (unsupported)
 
@@ -23,7 +23,7 @@ The app shows an **at your own risk** warning. Local installs are source `user`,
 
 | Module | Radios | Memory | Live CAT |
 | --- | --- | --- | --- |
-| Baofeng | UV-5R, UV-5RE Plus | Clone (`S` / `X` blocks) | No |
+| Baofeng | UV-5R (same config covers UV-5RE Plus) | Clone (`S` / `X` blocks) | No |
 | Kenwood | TH-F6 | Live CAT memories (`MR` / `MW` / `MNA`) | Yes |
 | Kenwood | TH-D74 | Clone (256-byte blocks at 57600) | Yes (same PC port) |
 | Kenwood | TM-D710A | Clone (256-byte blocks at 9600, body PC port) | Yes (same PC port) |

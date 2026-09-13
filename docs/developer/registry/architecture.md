@@ -189,7 +189,7 @@ radio-module-manufacturer/
     "pluginType": "radio-module",
     "version": "1.0.0",
     "manufacturer": "Baofeng",
-    "supportedRadios": ["uv5r", "uv5r-plus", "uv82"],
+    "supportedRadios": ["baofeng-uv5r"],
     "capabilities": {
       "dslProtocols": true,
       "memoryRead": true,
