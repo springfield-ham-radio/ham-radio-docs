@@ -49,7 +49,7 @@ A sparse buffer whose length covers the highest segment end address (`8192` for 
   "groups": [
     {
       "id": "basic",
-      "label": "Basic Settings",
+      "label": "Basic",
       "icon": "i-lucide-sliders-horizontal",
       "groups": [
         { "id": "receive", "label": "Receive" },
