@@ -129,28 +129,19 @@ const codec = await registry.getCodec('baofeng:uv5r');
 **Purpose**: Provide radio-specific implementations.
 
 **Key Principles**:
-- Follow established naming convention (`radio-module-{manufacturer}`)
-- Implement required interfaces from core API
-- Use utilities for common operations
-- Provide comprehensive configuration
+- Follow `radio-module-{manufacturer}` naming
+- Ship JSON only: configs, schemas, memory maps
+- Use `codec.type: "memoryMap"`; do not add TypeScript codecs
 
 **Example Structure**:
 ```
 radio-module-manufacturer/
-├── package.json                    # Module metadata
-├── configs/                        # Radio configurations
+├── package.json
+├── configs/
 │   └── model.json
-├── src/
-│   ├── shared/
-│   │   ├── codecs/
-│   │   │   ├── manufacturer-codec.ts
-│   │   │   ├── manufacturer-decoder.ts
-│   │   │   └── manufacturer-encoder.ts
-│   │   └── schemas/
-│   │       ├── channel-schema.json
-│   │       └── settings-schema.json
-│   ├── codec-factory.ts
-│   └── index.ts
+├── src/shared/
+│   ├── schemas/
+│   └── memory-maps/
 └── README.md
 ```
 

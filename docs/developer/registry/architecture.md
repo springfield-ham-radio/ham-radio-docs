@@ -164,25 +164,17 @@ sequenceDiagram
 
 ```
 radio-module-manufacturer/
-├── package.json                    # Module metadata and configuration
-├── configs/                        # Radio configuration files
-│   ├── model1.json                # Complete configuration for model 1
-│   └── model2.json                # Complete configuration for model 2
-├── src/                            # Module source code
-│   ├── shared/                     # Shared components
-│   │   ├── schemas/                # Shared JSON schemas
-│   │   │   ├── channel-schema.json
-│   │   │   └── settings-schema.json
-│   │   ├── protocols/              # Shared protocol definitions
-│   │   │   ├── handshake.json
-│   │   │   └── memory-access.json
-│   │   └── codecs/                 # Shared codec implementations
-│   │       ├── manufacturer-codec.ts
-│   │       ├── manufacturer-decoder.ts
-│   │       └── manufacturer-encoder.ts
-│   ├── index.ts                    # Main module entry point
-│   └── codec-factory.ts            # Codec factory implementation
-└── README.md                       # Module documentation
+├── package.json
+├── configs/
+│   ├── model1.json
+│   └── model2.json
+├── src/shared/
+│   ├── schemas/
+│   │   ├── channel-schema.json
+│   │   └── settings-schema.json
+│   └── memory-maps/
+│       └── model-settings.json
+└── README.md
 ```
 
 ### Package.json Configuration
@@ -200,14 +192,11 @@ radio-module-manufacturer/
     "supportedRadios": ["uv5r", "uv5r-plus", "uv82"],
     "capabilities": {
       "dslProtocols": true,
-      "customCodecs": true,
       "memoryRead": true,
-      "memoryWrite": true,
-      "sharedComponents": true
+      "memoryWrite": true
     },
     "configPath": "configs",
-    "sharedPath": "src/shared",
-    "codecFactory": "src/codec-factory.ts"
+    "sharedPath": "src/shared"
   },
   "peerDependencies": {
     "@springfield/ham-radio-api": "^12.0.0"
@@ -259,13 +248,11 @@ Configurations can reference shared components:
       "$ref": "src/shared/schemas/channel-schema.json"
     }
   },
+  "memoryMap": {
+    "$ref": "src/shared/memory-maps/uv5r-settings.json"
+  },
   "codec": {
-    "type": "shared",
-    "reference": "src/shared/codecs/baofeng-codec.ts",
-    "config": {
-      "channelSize": 16,
-      "magicNumber": [80, 187, 255, 32, 18, 7, 37]
-    }
+    "type": "memoryMap"
   }
 }
 ```

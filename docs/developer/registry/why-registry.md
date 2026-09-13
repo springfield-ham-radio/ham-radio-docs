@@ -56,11 +56,10 @@ const encodedMemory = codec.encode(program);
 
 ```
 radio-module-manufacturer/
-├── configs/              # Radio configurations
-├── src/
-│   ├── shared/           # Shared components
-│   ├── index.ts          # Entry point
-│   └── codec-factory.ts  # Codec factory
+├── configs/
+├── src/shared/
+│   ├── schemas/
+│   └── memory-maps/
 └── package.json
 ```
 
@@ -105,19 +104,23 @@ const configs = await registry.discoverConfigurations();
 Manages reusable codecs, schemas, and protocols:
 
 ```typescript
-// Loads shared components on demand
 const schema = await sharedComponentManager.loadSchema('src/shared/schemas/channel-schema.json');
-const codec = await sharedComponentManager.loadCodec('src/shared/codecs/baofeng-codec.ts');
+const memoryMap = await sharedComponentManager.loadMemoryMap('src/shared/memory-maps/uv5r-settings.json');
 ```
 
-### 3. **Codec Factory System**
+### 3. **Memory-map codec**
 
-Creates radio-specific codecs dynamically:
+HamBench builds a codec from the module's JSON map. Modules do not ship a factory.
 
 ```typescript
-// Factory creates appropriate codec for radio model
-const factory = new BaofengCodecFactory();
-const codec = await factory.createCodec(modelId, config, logger);
+import { createMemoryMapCodec } from '@springfield/ham-radio-utils';
+
+const codec = createMemoryMapCodec({
+  radioModel: config.id.model,
+  memoryMap,
+  memoryConfig: config.memoryConfig,
+  logger,
+});
 ```
 
 ## Use Cases

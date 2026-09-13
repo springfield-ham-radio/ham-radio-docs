@@ -105,8 +105,7 @@ Reuse codecs, schemas, and protocols across related radio models:
     "channelSchema": { "$ref": "src/shared/schemas/channel-schema.json" }
   },
   "codec": {
-    "type": "shared",
-    "reference": "src/shared/codecs/baofeng-codec.ts"
+    "type": "memoryMap"
   }
 }
 ```

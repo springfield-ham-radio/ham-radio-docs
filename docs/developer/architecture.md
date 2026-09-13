@@ -226,47 +226,29 @@ For detailed registry architecture information, see the [Registry Architecture](
 
 ### 5. **radio-module-baofeng** - Radio-Specific Implementation
 
-**Purpose**: Example implementation of a radio module for Baofeng UV-5R series radios.
+**Purpose**: JSON radio module for Baofeng UV-5R series radios.
 
 **Key Responsibilities**:
-- Provide radio-specific configuration and protocols
-- Implement Baofeng-specific codec for memory encoding/decoding
-- Define memory layout and channel structures
-- Handle Baofeng-specific communication protocols
-
-**Core Components**:
-- **CodecFactory**: Creates Baofeng-specific codec instances
-- **BaofengCodec**: Main codec for encoding/decoding radio memory
-- **BaofengDecoder**: Decodes radio memory to program data
-- **BaofengEncoder**: Encodes program data to radio memory
-- **Configuration Files**: JSON files defining radio protocols and memory layout
+- Provide radio-specific protocol, serial, and memory JSON
+- Point `codec.type` at `"memoryMap"` and `$ref` a memory-map JSON
+- Define channel/settings schemas
 
 **Module Structure**:
 ```
 radio-module-baofeng/
 ├── configs/
-│   └── baofeng-uv5r.json          # Radio configuration
-├── src/
-│   ├── shared/
-│   │   ├── codecs/
-│   │   │   ├── baofeng-codec.ts
-│   │   │   ├── baofeng-decoder.ts
-│   │   │   └── baofeng-encoder.ts
-│   │   └── schemas/
-│   │       ├── channel-schema.json
-│   │       └── settings-schema.json
+│   └── baofeng-uv5r.json
+├── src/shared/
+│   ├── schemas/
+│   │   ├── channel-schema.json
+│   │   └── settings-schema.json
+│   └── memory-maps/
+│       └── uv5r-settings.json
 ```
 
-**Key Features**:
-```typescript
-export class BaofengCodec implements RadioCodec {
-  constructor(modelId: RadioModelId, config: BaofengConfig, logger: ILogLayer)
-  decode(memory: RadioMemory): RadioProgram
-  encode(program: RadioProgram, memory: RadioMemory): RadioMemory
-}
-```
+Encode/decode is `createMemoryMapCodec()` in `@springfield/ham-radio-utils`. This package ships **JSON only**.
 
-**Dependencies**: `@springfield/ham-radio-api`, `@springfield/ham-radio-utils`, `loglayer`
+**Dependencies** (dev, for tests): `@springfield/ham-radio-api`, `@springfield/ham-radio-utils`
 
 ## Data Flow Architecture
 

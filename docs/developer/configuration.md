@@ -43,12 +43,11 @@ JSON schemas that define the structure and validation rules for radio data.
 - Support for `$ref` references to shared schemas
 
 ### 5. Codec Configuration
-Data encoding and decoding configuration for the radio's memory format.
+HamBench encodes and decodes with the generic memory-map codec. The module points at a JSON map; it does not ship TypeScript.
 
 **Key Elements**:
-- `type`: "shared" or "inline"
-- `reference`: Path to codec implementation file
-- `config`: Codec-specific configuration parameters
+- `codec.type`: `"memoryMap"`
+- `memoryMap.$ref`: path to the memory-map JSON under `src/shared/memory-maps/`
 
 ### 6. Metadata
 Information about the configuration and its source module.
@@ -79,26 +78,17 @@ Here's a complete example for a Baofeng UV-5R radio module:
 
 #### Directory Structure
 ```
-@springfield/radio-module-baofeng/
+radio-module-baofeng/
 ├── package.json
 ├── configs/
-│   ├── uv5r.json              # Complete configuration
-│   ├── uv5r-plus.json         # Additional model
-│   └── uv82.json              # Additional model
-├── shared/
+│   └── baofeng-uv5r.json
+├── src/shared/
 │   ├── schemas/
 │   │   ├── channel-schema.json
 │   │   └── settings-schema.json
-│   ├── protocols/
-│   │   └── handshake.json
-│   └── codecs/
-│       ├── baofeng-codec.ts
-│       ├── baofeng-decoder.ts
-│       └── baofeng-encoder.ts
-├── src/
-│   ├── index.ts
-│   └── codec-factory.ts
-└── README.md
+│   └── memory-maps/
+│       └── uv5r-settings.json
+└── test/
 ```
 
 #### Package.json
@@ -106,37 +96,18 @@ Here's a complete example for a Baofeng UV-5R radio module:
 {
   "name": "@springfield/radio-module-baofeng",
   "version": "1.0.0",
-  "description": "Radio module for Baofeng UV-5R series",
-  "keywords": ["ham-radio", "radio-module", "baofeng"],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "description": "JSON radio module for Baofeng UV-5R",
+  "files": ["configs/", "src/shared/schemas/", "src/shared/memory-maps/"],
   "springfield": {
     "pluginType": "radio-module",
-    "version": "1.0.0",
     "manufacturer": "Baofeng",
-    "supportedRadios": ["uv5r", "uv5r-plus", "uv82"],
+    "configPath": "configs",
+    "sharedPath": "src/shared",
     "capabilities": {
       "dslProtocols": true,
-      "customCodecs": true,
       "memoryRead": true,
-      "memoryWrite": true,
-      "sharedComponents": true
-    },
-    "configPath": "configs",
-    "sharedPath": "shared",
-    "codecFactory": "src/codec-factory.ts"
-  },
-  "files": [
-    "configs/",
-    "shared/",
-    "dist/"
-  ],
-  "peerDependencies": {
-    "@springfield/ham-radio-api": "^12.0.0"
-  },
-  "dependencies": {
-    "@springfield/ham-radio-driver-utils": "^7.1.0",
-    "loglayer": "^6.4.2"
+      "memoryWrite": true
+    }
   }
 }
 ```
@@ -153,11 +124,10 @@ Here's a complete example for a Baofeng UV-5R radio module:
   "version": "1.0.0",
   "description": "UV-5R and UV-5RE Plus models",
   "capabilities": {
-    "dslProtocols": true,
-    "customCodecs": true,
     "memoryRead": true,
     "memoryWrite": true,
-    "sharedComponents": true
+    "channelProgramming": true,
+    "settingsProgramming": true
   },
   "serialConfig": {
     "baudRate": 9600,
@@ -251,18 +221,11 @@ Here's a complete example for a Baofeng UV-5R radio module:
       "$ref": "shared/schemas/channel-schema.json"
     }
   },
+  "memoryMap": {
+    "$ref": "../src/shared/memory-maps/uv5r-settings.json"
+  },
   "codec": {
-    "type": "shared",
-    "reference": "shared/codecs/baofeng-codec.ts",
-    "config": {
-      "channelSize": 16,
-      "magicNumber": [80, 187, 255, 32, 18, 7, 37],
-      "powerOffset": 14,
-      "receiveFrequencyOffset": 0,
-      "receiveToneOffset": 8,
-      "transmitFrequencyOffset": 4,
-      "transmitToneOffset": 10
-    }
+    "type": "memoryMap"
   },
   "metadata": {
     "moduleId": "@springfield/radio-module-baofeng",
@@ -303,25 +266,6 @@ Here's a complete example for a Baofeng UV-5R radio module:
 }
 ```
 
-#### Codec Factory Example (src/codec-factory.ts)
-```typescript
-import type { RadioCodec, RadioModelId } from '@springfield/ham-radio-api';
-import type { ILogLayer } from 'loglayer';
-import { BaofengCodec } from '../shared/codecs/baofeng-codec.js';
-
-export interface CodecFactory {
-  createCodec(modelId: RadioModelId, config: any, logger: ILogLayer): Promise<RadioCodec>;
-}
-
-export class BaofengCodecFactory implements CodecFactory {
-  async createCodec(modelId: RadioModelId, config: any, logger: ILogLayer): Promise<RadioCodec> {
-    return new BaofengCodec(modelId, config, logger);
-  }
-}
-
-export { BaofengCodecFactory as CodecFactory };
-```
-
 ### Key Development Resources
 
 - **[Protocol DSL Documentation](/developer/protocols/dsl)**: Complete guide to writing protocol definitions
@@ -333,8 +277,8 @@ export { BaofengCodecFactory as CodecFactory };
 
 - [ ] Create module directory structure
 - [ ] Write radio configuration(s) with protocol definitions
-- [ ] Create shared schemas for data validation
-- [ ] Implement codec factory and codec classes
+- [ ] Create shared schemas and a memory-map JSON
+- [ ] Set `codec.type` to `"memoryMap"`
 - [ ] Configure package.json with springfield plugin settings
 - [ ] Test configuration with radio driver
 - [ ] Test module discovery with registry
@@ -383,7 +327,7 @@ Used by the radio driver for direct protocol execution.
 ```
 
 ### Registry Format
-Enhanced format used by the ham-radio-registry module for npm module distribution.
+Enhanced format used by the registry (same JSON files; not a separate npm plugin).
 
 **Documentation**: [Registry Configuration](/developer/configuration)
 
@@ -417,11 +361,10 @@ Here's a complete example showing all configuration components:
   "version": "1.0.0",
   "description": "UV-5R and UV-5RE Plus models",
   "capabilities": {
-    "dslProtocols": true,
-    "customCodecs": true,
     "memoryRead": true,
     "memoryWrite": true,
-    "sharedComponents": true
+    "channelProgramming": true,
+    "settingsProgramming": true
   },
   "serialConfig": {
     "baudRate": 9600,
@@ -505,18 +448,11 @@ Here's a complete example showing all configuration components:
       "$ref": "shared/schemas/channel-schema.json"
     }
   },
+  "memoryMap": {
+    "$ref": "../src/shared/memory-maps/uv5r-settings.json"
+  },
   "codec": {
-    "type": "shared",
-    "reference": "shared/codecs/baofeng-codec.ts",
-    "config": {
-      "channelSize": 16,
-      "magicNumber": [80, 187, 255, 32, 18, 7, 37],
-      "powerOffset": 14,
-      "receiveFrequencyOffset": 0,
-      "receiveToneOffset": 8,
-      "transmitFrequencyOffset": 4,
-      "transmitToneOffset": 10
-    }
+    "type": "memoryMap"
   },
   "metadata": {
     "moduleId": "@springfield/radio-module-baofeng",
@@ -531,35 +467,17 @@ Here's a complete example showing all configuration components:
 
 ## Module Distribution
 
-Radio configurations are distributed as npm modules with a standardized structure:
-
-### Package.json Configuration
-```json
-{
-  "name": "@springfield/radio-module-baofeng",
-  "version": "1.0.0",
-  "springfield": {
-    "pluginType": "radio-module",
-    "manufacturer": "Baofeng",
-    "capabilities": { ... },
-    "configPath": "configs",
-    "sharedPath": "shared"
-  }
-}
-```
+Radio modules are JSON zips on GitHub Releases. See [Publish a module](/developer/publishing-modules).
 
 ### Directory Structure
 ```
-@springfield/radio-module-baofeng/
+radio-module-baofeng/
 ├── package.json
-├── configs/                    # Radio configuration files
-│   ├── uv5r.json
-│   └── uv5r-plus.json
-├── shared/                     # Shared components
-│   ├── schemas/
-│   ├── protocols/
-│   └── codecs/
-└── src/                        # Module source code
+├── configs/
+│   └── baofeng-uv5r.json
+└── src/shared/
+    ├── schemas/
+    └── memory-maps/
 ```
 
 ## Related Documentation
@@ -595,7 +513,7 @@ const baofengConfig = await registry.getConfiguration('baofeng-uv5r');
 2. **Extensible**: New radio types can be added through configuration
 3. **Reusable**: Shared components can be used across multiple radio models
 4. **Validated**: JSON schemas provide validation and IDE support
-5. **Distributed**: Configurations can be distributed as npm modules
+5. **Distributed**: Configurations ship as JSON zips on GitHub Releases
 6. **Versioned**: Proper versioning and compatibility management
 7. **Discoverable**: Automatic discovery of available radio configurations
 
