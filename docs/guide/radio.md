@@ -30,7 +30,7 @@ Every import and write captures serial bytes. Inspect traffic on the **Debug** t
 
 ## Settings
 
-The **Settings** tab shows radio-wide options grouped by the driver. Pick a main group in the list (or the menu on a narrow window). Related fields in that group appear as headed sections in the panel. Groups, sub-groups, labels, and any warnings come from the radio’s memory map. Field and section descriptions appear as a help icon after the label. Boolean settings put the switch on the same row as the label.
+The **Settings** tab shows radio-wide options grouped by the driver. Pick a main group in the list (or the menu on a narrow window). Related fields in that group appear as headed sections in the panel. Groups, sub-groups, labels, and any warnings come from the radio’s memory map. Field and section descriptions appear as a help icon after the label. Boolean settings put the switch on the same row as the label. **Preferences → Appearance → Settings columns** controls how many fields appear per row (1–4; default 2). The same layout is used for radio-specific fields when you edit a channel.
 
 ## Channels on the radio
 
