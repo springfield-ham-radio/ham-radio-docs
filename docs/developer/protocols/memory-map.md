@@ -122,6 +122,8 @@ Non-reserved fields should include `ui` for schema-driven forms and tables.
 - **Radio-wide settings:** `collectMemoryMapUiFields` (skips channel-bound structs).
 - **Settings groups:** declare a top-level `groups` array. Each group has `id` and `label`, and may include `description`, `icon` (Iconify name), and `warning` (`title` + `description`). Field `ui.group` must match a group `id`. Declaration order is the left-nav order on the Settings tab.
 - **Settings sub-groups:** a group may include nested `groups`. Those become headed sections in the settings panel. Set field `ui.subgroup` to the nested group `id`. Fields without `subgroup` stay at the top of the panel. `collectMemoryMapUiGroups` applies this metadata and omits empty groups and empty sub-groups. Fields whose `ui.group` is not declared still appear after the declared groups.
+- **Descriptions:** field, group, and sub-group `description` values appear as a help-icon tooltip after the label.
+- **Display order:** struct field order is the EEPROM layout. Set `ui.order` (lower first) to change Settings-tab order without moving bytes. Fields without `order` keep declaration order.
 - **Per-channel extras:** put `ui` on fields of the `channelBindings.records` struct; `collectChannelMemoryMapUiFields` returns them for Channels-table columns. Bound RadioChannel fields (`rxfreq`, tones, …) are omitted. Use `formatMemoryMapFieldValue` for read-only cell text.
 
 Widgets: `integer`, `select`, `switch`, `text`, `number`. Set `writable: false` for firmware / read-only messages.
@@ -174,7 +176,7 @@ Shipped as [`uv5r-settings.json`](https://github.com/springfield-ham-radio/radio
 Includes:
 
 - `channels` / `names` (128 × 16) with full Chirp channel bitfields
-- Radio-wide groups: basic, dtmf, advanced, workmode, other, service (declared in `groups`, with panel sub-groups and a calibration warning on service)
+- Radio-wide groups: basic, advanced, workmode, other, dtmf, service (declared in `groups`, with panel sub-groups and a calibration warning on service)
 
 ## API
 
