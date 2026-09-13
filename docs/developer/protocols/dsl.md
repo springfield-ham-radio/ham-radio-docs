@@ -153,6 +153,27 @@ Optional fields:
 }
 ```
 
+## Live CAT memory (`catRead` / `catWrite`)
+
+Clone dumps EEPROM in chunks. Some radios program memories with CAT commands instead. Those steps use `catRead` / `catWrite` rather than `read` / `write`.
+
+The payload is a `RadioCatMemoryConfig`:
+
+| Field | Meaning |
+| --- | --- |
+| `segment` | Memory-map segment that holds channel records |
+| `count` | How many logical channels to read or write |
+| `recordSize` | Bytes per channel in the logical image |
+| `pack` | Command packer (`"kenwood-th-f6"` for TH-F6 `MR` / `MW` / `MNA`) |
+| `indexWidth` | Optional width of the channel index on the wire |
+| `emptyByte` | Optional empty-slot marker |
+| `timeout` | Optional timeout in milliseconds |
+| `interCommandDelayMs` | Optional pause between CAT commands |
+
+The TH-F6 handshake is ordinary exchanges (`ID`, `AI 0`). Memories then loop per channel: `catRead` issues `MR` / `MNA`; `catWrite` issues `MW` / `MNA`. The memory map is a **logical** image for the codec, not a clone dump.
+
+HamBench still uses a separate `cat` block (and `capabilities.liveControl`) for the live VFO page. That is independent of `catRead` / `catWrite`.
+
 ## Baofeng UV-5R
 
 ### Read
@@ -270,5 +291,6 @@ The driver walks `readMemory` or `writeMemory` in order:
 2. Write `send` bytes to the serial port.
 3. Wait for `expect` (byte-length parser + timeout).
 4. For `read` / `write`, repeat per chunk and update progress within that step.
+5. For `catRead` / `catWrite`, repeat per channel using the named packer.
 
 JSON Schema for the language lives in `@springfield/ham-radio-utils` (`radio-protocol-schema.json`). Types live in `@springfield/ham-radio-api` (`RadioProtocolStep`).

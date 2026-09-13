@@ -34,5 +34,5 @@ See the [Memory-Map DSL](./memory-map) for UV-5R address conversion (Chirp image
 
 - Learn the [Protocol DSL](./dsl) in detail
 - Learn the [Memory-Map DSL](./memory-map) in detail
-- See how protocols load through the [Registry Architecture](/reference/registry/architecture)
-- Explore the [Development Guide](/development-guide) for implementation details
+- See how protocols load through the [Registry Architecture](/developer/registry/architecture)
+- Explore the [Development Guide](/developer/development-guide) for implementation details

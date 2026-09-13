@@ -4,7 +4,7 @@ The Ham Radio Registry is a unified platform for discovering, managing, and usin
 
 ## Overview
 
-The registry automatically discovers radio modules from npm packages and provides a unified interface for:
+The Ham Radio Registry loads radio JSON configs and codecs for HamBench and for Node tools. The desktop app installs modules from GitHub Releases via the official catalog. For local development, clone a module repo and load its `configs/` JSON. `NpmBasedConfigRegistry` can still scan `node_modules` when you are working in a Yarn workspace.
 
 - **Configuration Discovery**: Find available radio configurations
 - **Codec Management**: Load and use radio-specific codecs
@@ -65,7 +65,7 @@ const memory = codec.encode(program);
 
 ### 1. **Automatic Discovery**
 
-The registry automatically discovers radio modules from installed npm packages:
+The registry lists radio configs from installed modules (workspace / `node_modules` in Node, or the app’s installed JSON catalog):
 
 ```typescript
 // List all installed radio modules

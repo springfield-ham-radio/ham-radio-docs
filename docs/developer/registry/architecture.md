@@ -1,6 +1,6 @@
 # Registry Architecture
 
-> **Note**: This document focuses specifically on the Registry module architecture. For a high-level overview of the entire architecture, see the [Architecture Overview](/reference/architecture).
+> **Note**: This document focuses specifically on the Registry module architecture. For a high-level overview of the entire architecture, see the [Architecture Overview](/developer/architecture).
 
 The Ham Radio Registry is built with a modular, extensible architecture that supports both official and third-party radio modules. This page explains the technical design and how the registry components work together.
 

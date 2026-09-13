@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 
-// https://vitepress.dev/reference/site-config
 export default withMermaid(defineConfig({
   srcDir: "docs",
   base: "/ham-radio-docs/",
@@ -9,106 +8,76 @@ export default withMermaid(defineConfig({
   title: "HamBench",
   description: "Documentation for HamBench",
 
-  // Appearance configuration for VitePress 2
   appearance: true,
 
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Getting Started', link: '/overview' },
-      { text: 'Developer Guide', link: '/reference/' }
+      { text: 'User Guide', link: '/guide/' },
+      { text: 'Developer', link: '/developer/' }
     ],
 
     sidebar: {
-      '/': [
+      '/guide/': [
         {
-          text: 'Getting Started',
+          text: 'User Guide',
           items: [
-            { text: 'Overview', link: '/overview' },
-            { text: 'Quick Start Guide', link: '/getting-started' },
-            { text: 'Architecture Overview', link: '/architecture-overview' }
+            { text: 'Overview', link: '/guide/' },
+            { text: 'Install HamBench', link: '/guide/getting-started' },
+            { text: 'Install radios', link: '/guide/install-radios' },
+            { text: 'Read and write memory', link: '/guide/radio' },
+            { text: 'Live CAT', link: '/guide/cat' },
+            { text: 'Channel library', link: '/guide/channels' },
+            { text: 'Sniffer', link: '/guide/sniffer' },
+            { text: 'License privileges', link: '/guide/license' }
           ]
         }
       ],
-      '/getting-started': [
+      '/developer/': [
         {
-          text: 'Getting Started',
+          text: 'Start here',
           items: [
-            { text: 'Overview', link: '/overview' },
-            { text: 'Quick Start Guide', link: '/getting-started' },
-            { text: 'Architecture Overview', link: '/architecture-overview' }
-          ]
-        }
-      ],
-      '/reference/': [
-        {
-          text: 'Developer Documentation',
-          link: '/reference/developer-docs',
-        },
-        {
-          text: 'Radio Module Development',
-          link: '/reference/radio-module-dev',
-        },
-        {
-          text: 'Installing Radio Modules',
-          link: '/reference/installing-radio-modules',
-        },
-        {
-          text: 'Architecture & Standards',
-          items: [
-            {
-              text: 'Architecture Reference',
-              link: '/reference/architecture',
-              items: [
-                { text: 'Registry Architecture', link: '/reference/registry/architecture' },
-                { text: 'Why Registry?', link: '/reference/registry/why-registry' },
-                { text: 'Plugin Development', link: '/reference/registry/plugin-development' },
-                { text: 'Registry Examples', link: '/reference/registry/examples' },
-                { text: 'Registry API Reference', link: '/reference/registry/api-reference' },
-                { text: 'Registry Getting Started', link: '/reference/registry/getting-started' },
-                { text: 'Protocols Overview', link: '/reference/protocols/' },
-                { text: 'Protocol DSL', link: '/reference/protocols/dsl' },
-                { text: 'Memory-Map DSL', link: '/reference/protocols/memory-map' }
-              ]
-            },
-            { text: 'Module Comparison', link: '/reference/module-comparison' },
-            { text: 'License Lookup', link: '/reference/license-lookup' },
-            { text: 'Documentation Standards', link: '/reference/documentation-guide' }
+            { text: 'Overview', link: '/developer/' },
+            { text: 'Architecture overview', link: '/developer/architecture-overview' },
+            { text: 'Architecture reference', link: '/developer/architecture' },
+            { text: 'Modules', link: '/developer/module-comparison' },
+            { text: 'Development guide', link: '/developer/development-guide' }
           ]
         },
         {
-          text: 'Registry System',
+          text: 'Radio modules',
+          items: [
+            { text: 'Create a module', link: '/developer/radio-module-dev' },
+            { text: 'Configuration format', link: '/developer/configuration' },
+            { text: 'Publish a module', link: '/developer/publishing-modules' }
+          ]
+        },
+        {
+          text: 'Protocols',
+          collapsed: false,
+          items: [
+            { text: 'Overview', link: '/developer/protocols/' },
+            { text: 'Protocol DSL', link: '/developer/protocols/dsl' },
+            { text: 'Memory-map DSL', link: '/developer/protocols/memory-map' }
+          ]
+        },
+        {
+          text: 'Registry',
           collapsed: true,
           items: [
-            { text: 'Overview', link: '/reference/registry/' },
-            { text: 'Why Registry?', link: '/reference/registry/why-registry' },
-            { text: 'Architecture', link: '/reference/registry/architecture' },
-            { text: 'Getting Started', link: '/reference/registry/getting-started' },
-            { text: 'Plugin Development', link: '/reference/registry/plugin-development' },
-            { text: 'API Reference', link: '/reference/registry/api-reference' },
-            { text: 'Examples', link: '/reference/registry/examples' },
-            { text: 'Configuration', link: '/reference/configuration/overview' }
+            { text: 'Overview', link: '/developer/registry/' },
+            { text: 'Why a registry?', link: '/developer/registry/why-registry' },
+            { text: 'Architecture', link: '/developer/registry/architecture' },
+            { text: 'Getting started', link: '/developer/registry/getting-started' },
+            { text: 'Plugin development', link: '/developer/registry/plugin-development' },
+            { text: 'API reference', link: '/developer/registry/api-reference' },
+            { text: 'Examples', link: '/developer/registry/examples' }
           ]
         },
         {
-          text: 'Protocols & DSL',
-          collapsed: true,
+          text: 'More',
           items: [
-            { text: 'Overview', link: '/reference/protocols/' },
-            { text: 'Protocol DSL', link: '/reference/protocols/dsl' },
-            { text: 'Memory-Map DSL', link: '/reference/protocols/memory-map' }
-          ]
-        },
-        {
-          text: 'Configuration Format',
-          link: '/reference/configuration/overview'
-        }
-      ],
-      '/configuration/': [
-        {
-          text: 'Configuration',
-          items: [
-            { text: 'Overview', link: '/reference/configuration/overview' }
+            { text: 'License lookup API', link: '/developer/license-lookup' },
+            { text: 'Documentation standards', link: '/developer/documentation' }
           ]
         }
       ]

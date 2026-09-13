@@ -16,7 +16,7 @@ const registry = createRegistry(logger);
 
 ```typescript
 interface RadioConfigRegistry {
-  // Discover all available radio configurations from npm modules
+  // Discover radio configurations from loaded modules
   discoverConfigurations(): Promise<RegistryRadio[]>;
 
   // Get configuration by ID
@@ -104,7 +104,7 @@ interface ValidationResult {
 
 ```typescript
 interface CodecConfig {
-  type: 'shared' | 'inline';
+  type: 'shared' | 'inline' | 'memoryMap';
   reference?: string;
   config?: Record<string, any>;
 }

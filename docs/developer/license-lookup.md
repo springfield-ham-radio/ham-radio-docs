@@ -22,7 +22,7 @@ Callook is US-only. Club, military, and RACES records often have an empty `operC
 | `NOVICE` | Novice (Grandfathered) |
 | empty / unknown | no mapping (`undefined`) |
 
-GMRS, FRS, and Weather Radio classes are not returned by Callook amateur lookups; they remain available for manual assignment when needed.
+GMRS, FRS, and Weather Radio classes are not returned by Callook amateur lookups; they remain available for manual assignment when needed. Weather allocations include NOAA US channels and Environment Canada WX8–WX10.
 
 ## Privilege checks
 

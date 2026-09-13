@@ -108,13 +108,7 @@ export { BaofengCodecFactory as CodecFactory };
 
 ## 6. Publishing Your Module
 
-- Publish your module to npm:
-
-```sh
-yarn publish --access public
-```
-
-- Users can now install your module and the registry will automatically discover it.
+Ship a JSON-only zip on GitHub Releases (`yarn pack:release`). Do not publish radio modules to npm. Add `version`, `downloadUrl`, `integrity`, and `minApiVersion` to [`radio-module-catalog`](https://github.com/springfield-ham-radio/radio-module-catalog). Desktop users install from **Preferences → Radios**. See [Publish a module](/developer/publishing-modules).
 
 ## 7. Testing Your Module
 

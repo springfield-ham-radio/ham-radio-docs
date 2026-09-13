@@ -5,7 +5,7 @@ This section provides everything you need to create radio modules for the HamBen
 ## Quick Start
 
 ### 1. Module Structure
-Create a new npm package with this structure:
+Create a new module repository with this structure (JSON only; no radio-specific TypeScript):
 ```
 radio-module-example/
 ├── package.json
@@ -101,7 +101,7 @@ The Domain-Specific Language for defining radio communication protocols:
 ### Registry Integration
 The registry automatically discovers and manages your module:
 
-- **Discovery**: Scans `node_modules` for radio modules
+- **Discovery**: The desktop app installs JSON zips from GitHub Releases. In Node, the registry can scan workspace packages.
 - **Validation**: Validates configurations and capabilities
 - **Access**: Provides unified access to radio configurations
 - **Distribution**: Supports npm-based distribution
@@ -109,22 +109,22 @@ The registry automatically discovers and manages your module:
 ## Development Guide
 
 ### 1. Configuration Overview
-Start with the [Configuration Overview](/reference/configuration/overview) to understand the complete configuration structure and how all components work together.
+Start with the [Configuration Overview](/developer/configuration) to understand the complete configuration structure and how all components work together.
 
 ### 2. Protocol DSL
-Learn the [Protocol DSL](/reference/protocols/dsl) for defining radio communication protocols:
+Learn the [Protocol DSL](/developer/protocols/dsl) for defining radio communication protocols:
 - Step-by-step protocol definition
 - Expression resolution and pattern matching
 - Complete examples and best practices
 
 ### 3. Registry Configuration
-Understand [Registry Configuration](/reference/configuration/overview) for module discovery and management:
+Understand [Registry Configuration](/developer/configuration) for module discovery and management:
 - Package.json plugin configuration
 - Capabilities and metadata
 - Module directory structure
 
 ### 4. Plugin Development
-Follow the [Plugin Development Guide](/reference/registry/plugin-development) for advanced module development:
+Follow the [Plugin Development Guide](/developer/registry/plugin-development) for advanced module development:
 - Shared component references
 - Codec factory implementation
 - Testing and validation
@@ -296,10 +296,10 @@ export default BaofengCodecFactory;
 ## Development Resources
 
 ### Documentation
-- **[Configuration Overview](/reference/configuration/overview)**: Complete configuration structure
-- **[Protocol DSL](/reference/protocols/dsl)**: Protocol definition language
-- **[Registry Configuration](/reference/configuration/overview)**: Module discovery and management
-- **[Plugin Development](/reference/registry/plugin-development)**: Advanced development guide
+- **[Configuration Overview](/developer/configuration)**: Complete configuration structure
+- **[Protocol DSL](/developer/protocols/dsl)**: Protocol definition language
+- **[Registry Configuration](/developer/configuration)**: Module discovery and management
+- **[Plugin Development](/developer/registry/plugin-development)**: Advanced development guide
 
 ### Examples
 - **Baofeng Module**: Complete working example in the `radio-module-baofeng` package
@@ -358,7 +358,7 @@ Official modules ship a JSON-only zip (`configs/`, `src/shared/schemas/`, `src/s
 
 Each radio JSON has a top-level `version` field. That is the **module** version HamBench shows when you install a config from a file. Do not edit it by hand. `yarn pack:release` and semantic-release stamp `package.json`'s version into every `configs/*.json` before the zip is built, and the release commit includes those files.
 
-Update the official catalog after each release. Desktop users install from the app (**Preferences → Radios**). See [Installing Radio Modules](/reference/installing-radio-modules).
+Update the official catalog after each release. Desktop users install from the app (**Preferences → Radios**). See [Installing Radio Modules](/guide/install-radios).
 
 ## Getting Help
 
@@ -379,4 +379,4 @@ Update the official catalog after each release. Desktop users install from the a
 
 ---
 
-Ready to start? Check out the [Configuration Overview](/reference/configuration/overview#for-radio-module-developers) for a detailed quick start guide! 
+Ready to start? Check out the [Configuration Overview](/developer/configuration#for-radio-module-developers) for a detailed quick start guide! 

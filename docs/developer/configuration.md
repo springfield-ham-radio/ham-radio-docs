@@ -9,7 +9,7 @@ A complete radio configuration consists of several interconnected components:
 ### 1. Protocol Definition
 The core communication protocol that defines how to read from and write to the radio's memory.
 
-**Documentation**: [Protocol DSL](../protocols/dsl.md)
+**Documentation**: [Protocol DSL](/developer/protocols/dsl)
 
 **Key Elements**:
 - `readMemory`: Array of protocol steps for reading radio memory
@@ -54,7 +54,7 @@ Data encoding and decoding configuration for the radio's memory format.
 Information about the configuration and its source module.
 
 **Key Elements**:
-- `moduleId`: NPM module identifier
+- `moduleId`: Package identifier
 - `moduleVersion`: Version of the module
 - `author`: Module author
 - `license`: Module license
@@ -324,10 +324,10 @@ export { BaofengCodecFactory as CodecFactory };
 
 ### Key Development Resources
 
-- **[Protocol DSL Documentation](../protocols/dsl.md)**: Complete guide to writing protocol definitions
-- **[Registry Configuration Guide](/reference/configuration/overview)**: Detailed registry format specification
-- **[Plugin Development Guide](../registry/plugin-development.md)**: Step-by-step plugin development tutorial
-- **[Registry Architecture](../registry/architecture.md)**: Understanding how the registry system works
+- **[Protocol DSL Documentation](/developer/protocols/dsl)**: Complete guide to writing protocol definitions
+- **[Registry Configuration Guide](/developer/configuration)**: Detailed registry format specification
+- **[Plugin Development Guide](/developer/registry/plugin-development)**: Step-by-step plugin development tutorial
+- **[Registry Architecture](/developer/registry/architecture)**: Understanding how the registry system works
 
 ### Development Checklist
 
@@ -385,7 +385,7 @@ Used by the radio driver for direct protocol execution.
 ### Registry Format
 Enhanced format used by the ham-radio-registry module for npm module distribution.
 
-**Documentation**: [Registry Configuration](/reference/configuration/overview)
+**Documentation**: [Registry Configuration](/developer/configuration)
 
 ```json
 {
@@ -564,10 +564,10 @@ Radio configurations are distributed as npm modules with a standardized structur
 
 ## Related Documentation
 
-- **[Protocol DSL](../protocols/dsl.md)**: Detailed documentation of the protocol definition language
-- **[Registry Configuration](/reference/configuration/overview)**: Documentation of the registry-specific configuration format
-- **[Registry Architecture](../registry/architecture.md)**: Overview of the registry system architecture
-- **[Plugin Development](../registry/plugin-development.md)**: Guide for developing radio module plugins
+- **[Protocol DSL](/developer/protocols/dsl)**: Detailed documentation of the protocol definition language
+- **[Registry Configuration](/developer/configuration)**: Documentation of the registry-specific configuration format
+- **[Registry Architecture](/developer/registry/architecture)**: Overview of the registry system architecture
+- **[Plugin Development](/developer/registry/plugin-development)**: Guide for developing radio module plugins
 
 ## Usage
 

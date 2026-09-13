@@ -1,6 +1,6 @@
 # HamBench Architecture Reference
 
-> **Looking for a high-level introduction?** See the [Architecture Overview](/architecture-overview) in the Getting Started section.
+> **Looking for a high-level introduction?** See the [Architecture Overview](/developer/architecture-overview) in the Getting Started section.
 
 This document provides a comprehensive technical reference for the HamBench software ecosystem architecture, including detailed analysis of module responsibilities, APIs, data flow, design patterns, security, performance, and extensibility.
 
@@ -187,10 +187,10 @@ export interface UILogger {
 
 ### 4. **@springfield/ham-radio-registry** - Module Discovery and Management
 
-**Purpose**: Manages the discovery, installation, and loading of radio module plugins from npm.
+**Purpose**: Loads radio JSON configs for the desktop catalog and for Node tooling.
 
 **Key Responsibilities**:
-- Discover radio configurations from npm modules
+- Discover radio configurations from installed modules (GitHub catalog in the app; `node_modules` in Node)
 - Validate and load radio configurations
 - Manage shared components across modules
 - Handle plugin installation and updates
@@ -214,7 +214,7 @@ export interface RadioConfigRegistry {
 ```
 
 **Plugin Discovery Process**:
-1. Scan `node_modules` for packages with `springfield.pluginType: "radio-module"`
+1. Load configs from an installed JSON catalog (desktop) or scan workspace / `node_modules` packages with `springfield.pluginType: "radio-module"` (Node)
 2. Load configuration files from `configs/` directory
 3. Validate configurations against schemas
 4. Resolve shared components and dependencies
@@ -222,7 +222,7 @@ export interface RadioConfigRegistry {
 
 **Dependencies**: `@springfield/ham-radio-api`, `loglayer`
 
-For detailed registry architecture information, see the [Registry Architecture](/reference/registry/architecture) documentation.
+For detailed registry architecture information, see the [Registry Architecture](/developer/registry/architecture) documentation.
 
 ### 5. **radio-module-baofeng** - Radio-Specific Implementation
 

@@ -93,13 +93,10 @@ The registry consists of several key components:
 
 ### 1. **Configuration Discovery**
 
-Automatically discovers radio modules from npm packages:
+Automatically discovers radio modules from installed packages or the desktop catalog:
 
 ```typescript
-// Scans node_modules for radio modules
 const modules = await registry.listInstalledPlugins();
-
-// Validates and loads configurations
 const configs = await registry.discoverConfigurations();
 ```
 

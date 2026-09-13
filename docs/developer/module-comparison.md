@@ -11,7 +11,7 @@ This document provides a quick reference comparison of all modules in the HamBen
 | `@springfield/ham-radio-utils` | Shared utilities and helper functions | `SegmentedMemory`, `UILogger`, validation functions | `@springfield/ham-radio-api`, `ajv`, `fishery` | Utilities |
 | `@springfield/ham-radio-registry` | Plugin discovery and management | `RadioConfigRegistry`, `NpmBasedConfigRegistry` | `@springfield/ham-radio-api`, `loglayer` | Registry |
 | `radio-module-baofeng` | Baofeng radio-specific implementation | JSON configs + memory maps | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils` | Radio Module |
-| `radio-module-kenwood` | Kenwood TH-F6 (live), TH-D74 (clone), and TM-D710A (clone) | JSON configs + memory maps | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils` | Radio Module |
+| `radio-module-kenwood` | Kenwood TH-F6 (live CAT memories), TH-D74 (clone + CAT), TM-D710A (clone + CAT) | JSON configs + memory maps | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils` | Radio Module |
 
 ## Module Details
 
@@ -57,7 +57,7 @@ This document provides a quick reference comparison of all modules in the HamBen
 **Role**: Manages plugin discovery and configuration loading
 
 **Key Responsibilities**:
-- Discover radio configurations from npm modules
+- Discover radio configurations from installed JSON modules
 - Validate and load configurations
 - Manage shared components
 - Handle plugin installation
