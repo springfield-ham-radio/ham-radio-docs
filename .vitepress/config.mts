@@ -27,6 +27,7 @@ export default withMermaid(defineConfig({
             { text: 'Read and write memory', link: '/guide/radio' },
             { text: 'Live CAT', link: '/guide/cat' },
             { text: 'Channel library', link: '/guide/channels' },
+            { text: 'Stations & antennas', link: '/guide/antennas' },
             { text: 'Sniffer', link: '/guide/sniffer' },
             { text: 'License privileges', link: '/guide/license' }
           ]

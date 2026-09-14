@@ -4,7 +4,7 @@ HamBench is a set of TypeScript packages plus JSON radio modules. The desktop ap
 
 | Package | Role |
 | --- | --- |
-| [`@springfield/ham-radio-api`](https://github.com/springfield-ham-radio/ham-radio-api) | Types and schemas (protocol DSL, memory map, serial config) |
+| [`@springfield/ham-radio-api`](https://github.com/springfield-ham-radio/ham-radio-api) | Types and schemas (protocol DSL, memory map, serial config, stations, antennas) |
 | [`@springfield/ham-radio-utils`](https://github.com/springfield-ham-radio/ham-radio-utils) | Memory-map codec, band plan, license mapping, validation |
 | [`@springfield/ham-radio-driver`](https://github.com/springfield-ham-radio/ham-radio-driver) | Serial driver that executes protocol steps |
 | [`@springfield/ham-radio-registry`](https://github.com/springfield-ham-radio/ham-radio-registry) | Load and validate radio configs; official catalog types |

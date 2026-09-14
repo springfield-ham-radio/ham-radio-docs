@@ -2,7 +2,7 @@
 
 HamBench docs are split in two:
 
-- **[User Guide](/guide/)** — install the app, install radios, Import/Write, CAT, channel library, sniffer, license privileges
+- **[User Guide](/guide/)** — install the app, install radios, Import/Write, CAT, channel library, stations and antennas, sniffer, license privileges
 - **[Developer docs](/developer/)** — packages, protocol DSL, memory maps, radio modules, registry
 
 Put operator-facing steps in the User Guide. Put JSON schemas, TypeScript APIs, and module authoring in Developer docs. Link across the two instead of duplicating.

@@ -11,6 +11,7 @@ It ships a generic serial driver. Per-radio support comes from **radio modules**
 - **Live CAT** on radios that declare it (Kenwood TH-F6, TH-D74, TM-D710A): frequency, mode, power, PTT
 - **Sniff** clone-protocol traffic between a computer and a radio
 - Flag transmit frequencies outside your **license class** (US Callook lookup)
+- Keep **stations** (grid and lat/lon) and **antennas** (generic types, height, heading), and try what-ifs on Propagation
 
 ## Start here
 

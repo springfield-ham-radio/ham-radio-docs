@@ -82,6 +82,7 @@ graph TB
 - **Radio Interfaces**: `RadioDriver`, `RadioCodec`, `RadioMemory`, etc.
 - **Spectrum Management**: Band, mode, and privilege definitions
 - **License Management**: Amateur radio license class definitions
+- **Stations and antennas**: `RadioStation`, `StationAntenna`, generic `AntennaType` catalog
 
 **Key Exports**:
 ```typescript

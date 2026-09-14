@@ -6,7 +6,7 @@ This document provides a quick reference comparison of all modules in the HamBen
 
 | Module | Purpose | Key Exports | Dependencies | Type |
 |--------|---------|-------------|--------------|------|
-| `@springfield/ham-radio-api` | Core type definitions and interfaces | `RadioDriver`, `RadioCodec`, branded types | `loglayer`, `ts-brand` | Core API |
+| `@springfield/ham-radio-api` | Core type definitions and interfaces | `RadioDriver`, `RadioCodec`, branded types, `RadioStation`, `StationAntenna` | `loglayer`, `ts-brand` | Core API |
 | `@springfield/ham-radio-driver` | Protocol interpreter and serial communication | `RadioDriver`, `ProtocolInterpreter` | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils`, `serialport` | Driver |
 | `@springfield/ham-radio-utils` | Shared utilities and helper functions | `SegmentedMemory`, `UILogger`, validation functions | `@springfield/ham-radio-api`, `ajv`, `fishery` | Utilities |
 | `@springfield/ham-radio-registry` | Plugin discovery and management | `RadioConfigRegistry`, `NpmBasedConfigRegistry` | `@springfield/ham-radio-api`, `loglayer` | Registry |
@@ -22,7 +22,7 @@ This document provides a quick reference comparison of all modules in the HamBen
 **Key Responsibilities**:
 - Define core interfaces (`RadioDriver`, `RadioCodec`, etc.)
 - Provide branded types for type safety
-- Define spectrum and license management types
+- Define spectrum, license, station, and antenna types
 - Establish contracts between all modules
 
 **When to use**: Required by all other modules as the foundation layer
