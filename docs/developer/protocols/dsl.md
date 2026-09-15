@@ -114,7 +114,7 @@ JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` /
     "segments": ["channels", "settings"],
     "send": ["S", "$address", "$chunkSize"],
     "expect": ["X", "$address", "$length", "$data"],
-    "delay": 50,
+    "delay": 100,
     "ack": {
       "send": ["0x06"],
       "expect": "0x06"
