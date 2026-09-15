@@ -105,7 +105,7 @@ JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` /
 
 ## Chunked read
 
-`read` repeats the exchange for every chunk in the named segments. `$data` in `expect` is stored in the memory buffer. Optional `ack` is a second exchange after each chunk.
+`read` repeats the exchange for every chunk in the named segments. `$data` in `expect` is stored in the memory buffer. Optional `ack` is a second exchange after each chunk. Optional `delay` is milliseconds to wait after each accepted chunk, including after `ack` (Kenwood TM-D710A clone at 57600 needs this so the next read does not outrun the radio).
 
 ```json
 {
@@ -114,6 +114,7 @@ JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` /
     "segments": ["channels", "settings"],
     "send": ["S", "$address", "$chunkSize"],
     "expect": ["X", "$address", "$length", "$data"],
+    "delay": 50,
     "ack": {
       "send": ["0x06"],
       "expect": "0x06"

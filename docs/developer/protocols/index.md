@@ -21,6 +21,7 @@ The HamBench ecosystem uses JSON languages to describe clone-style serial I/O an
 - **Chunk loop**: `read` / `write` repeats an exchange across named memory segments.
 - **Placeholders**: `$address`, `$chunkSize`, `$length`, `$data` are filled in at runtime.
 - **Write extras**: optional `chunkSize`, `delay`, and `skip` on a `write` step (UV-5R clone uses 16-byte blocks).
+- **Read extras**: optional `delay` after each accepted chunk (Kenwood TM-D710A clone at 57600).
 
 ## Memory-Map DSL (settings)
 
