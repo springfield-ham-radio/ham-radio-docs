@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
+    "prepare": "yarn build",
     "preview": "vitepress preview"
   }
 }
