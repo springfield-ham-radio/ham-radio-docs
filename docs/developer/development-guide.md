@@ -9,7 +9,7 @@ Before diving into development, we recommend reading the [Architecture Overview]
 ## Development Environment Setup
 
 ### Prerequisites
-- Node.js 18.0.0 or higher
+- Node.js 26.10.0 (see each repo’s `.nvmrc`)
 - Yarn package manager
 - TypeScript knowledge
 - Familiarity with amateur radio concepts

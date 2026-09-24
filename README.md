@@ -12,7 +12,7 @@ yarn install
 yarn dev
 ```
 
-Requires Node.js 24 (see `.nvmrc`). The site is served at `/ham-radio-docs/` to match GitHub Pages.
+Requires Node.js 26 (see `.nvmrc`). The site is served at `/ham-radio-docs/` to match GitHub Pages.
 
 ```bash
 yarn build
