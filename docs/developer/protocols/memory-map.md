@@ -122,7 +122,8 @@ Non-reserved fields should include `ui` for schema-driven forms and tables.
 - **Radio-wide settings:** `collectMemoryMapUiFields` (skips channel-bound structs).
 - **Settings groups:** declare a top-level `groups` array. Each group has `id` and `label`, and may include `description`, `icon` (Iconify name), and `warning` (`title` + `description`). Field `ui.group` must match a group `id`. Declaration order is the left-nav order on the Settings tab.
 - **Settings sub-groups:** a group may include nested `groups`. Those become headed sections in the settings panel. Set field `ui.subgroup` to the nested group `id`. Fields without `subgroup` stay at the top of the panel. `collectMemoryMapUiGroups` applies this metadata and omits empty groups and empty sub-groups. Fields whose `ui.group` is not declared still appear after the declared groups.
-- **Descriptions:** field, group, and sub-group `description` values appear as a help-icon tooltip after the label.
+- **Descriptions:** field, group, and sub-group `description` values appear in a help-icon tooltip after the label. Integer `min` / `max`, short enum lists, and ASCII length are shown in that tooltip when a description is present.
+- **Front-panel menu:** optional `ui.menu` is `{ "number": 0, "code": "SQL" }`. The tooltip shows it as `Menu 0 · SQL`. Omit `menu` when the setting is not a numbered keypad item.
 - **Display order:** struct field order is the EEPROM layout. Set `ui.order` (lower first) to change Settings-tab order without moving bytes. Fields without `order` keep declaration order.
 - **Per-channel extras:** put `ui` on fields of the `channelBindings.records` struct; `collectChannelMemoryMapUiFields` returns them for Channels-table columns. Bound RadioChannel fields (`rxfreq`, tones, …) are omitted. Use `formatMemoryMapFieldValue` for read-only cell text.
 
@@ -138,7 +139,8 @@ Widgets: `integer`, `select`, `switch`, `text`, `number`. Set `writable: false` 
     "subgroup": "receive",
     "label": "Carrier Squelch Level",
     "widget": "integer",
-    "description": "How strong a received signal must be before the speaker unmutes."
+    "description": "How strong a received signal must be before the speaker unmutes.",
+    "menu": { "number": 0, "code": "SQL" }
   }
 }
 ```
