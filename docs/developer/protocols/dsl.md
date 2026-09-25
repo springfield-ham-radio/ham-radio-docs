@@ -107,6 +107,8 @@ JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` /
 
 `read` repeats the exchange for every chunk in the named segments. `$data` in `expect` is stored in the memory buffer. Optional `ack` is a second exchange after each chunk. Optional `delay` is milliseconds to wait after each accepted chunk, including after `ack` (Kenwood TM-D710A clone at 57600 needs this so the next read does not outrun the radio).
 
+Optional `ready` is a byte added to the front of the next chunk when `ack.expect` times out. Give that ack a short `timeout`. Firmware that replies in time keeps the plain frame. Firmware that stays silent is not held until it sends an error byte; the next chunk is read with `ready` in front of `expect`.
+
 ```json
 {
   "description": "Read memory",
@@ -203,9 +205,12 @@ HamBench still uses a separate `cat` block (and `capabilities.liveControl`) for 
         "segments": ["channels", "settings"],
         "send": ["S", "$address", "$chunkSize"],
         "expect": ["X", "$address", "$length", "$data"],
+        "delay": 50,
+        "ready": "0x06",
         "ack": {
           "send": ["0x06"],
-          "expect": "0x06"
+          "expect": "0x06",
+          "timeout": 50
         }
       }
     }

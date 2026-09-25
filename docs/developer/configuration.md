@@ -174,9 +174,12 @@ radio-module-baofeng/
         "segments": ["channels", "settings"],
         "send": ["S", "$address", "$chunkSize"],
         "expect": ["X", "$address", "$length", "$data"],
+        "delay": 50,
+        "ready": "0x06",
         "ack": {
           "send": ["0x06"],
-          "expect": "0x06"
+          "expect": "0x06",
+          "timeout": 50
         }
       }
     }
@@ -401,9 +404,12 @@ Here's a complete example showing all configuration components:
         "segments": ["channels", "settings"],
         "send": ["S", "$address", "$chunkSize"],
         "expect": ["X", "$address", "$length", "$data"],
+        "delay": 50,
+        "ready": "0x06",
         "ack": {
           "send": ["0x06"],
-          "expect": "0x06"
+          "expect": "0x06",
+          "timeout": 50
         }
       }
     }
