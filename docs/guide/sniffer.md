@@ -10,7 +10,7 @@ HamBench talks to a separate headless [ham-radio-sniffer](https://github.com/spr
 2. Open **Radio → Sniffer**. **Computer port** is the debug cable; **Radio port** is the programming cable. Turn on **Bridge ports**.
 3. Traffic streams into the Traffic panel. **Save capture** writes JSON for offline review.
 
-**Preferences → Serial ports** can hide macOS system devices from these lists (same filter as Import and Write).
+**Preferences → Serial ports** can hide macOS system devices from these lists and can name a port so the selector shows that name. See [Read and write memory](/guide/radio).
 
 If the bridge is running and byte counts stay at 0, the selected serial device is not receiving. On the sniffer host, `SNIFFER_LOG_LEVEL=debug yarn start` prints every chunk as hex.
 

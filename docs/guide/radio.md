@@ -20,7 +20,7 @@ Until a memory is loaded, a radio card offers **Import from Radio** and **Open M
 
 Write uses the radio on that card. Import and Write open on the card's saved serial port and let you choose a different one. Baud rate comes from the radio in Preferences. File → Import and File → Write use the card you last clicked.
 
-**Preferences → Serial ports** hides common macOS system devices from port lists. You can add extra names to hide.
+**Preferences → Serial ports** hides common macOS system devices from port lists. You can add extra names to hide. You can also give a system port a name, such as `usbserial-A50285BI` as "Kenwood cable". Import, Write, CAT, saved radios, and Sniffer show that name in the serial port selector. The system name stays on the menu item so you can still tell adapters apart.
 
 ## CAT-busy ports
 
