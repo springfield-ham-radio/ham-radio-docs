@@ -30,7 +30,7 @@ While a [CAT](/guide/cat) session holds a serial port, Import and Write will not
 
 Every import and write captures serial bytes. Inspect traffic on the **Debug** tab, or **Save serial log** if the transfer fails.
 
-The **Driver** tab shows the read/write protocol as a sequence diagram (or JSON) and the channel/settings memory maps.
+The **Driver** tab shows the read/write protocol as a sequence diagram (or syntax-highlighted JSON) and the channel/settings memory maps.
 
 **Radio → Hex Dump** shows the loaded image next to the memory map. Click a mapped byte to select that field.
 
