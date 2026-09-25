@@ -24,6 +24,10 @@ Select rows and choose **Delete** to remove those channels from the library and 
 
 On the Radio page, select memory channels and **Save to library** to store them for reuse across radios.
 
+## Replace a memory slot
+
+On the Radio page, open a memory channel and choose **Replace from library**. The picker uses the same group tabs as this page. Pick a saved channel to copy its name, frequencies, and tones into that slot. The memory slot number stays the same. Power, mode, scan, and other radio-specific settings stay as they are. Write to the radio to program the device.
+
 ## Import CSV
 
 **Import CSV** accepts:
