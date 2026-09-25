@@ -59,7 +59,7 @@ Information about the configuration and its source module.
 - `license`: Module license
 - `lastUpdated`: Timestamp of last update
 
-The radio JSON also has a top-level `version`. That is the radio-module package version (the same number as `package.json`). `yarn pack:release` stamps it; do not edit it by hand. `metadata.moduleVersion` is filled in when the registry loads a packaged module.
+The radio JSON also has a top-level `version`. That is this radio's driver version (protocol, serial, memory, and the schemas and memory maps it references). Bump it in the same change that edits those files. It is independent of `package.json`, which is the module zip version. `metadata.moduleVersion` is filled in when the registry loads a packaged module.
 
 ## For Radio Module Developers
 

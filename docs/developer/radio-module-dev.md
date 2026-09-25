@@ -98,7 +98,7 @@ Each `configs/*.json` file is one radio. It owns protocol steps, serial settings
 - Live VFO: set `capabilities.liveControl` and a `cat` block. That is still JSON, not code.
 - If the PC port accepts more than one baud, list `serialConfig.baudRates` and set `baudRate` to the default.
 
-`pack:release` stamps `package.json`'s version into every `configs/*.json` `version` field. Do not bump those fields by hand. It also writes `dist-release/catalog-module.json` from those configs for the official catalog index.
+Each config's `version` is that radio's driver version. Bump it when the config or a file it `$ref`s changes. `package.json` is the zip version published to the catalog; `pack:release` does not copy it onto configs. `pack:release` writes `dist-release/catalog-module.json` from those configs for the official catalog index.
 
 ## What HamBench loads
 

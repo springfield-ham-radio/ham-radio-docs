@@ -9,7 +9,7 @@ HamBench does not bundle every radio. You install **JSON radio modules** for the
 3. Select modules and click **Install**.
 4. The app downloads each module zip from GitHub Releases, checks `sha256:…` integrity, extracts JSON under the app data directory, and adds radios to the local catalog as source `installed`.
 
-Later, open **Preferences → Drivers**. Installed and available drivers are grouped by manufacturer, with each model listed underneath. **Install** on a model adds only that radio from the manufacturer zip. Official modules show a marker when a newer version is available; **Update** downloads that module.
+Later, open **Preferences → Drivers**. Installed and available drivers are grouped by manufacturer, with each model listed underneath. The version under an installed model is that radio's driver version. **Install** on a model adds only that radio from the manufacturer zip. Official modules show a marker when a newer zip is in the catalog; **Update** downloads that module.
 
 After a driver is installed, add the radio you own under **Preferences → Radios**: a name, that manufacturer and model, the baud rate when the driver lists more than one, and the serial port you usually use. The Radio page opens those radios as cards.
 
