@@ -1,6 +1,6 @@
 # Install HamBench
 
-Installers for macOS (Apple Silicon), Windows, and Linux are on [GitHub Releases](https://github.com/springfield-ham-radio/ham-radio-ui/releases).
+Installers for macOS (Apple Silicon), Windows, and Linux are on [GitHub Releases](https://github.com/springfield-ham-radio/ham-radio-ui/releases). The macOS build is the file whose name includes **macOS** and ends in `.dmg`. Linux files include **Linux** (`.deb`, `.rpm`, or `.AppImage`). Windows files include **Windows**.
 
 Packaged builds check that feed on launch and every few hours, download updates in the background, and prompt you to restart. Turn this off under **Preferences → Updates**.
 
