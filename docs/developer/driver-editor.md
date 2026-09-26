@@ -19,6 +19,7 @@ Turn Developer Mode off to hide that tab. A draft you already started stays on d
 | Memory | Channel bindings, the structs that hold the name, frequencies, and tones, and settings groups. The groups are a tab menu, and a settings field is edited inside the selected group, such as Basic or Advanced. Structs keep the radio address and the fields that are not on the Settings screen. Addresses are hex in the form, shown as `0x0000`; the JSON stores a struct `seek` as `0x0000`. The JSON panel is that memory-map file. The protocol document keeps only its path |
 | Read | `readMemory` exchanges, chunked reads, and CAT reads |
 | Write | `writeMemory` exchanges, chunked writes, and CAT writes. Skip ranges are hex in the form, shown as `0x0000`; the JSON stores those addresses as numbers |
+| Debug | Two clones of the radio. Name the channel or setting you change between the reads, with the original value and the new value. A side-by-side hex dump highlights the bytes that differ, which is where that field is stored. This comparison is not written into the protocol JSON |
 
 **Example** loads a short clone-style driver you can walk through. **Load installed** copies a module that is already installed, including the channel schema and the memory map, so the Channel and Memory tabs show that radio's fields. The Settings screen is the memory map. **Import** and **Export** read and write a JSON file. The copy icon at the upper right of the JSON panel puts the same document on the clipboard.
 
