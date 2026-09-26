@@ -48,7 +48,7 @@ See [`radio-module-baofeng`](https://github.com/springfield-ham-radio/radio-modu
 
 Do not set `main`, `types`, or a codec factory path. There is no module entrypoint.
 
-You can draft the protocol in the desktop app before you fill in this layout. **View → Developer Mode** opens a Driver page whose form writes serial settings, memory segments, protocol steps, the channel schema, and the memory map, including settings groups. Copy the protocol JSON into `configs/`, and copy the schema and memory map from their tabs. See [Driver editor](/developer/driver-editor).
+You can draft the protocol in the desktop app before you fill in this layout. **View → Developer Mode** opens a Driver page whose form writes serial settings, memory segments, protocol steps, the channel schema, and the memory map, including settings groups. **Load installed** fills the Channel and Memory tabs from a module that is already installed. Copy the protocol JSON into `configs/`, and copy the schema and memory map from their tabs. See [Driver editor](/developer/driver-editor).
 
 ## Radio JSON
 
