@@ -35,6 +35,6 @@ Choose **More info** → **Run anyway**.
 
 1. Open HamBench.
 2. If no drivers are installed, **Install radios** opens so you can pick official modules. Later, manage them under **Preferences → Drivers**.
-3. Add each radio you own under **Preferences → Radios**, then open it on the Radio page and use **Import** or **Open** to load memory.
+3. Add each radio you own under **Preferences → Radios**, then open it on the Radio page and use **Import** or **Open** to load memory. To clone a radio you have not added yet, use **Import from Radio** on the empty Radio page.
 
 See [Install radios](/guide/install-radios) and [Read and write memory](/guide/radio).

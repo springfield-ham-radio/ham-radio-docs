@@ -6,7 +6,9 @@ The **Radio** page programs clone-style and live-CAT memories. Live VFO, mode, p
 
 Add each radio you use under **Preferences → Radios**. Give it a name, then choose the manufacturer, model, baud rate when the driver lists more than one, and the serial port that cable usually uses. Install the model first under **Preferences → Drivers**.
 
-On the Radio page, **Add radio** opens one of those radios as a card. Each card keeps its own memory. **Stack** lists cards in a column. **Tile** places them side by side, so two radios on two serial cables can stay open together. Close a card from its header; that does not delete the radio from Preferences.
+On the Radio page, **Add radio** opens one of those radios as a card. Each card keeps its own memory. **Tabs** shows one radio at a time, with the others stacked behind the tab you pick. **Tile** places them side by side, so two radios on two serial cables can stay open together. Close a card from its header; that does not delete the radio from Preferences.
+
+When no card is open, **Import from Radio** clones a connected radio without adding it under Preferences. Choose the installed model, the baud rate when the driver lists more than one, and the serial port. The memory opens on a card for this session. **Save** keeps the memory file. Closing the card, or quitting the app, drops that clone.
 
 Import and Write use the radio on that card. The **CAT** tab is on that card only when its driver supports live control. The connect dialog starts on the saved serial port. Pick another port if this cable is plugged into a different adapter. The saved port does not change.
 
