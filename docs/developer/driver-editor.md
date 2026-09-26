@@ -18,13 +18,13 @@ Turn Developer Mode off to hide that tab. A draft you already started stays on d
 | Serial | `serialConfig`, including the open baud rate and optional RTS/CTS or line levels |
 | Memory | `memoryConfig` segments. `endAddress` is inclusive |
 | Read | `readMemory` exchanges, chunked reads, and CAT reads |
-| Write | `writeMemory` exchanges, chunked writes, and CAT writes |
+| Write | `writeMemory` exchanges, chunked writes, and CAT writes. Skip ranges are hex in the form, shown as `0x0000`; the JSON stores those addresses as numbers |
 
-**Example** loads a short clone-style driver you can walk through. **Load installed** copies a module that is already installed. **Import** and **Export** read and write a JSON file. **Copy JSON** puts the same document on the clipboard.
+**Example** loads a short clone-style driver you can walk through. **Load installed** copies a module that is already installed. **Import** and **Export** read and write a JSON file. The copy icon at the upper right of the JSON panel puts the same document on the clipboard.
 
 ## Debug a step
 
-On Read or Write, select a step or use Previous and Next. The guide says what the computer sends and what the radio is expected to answer, and the sequence diagram draws that one step.
+On Read or Write, the step list, the form, and the guide start at an even split between the form and the guide. Drag the dividers to change those widths. Drag a step or a byte by its handle to change the order. Select a step or use Previous and Next. What the computer sends, and what the radio is expected to answer, sits in its own section, apart from the help text. The sequence diagram draws the whole protocol, the same way the radio Driver tab does, and highlights the step that is open in the form. Choose a step in the diagram to open it.
 
 Errors name the field that is wrong. A step with an error is left out of the JSON preview so the preview still parses. Warnings, such as a chunked read with no `$data`, stay in the JSON and are called out in the guide.
 
