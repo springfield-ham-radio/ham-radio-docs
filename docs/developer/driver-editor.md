@@ -15,6 +15,7 @@ Turn Developer Mode off to hide that tab. A draft you already started stays on d
 | Section | JSON |
 | --- | --- |
 | Setup | Identity (`id`, `version`, `description`, `capabilities`, optional schema and memory-map paths), serial settings (`serialConfig`, including at least one supported baud rate, the default baud rate chosen from those speeds, and optional RTS/CTS or line levels), and `memoryConfig` segments. Segment addresses are hex in the form, shown as `0x0000`; the JSON stores them as numbers. `endAddress` is inclusive |
+| Channel | The channel JSON Schema: optional name, receive and transmit frequencies in hertz, and optional CTCSS or DCS tones. The JSON panel is that schema file. The protocol document keeps only its path |
 | Read | `readMemory` exchanges, chunked reads, and CAT reads |
 | Write | `writeMemory` exchanges, chunked writes, and CAT writes. Skip ranges are hex in the form, shown as `0x0000`; the JSON stores those addresses as numbers |
 
