@@ -6,7 +6,7 @@ The memory-map field layout and the live CAT command profile are still JSON file
 
 ## Open it
 
-Choose **View → Developer Mode**. The check is remembered. HamBench opens the **Driver** page and adds a Driver tab next to WaveBench.
+Choose **View → Developer Mode**. The check is remembered. HamBench opens the **Driver** page and adds a Driver tab next to WaveBench. A warning at the top of the page explains that this edits the programming protocol. Close it to hide it until the next launch.
 
 Turn Developer Mode off to hide that tab. A draft you already started stays on disk until you replace it.
 
