@@ -18,8 +18,9 @@ Official modules are **JSON zips on GitHub Releases**, listed in [`radio-module-
 
 1. [Architecture](/developer/architecture-overview)
 2. [Create a radio module](/developer/radio-module-dev)
-3. [Protocol DSL](/developer/protocols/dsl) and [Memory-map DSL](/developer/protocols/memory-map)
-4. [Publish a module](/developer/publishing-modules)
+3. [Driver editor](/developer/driver-editor) in the desktop app
+4. [Protocol DSL](/developer/protocols/dsl) and [Memory-map DSL](/developer/protocols/memory-map)
+5. [Publish a module](/developer/publishing-modules)
 
 ```typescript
 import { RadioDriver } from '@springfield/ham-radio-driver';
