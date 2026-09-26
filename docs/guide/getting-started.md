@@ -38,3 +38,9 @@ Choose **More info** → **Run anyway**.
 3. Add each radio you own under **Preferences → Radios**, then open it on the Radio page and use **Import** or **Open** to load memory. To clone a radio you have not added yet, use **Import from Radio** on the empty Radio page.
 
 See [Install radios](/guide/install-radios) and [Read and write memory](/guide/radio).
+
+## Zoom
+
+**View → Zoom In**, **Zoom Out**, and **Zoom to 100%** change the window scale. Each step is 20%, from 20% through 1000%.
+
+On macOS the shortcuts are Command-= (or Command-+), Command-minus, and Command-0. On Windows and Linux they are Control-= (or Control-+), Control-minus, and Control-0. Pinch the trackpad, or hold Control and scroll, to zoom as well. Zoom lasts until you quit.
