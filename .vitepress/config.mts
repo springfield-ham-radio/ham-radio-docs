@@ -48,6 +48,7 @@ export default withMermaid(defineConfig({
           text: 'Radio modules',
           items: [
             { text: 'Create a module', link: '/developer/radio-module-dev' },
+            { text: 'Driver editor', link: '/developer/driver-editor' },
             { text: 'Configuration format', link: '/developer/configuration' },
             { text: 'Publish a module', link: '/developer/publishing-modules' }
           ]
