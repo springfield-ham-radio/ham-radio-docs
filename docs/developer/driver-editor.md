@@ -14,13 +14,13 @@ Turn Developer Mode off to hide that tab. A draft you already started stays on d
 
 | Section | JSON |
 | --- | --- |
-| Setup | Identity (`id`, `version`, `description`, `capabilities`, optional schema and memory-map paths), serial settings (`serialConfig`, including at least one supported baud rate, the default baud rate chosen from those speeds, and optional RTS/CTS or line levels), and `memoryConfig` segments. Segment addresses are hex in the form, shown as `0x0000`; the JSON stores them as numbers. `endAddress` is inclusive |
+| Setup | Identity (`id`, `version`, `description`, `capabilities`, optional channel-schema and memory-map paths), serial settings (`serialConfig`, including at least one supported baud rate, the default baud rate chosen from those speeds, and optional RTS/CTS or line levels), and `memoryConfig` segments. The protocol writes an open settings schema next to the channel schema path. Segment addresses are hex in the form, shown as `0x0000`; the JSON stores them as numbers. `endAddress` is inclusive |
 | Channel | The channel JSON Schema: optional name, receive and transmit frequencies in hertz, and optional CTCSS or DCS tones. The JSON panel is that schema file. The protocol document keeps only its path |
 | Memory | Channel bindings, the structs that hold the name, frequencies, and tones, and settings groups. The groups are a tab menu, and a settings field is edited inside the selected group, such as Basic or Advanced. Structs keep the radio address and the fields that are not on the Settings screen. Addresses are hex in the form, shown as `0x0000`; the JSON stores a struct `seek` as `0x0000`. The JSON panel is that memory-map file. The protocol document keeps only its path |
 | Read | `readMemory` exchanges, chunked reads, and CAT reads |
 | Write | `writeMemory` exchanges, chunked writes, and CAT writes. Skip ranges are hex in the form, shown as `0x0000`; the JSON stores those addresses as numbers |
 
-**Example** loads a short clone-style driver you can walk through. **Load installed** copies a module that is already installed, including the channel schema and the memory map, so the Channel and Memory tabs show that radio's fields. The settings schema stays a path. The Settings screen is the memory map. **Import** and **Export** read and write a JSON file. The copy icon at the upper right of the JSON panel puts the same document on the clipboard.
+**Example** loads a short clone-style driver you can walk through. **Load installed** copies a module that is already installed, including the channel schema and the memory map, so the Channel and Memory tabs show that radio's fields. The Settings screen is the memory map. **Import** and **Export** read and write a JSON file. The copy icon at the upper right of the JSON panel puts the same document on the clipboard.
 
 ## Debug a step
 
