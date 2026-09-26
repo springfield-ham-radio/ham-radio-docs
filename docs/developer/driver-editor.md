@@ -14,9 +14,7 @@ Turn Developer Mode off to hide that tab. A draft you already started stays on d
 
 | Section | JSON |
 | --- | --- |
-| Identity | `id`, `version`, `description`, `capabilities`, optional schema and memory-map paths |
-| Serial | `serialConfig`, including the open baud rate and optional RTS/CTS or line levels |
-| Memory | `memoryConfig` segments. `endAddress` is inclusive |
+| Setup | Identity (`id`, `version`, `description`, `capabilities`, optional schema and memory-map paths), serial settings (`serialConfig`, including at least one supported baud rate, the default baud rate chosen from those speeds, and optional RTS/CTS or line levels), and `memoryConfig` segments. Segment addresses are hex in the form, shown as `0x0000`; the JSON stores them as numbers. `endAddress` is inclusive |
 | Read | `readMemory` exchanges, chunked reads, and CAT reads |
 | Write | `writeMemory` exchanges, chunked writes, and CAT writes. Skip ranges are hex in the form, shown as `0x0000`; the JSON stores those addresses as numbers |
 
@@ -40,4 +38,4 @@ Placeholders:
 
 ## Publish
 
-Export the JSON into a module's `configs/` directory. Add the memory map and schemas beside it, and point the Identity paths at those files. Then follow [Create a radio module](/developer/radio-module-dev) and [Publish a module](/developer/publishing-modules).
+Export the JSON into a module's `configs/` directory. Add the memory map and schemas beside it, and point the Setup paths at those files. Then follow [Create a radio module](/developer/radio-module-dev) and [Publish a module](/developer/publishing-modules).
