@@ -1,8 +1,8 @@
 # Driver editor
 
-HamBench can draft a radio's protocol from the desktop app. The form builds serial settings, memory segments, protocol steps, the channel schema, and the channel half of the memory map. Byte tokens are chosen as hex, one ASCII character, or a placeholder, so the saved JSON stays syntactically valid while the protocol is still incomplete.
+HamBench can draft a radio's protocol from the desktop app. The form builds serial settings, memory segments, protocol steps, the channel schema, and the memory map, including settings groups. Byte tokens are chosen as hex, one ASCII character, or a placeholder, so the saved JSON stays syntactically valid while the protocol is still incomplete.
 
-Radio-wide settings groups and the live CAT command profile are still JSON files. See [Protocol DSL](/developer/protocols/dsl) and [Memory-map DSL](/developer/protocols/memory-map).
+The live CAT command profile is still a JSON file. See [Protocol DSL](/developer/protocols/dsl) and [Memory-map DSL](/developer/protocols/memory-map).
 
 ## Open it
 
@@ -16,7 +16,7 @@ Turn Developer Mode off to hide that tab. A draft you already started stays on d
 | --- | --- |
 | Setup | Identity (`id`, `version`, `description`, `capabilities`, optional schema and memory-map paths), serial settings (`serialConfig`, including at least one supported baud rate, the default baud rate chosen from those speeds, and optional RTS/CTS or line levels), and `memoryConfig` segments. Segment addresses are hex in the form, shown as `0x0000`; the JSON stores them as numbers. `endAddress` is inclusive |
 | Channel | The channel JSON Schema: optional name, receive and transmit frequencies in hertz, and optional CTCSS or DCS tones. The JSON panel is that schema file. The protocol document keeps only its path |
-| Memory | Channel bindings and the structs that hold the name, frequencies, and tones. Addresses are hex in the form, shown as `0x0000`; the JSON stores a struct `seek` as `0x0000`. The JSON panel is that memory-map file. The protocol document keeps only its path. Settings groups are not in this file |
+| Memory | Channel bindings, the structs that hold the name, frequencies, and tones, and settings groups. A field can point at a group with a label and a widget. Addresses are hex in the form, shown as `0x0000`; the JSON stores a struct `seek` as `0x0000`. The JSON panel is that memory-map file. The protocol document keeps only its path |
 | Read | `readMemory` exchanges, chunked reads, and CAT reads |
 | Write | `writeMemory` exchanges, chunked writes, and CAT writes. Skip ranges are hex in the form, shown as `0x0000`; the JSON stores those addresses as numbers |
 
