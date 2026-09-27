@@ -6,21 +6,21 @@ HamBench talks to a separate headless [ham-radio-sniffer](https://github.com/spr
 
 ## Connection
 
-1. Open **Preferences → Sniffer**. Set **Host** (default `127.0.0.1`) and **Port** (default `3010`). **Install directory** defaults to `~/ham-radio-sniffer`; **Run command** defaults to `yarn start`.
+1. Open **Preferences → Sniffer**. Set **Host** (default `127.0.0.1`) and **Port** (default `3010`). **Install directory** defaults to `~/ham-radio-sniffer`; **Run command** defaults to `./ham-radio-sniffer`.
 2. Open **Radio → Sniffer**. **Computer port** is the debug cable; **Radio port** is the programming cable. Turn on **Bridge ports**.
 3. Traffic streams into the Traffic panel. **Save capture** writes JSON for offline review.
 
 **Preferences → Serial ports** can hide macOS system devices from these lists and can name a port so the selector shows that name. See [Read and write memory](/guide/radio).
 
-If the bridge is running and byte counts stay at 0, the selected serial device is not receiving. On the sniffer host, `SNIFFER_LOG_LEVEL=debug yarn start` prints every chunk as hex.
+If the bridge is running and byte counts stay at 0, the selected serial device is not receiving. Each bridge write is logged with the destination port and the hex, including when the write finishes or is dropped. On the sniffer host, `SNIFFER_LOG_LEVEL=debug ./ham-radio-sniffer` also prints every chunk as hex.
 
-You can start the sniffer yourself (`yarn start` after build) and only set Host and Port.
+You can start the sniffer yourself (`./ham-radio-sniffer`) and only set Host and Port.
 
 ## Install, start, and stop
 
-These controls are in **Preferences → Sniffer** and run only in the desktop app. HamBench does **not** install Node for you.
+These controls are in **Preferences → Sniffer** and run only in the desktop app. Install copies one binary; Node is not required.
 
-1. **Install** copies bundled sniffer sources, then runs `yarn install` and `yarn build` so `serialport` matches that machine. Use it again to update.
+1. **Install** copies the bundled sniffer binary into the install directory. Use it again to update.
 2. **Running** starts a detached process and waits until `/api/health` responds. If start fails, the error includes `sniffer.log` tails.
 3. An older install shows **Update available** when its version is behind the copy bundled in HamBench.
 
