@@ -20,7 +20,7 @@ Radios that set `liveControl` to false, or omit it and have no Kenwood CAT hands
 
 ## Operate
 
-Each connected radio has a panel with VFO cards. Edit the MHz field and press Enter or leave the field to QSY. Mode and power lists are the names from the radio module. **Log contact** opens the station log with frequency, mode, and band filled in.
+Each connected radio has a panel with VFO cards. Edit the MHz field and press Enter or leave the field to QSY. Mode and power lists are the names from the radio module. **Log contact** opens the [station log](/guide/log) with frequency, mode, and band filled in.
 
 **Hold to transmit** sends `TX` while the button is held and `RX` on release. That keys microphone audio on whichever side currently has PTT, not audio from the DATA port. A warning on the Control tab explains this; dismiss it with the close button if you already know.
 

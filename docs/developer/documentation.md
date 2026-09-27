@@ -2,7 +2,7 @@
 
 HamBench docs are split in two:
 
-- **[User Guide](/guide/)** — install the app, install radios, Import/Write, CAT, channel library, stations and antennas, sniffer, license privileges
+- **[User Guide](/guide/)** — install the app, install radios, Import/Write, CAT, station log, channel library, stations and antennas, sniffer, license privileges
 - **[Developer docs](/developer/)** — packages, protocol DSL, memory maps, radio modules, registry
 - **[Architecture decision records](/developer/adr/)** — why a layer, runtime, or public contract changed
 
