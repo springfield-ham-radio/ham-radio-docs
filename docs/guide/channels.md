@@ -23,7 +23,7 @@ Weather, FRS, and GMRS cannot be used as names for a group you create.
 
 Select rows and choose **Add to radio** to copy them into unused memory slots. **Export CSV** on one of these tabs exports that list.
 
-Hide any of these tabs under **Preferences → Channels**.
+Each group is on by default. Turn one off under **Preferences → Channels** to remove its tab.
 
 Import and export follow the open tab. **All** imports and exports the whole library. A group you created imports into that group and exports only its channels. A built-in tab exports its channels and does not accept an import.
 
