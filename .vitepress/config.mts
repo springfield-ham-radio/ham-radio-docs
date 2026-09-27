@@ -41,7 +41,8 @@ export default withMermaid(defineConfig({
             { text: 'Architecture overview', link: '/developer/architecture-overview' },
             { text: 'Architecture reference', link: '/developer/architecture' },
             { text: 'Modules', link: '/developer/module-comparison' },
-            { text: 'Development guide', link: '/developer/development-guide' }
+            { text: 'Development guide', link: '/developer/development-guide' },
+            { text: 'Architecture decisions', link: '/developer/adr/' }
           ]
         },
         {

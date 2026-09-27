@@ -9,7 +9,7 @@ HamBench is a set of TypeScript packages plus JSON radio modules. The desktop ap
 | [`@springfield/ham-radio-driver`](https://github.com/springfield-ham-radio/ham-radio-driver) | Serial driver that executes protocol steps |
 | [`@springfield/ham-radio-registry`](https://github.com/springfield-ham-radio/ham-radio-registry) | Load and validate radio configs; official catalog types |
 | [`ham-radio-ui`](https://github.com/springfield-ham-radio/ham-radio-ui) | HamBench desktop app |
-| [`ham-radio-sniffer`](https://github.com/springfield-ham-radio/ham-radio-sniffer) | Headless serial bridge |
+| [`ham-radio-sniffer`](https://github.com/springfield-ham-radio/ham-radio-sniffer) | Headless serial bridge. [ADR 0001](/developer/adr/0001-rewrite-sniffer-in-rust) accepts a Rust rewrite |
 | [`radio-module-baofeng`](https://github.com/springfield-ham-radio/radio-module-baofeng) / [`radio-module-kenwood`](https://github.com/springfield-ham-radio/radio-module-kenwood) | JSON radio modules |
 
 Official modules are **JSON zips on GitHub Releases**, listed in [`radio-module-catalog`](https://github.com/springfield-ham-radio/radio-module-catalog). They are not published to npm.
