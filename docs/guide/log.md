@@ -21,3 +21,5 @@ The marker color is the QSL card state from **Card sent** and **Card received** 
 | Violet | Several contacts in the same grid with different card states |
 
 Click a marker to open that contact. When several contacts share a grid, the popup lists them. The **Card** column in the table uses the same states. Search filters both the table and the map.
+
+Stations from **Preferences → Stations** appear as pins when they have a grid or coordinates. A pin uses the station's latitude and longitude when those are set, and otherwise the center of the grid. The nickname is drawn under the pin. Click a pin to see the location. A station with no location is left off the map.
