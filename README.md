@@ -18,3 +18,8 @@ Requires Node.js 26 (see `.nvmrc`). The site is served at `/ham-radio-docs/` to 
 yarn build
 yarn preview
 ```
+
+## License
+
+Released under the MIT License. Copyright (c) 2026 Bryan Hunt. See [LICENSE](LICENSE).
+
