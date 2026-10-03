@@ -1,6 +1,6 @@
 # Antennas
 
-HamBench stores **stations** (operating sites) and the antennas at each site. Types are generic; it does not yet ship manufacturer catalogs.
+HamBench stores **stations** (operating sites), the antennas installed at each site, and the antennas mounted on a radio. Types are generic; it does not yet ship manufacturer catalogs.
 
 ## Add a station
 
@@ -11,15 +11,26 @@ HamBench stores **stations** (operating sites) and the antennas at each site. Ty
 
 A Callook license grid is copied onto Home only when Home has no location yet. That FCC mailing-address grid is a starting point, not the shack — you can always overwrite it. You cannot delete the last station. Removing a station also removes its antennas.
 
+## Add an antenna on a radio
+
+A handheld whip, rubber duck, or other antenna screwed onto a radio belongs to that radio. It is not installed at Home or Portable.
+
+1. Open **Preferences → Radios** and select the radio.
+2. Click **Add** in the antennas list under that radio.
+3. Pick a type. A new antenna starts as a dual-band 2 m / 70 cm vertical at **1.5 m**, about head height. Change the type, height, heading, or bands the same way as a station antenna. Verticals and loops do not use heading.
+4. Optionally name it, and enter a **Manufacturer** and **Model** (for example Nagoya NA-771). Those are free text. HamBench does not ship a manufacturer catalog.
+
+Removing the radio removes the antennas mounted on it. The same whip on two radios is two records. The list stays on this computer (localStorage).
+
 ## Add an antenna at a station
 
 1. Select the station, then click **Add** in the antennas list.
 2. Pick a type (dipole, inverted-V, quarter-wave vertical, 3-element Yagi, magnetic loop, end-fed, dual-band 2 m / 70 cm vertical, 2 m Yagi, or 70 cm Yagi).
 3. Set **Height AGL** in meters. For a Yagi or dipole, set **Heading** in true degrees (boom or broadside of maximum radiation). Verticals and loops are omnidirectional and do not use heading.
-4. Optionally name it and limit **Bands** (160 m through 70 cm). Empty bands keep the type defaults.
+4. Optionally name it, set **Manufacturer** and **Model**, and limit **Bands** (160 m through 70 cm). Empty bands keep the type defaults. Manufacturer and model are free text, not a catalog.
 5. For a dipole, inverted-V, or HF Yagi, turn on **Traps** if the antenna uses LC traps for extra HF bands. A tribander Yagi starts trapped (20/15/10, traps at 15 m and 10 m). A single-band 40 m dipole plus traps becomes 80/40. Leave traps off for a fan or parallel-wire dipole.
 
-The same physical antenna at two sites is two records. The list stays on this computer (localStorage). It is not a radio module. The [station log](/guide/log) offers an antenna only when its bands include the contact’s band.
+The same physical antenna at two sites is two records. The list stays on this computer (localStorage). It is not a radio module. The [station log](/guide/log) offers antennas mounted on the selected radio and station antennas whose bands include the contact’s band. When that radio has one mounted antenna for the band, the contact uses it. Otherwise it uses the station antenna selected here.
 
 ## Use it on Propagation
 
