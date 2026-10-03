@@ -1,6 +1,7 @@
 {
   "name": "ham-radio-docs",
   "private": true,
+  "license": "MIT",
   "packageManager": "yarn@4.6.0",
   "repository": {
     "type": "git",
