@@ -26,7 +26,16 @@ Communication settings for the serial connection to the radio.
 - `stopBits`: Number of stop bits (typically 1)
 - `parity`: Parity setting (typically "none")
 
-### 3. Memory Configuration
+### 3. Transmit bands
+
+Optional `bands` lists the amateur bands this model can transmit on. Use ADIF band tokens: `160m`, `80m`, `40m`, `30m`, `20m`, `17m`, `15m`, `12m`, `10m`, `6m`, `2m`, `1.25m`, `70cm`, `33cm`, `23cm`. HamBench shows them on the saved radio and compares them with the band of a logged contact. Leave `bands` out when coverage is unknown. Do not list receive-only ranges.
+
+```json
+"bands": ["2m", "70cm"]
+```
+
+### 4. Memory Configuration
+
 Layout and organization of the radio's memory structure.
 
 **Key Elements**:
@@ -34,7 +43,7 @@ Layout and organization of the radio's memory structure.
 - `addressSize` / `addressEndianness`: How `$address` is encoded on the wire
 - `segments`: Named memory regions with inclusive `startAddress`–`endAddress` ranges
 
-### 4. Schema Definitions
+### 5. Schema Definitions
 JSON schemas that define the structure and validation rules for radio data.
 
 **Key Elements**:
@@ -42,14 +51,14 @@ JSON schemas that define the structure and validation rules for radio data.
 - `channelSchema`: Schema for channel memory data
 - Support for `$ref` references to shared schemas
 
-### 5. Codec Configuration
+### 6. Codec Configuration
 HamBench encodes and decodes with the generic memory-map codec. The module points at a JSON map; it does not ship TypeScript.
 
 **Key Elements**:
 - `codec.type`: `"memoryMap"`
 - `memoryMap.$ref`: path to the memory-map JSON under `src/shared/memory-maps/`
 
-### 6. Metadata
+### 7. Metadata
 Information about the configuration and its source module.
 
 **Key Elements**:

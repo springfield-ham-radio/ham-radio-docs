@@ -98,6 +98,7 @@ Each `configs/*.json` file is one radio. It owns protocol steps, serial settings
 - Protocol: [Protocol DSL](/developer/protocols/dsl) (`send`/`expect`, `read`/`write`, or `catRead`/`catWrite`).
 - Memory packing: [Memory-map DSL](/developer/protocols/memory-map). Declare `groups` on the map so the Settings tab can show labeled sections in the left nav; nested `groups` plus field `ui.subgroup` become headed sections in the panel. A radio-wide field’s `ui.group` matches a top-level group `id`. Per-channel extras use `channel`.
 - Live VFO: set `capabilities.liveControl` and a `cat` block. That is still JSON, not code.
+- Transmit coverage: set `bands` to ADIF tokens such as `["2m", "70cm"]`. Omit it when coverage is unknown. Do not list receive-only ranges.
 - If the PC port accepts more than one baud, list `serialConfig.baudRates` and set `baudRate` to the default.
 
 Each config's `version` is that radio's driver version. Bump it when the config or a file it `$ref`s changes. `package.json` is the zip version published to the catalog; `pack:release` does not copy it onto configs. `pack:release` writes `dist-release/catalog-module.json` from those configs for the official catalog index.

@@ -19,7 +19,7 @@ A Callook license grid is copied onto Home only when Home has no location yet. T
 4. Optionally name it and limit **Bands** (160 m through 70 cm). Empty bands keep the type defaults.
 5. For a dipole, inverted-V, or HF Yagi, turn on **Traps** if the antenna uses LC traps for extra HF bands. A tribander Yagi starts trapped (20/15/10, traps at 15 m and 10 m). A single-band 40 m dipole plus traps becomes 80/40. Leave traps off for a fan or parallel-wire dipole.
 
-The same physical antenna at two sites is two records. The list stays on this computer (localStorage). It is not a radio module.
+The same physical antenna at two sites is two records. The list stays on this computer (localStorage). It is not a radio module. The [station log](/guide/log) offers an antenna only when its bands include the contact’s band.
 
 ## Use it on Propagation
 

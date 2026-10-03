@@ -1,8 +1,10 @@
 # Station log
 
-The **Log** page stores QSO contacts in the app database. Add a contact with **Add contact**, or from **Log contact** on a [CAT](/guide/cat) VFO card, which fills in frequency, mode, and band.
+The **Log** page stores QSO contacts in the app database. Add a contact with **Add contact**, or from **Log contact** on a [CAT](/guide/cat) VFO card, which fills in frequency, mode, band, and the radio you logged from. When only one radio is saved, **Add contact** selects it. The selected station antenna is filled in when one is selected under **Preferences → Stations**. After the frequency is set, those menus list only the saved radios and station antennas configured for that band. A radio whose installed driver does not declare bands stays in the list. A selection that does not cover the band is cleared.
 
 **Import ADIF** and **Export ADIF** read and write an ADI file. Confirmed cards are `QSL_SENT` and `QSL_RCVD` set to `Y`.
+
+Leaving **Callsign** looks up a US license and fills an empty name, QTH, and grid. The QTH is the license city and state. The grid is the one from that lookup, or the Maidenhead locator for the license mailing address when the lookup has no coordinates. `FN31` in an empty grid field is the example text, not a filled value.
 
 ## Summary
 
@@ -15,29 +17,31 @@ A panel on the left counts the contacts in the table:
 | POTA | Contacts with a park reference |
 | QRZ | Contacts uploaded to QRZ.com |
 
-**Bands** and **Modes** list how many contacts used each one, busiest first. A POTA contact is one whose ADIF record has `SIG` `POTA` and `SIG_INFO`, `MY_SIG` `POTA` and `MY_SIG_INFO`, or `POTA_REF` / `MY_POTA_REF`. QRZ counts `QRZCOM_QSO_UPLOAD_STATUS` of `Y` (uploaded) or `M` (uploaded, then edited). Search limits these counts to the contacts that match.
+**Bands**, **Modes**, **Radios**, and **Antennas** list how many contacts used each one, busiest first. Radios and antennas count only contacts that have one recorded. A POTA contact is one whose ADIF record has `SIG` `POTA` and `SIG_INFO`, `MY_SIG` `POTA` and `MY_SIG_INFO`, or `POTA_REF` / `MY_POTA_REF`. QRZ counts `QRZCOM_QSO_UPLOAD_STATUS` of `Y` (uploaded) or `M` (uploaded, then edited). Search limits these counts to the contacts that match.
 
 ## Table
 
 | Column | Contents |
 | --- | --- |
 | Local Time | Start time in the computer's timezone. Click the heading to reverse the order. Stored and exported times stay UTC. |
-| Call | Their callsign |
+| Call | Callsign |
 | Band | ADIF band, such as `40M` or `70CM`. Filled from the frequency when the band is empty. |
 | Mode | Mode, with submode after a slash when one is set |
 | Freq | Frequency in MHz |
 | RST | RST sent and received |
-| Name | Their name |
+| Name | Name |
 | POTA | Park reference |
 | QRZ | A check when the contact is uploaded to QRZ.com, or `M` when it changed after upload |
 | Notes | Comment |
+| Radio | Saved radio used for the contact. The menu lists saved radios configured for this band. |
+| Antenna | Station antenna used for the contact. The menu lists station antennas configured for this band. |
 | Card | QSL card state, same colors as the map |
 
 ## Map
 
-**Map** shows a world map above the table. Drag the bar between the map and the table to make the map taller or shorter. That size is remembered. Tiles come from [OpenFreeMap](https://openfreemap.org/), which serves OpenStreetMap data with no account and no API key. The map needs a network connection. MapLibre draws the OpenFreeMap and OpenStreetMap attribution on the map.
+**Map** shows a world map above the table. Drag the bar between the map and the table to make the map taller or shorter. That size is remembered. Tiles come from [OpenFreeMap](https://openfreemap.org/), which serves OpenStreetMap data with no account and no API key. The map needs a network connection. By default the basemap follows the app theme: Liberty when the theme is light, Dark when it is dark. **Preferences → Appearance → Map style** can pin it to Liberty, Bright, Positron, Dark, or Fiord instead. That menu shows a small preview of the basemap. MapLibre draws the OpenFreeMap and OpenStreetMap attribution on the map.
 
-A contact is plotted at the center of its Maidenhead grid (**Their grid**). Contacts with an empty or invalid grid stay in the table and are counted under the map.
+A contact is plotted at the center of its Maidenhead grid (**Grid**). Contacts with an empty or invalid grid stay in the table and are counted under the map.
 
 The marker color is the QSL card state from **Card sent** and **Card received** on the contact:
 
