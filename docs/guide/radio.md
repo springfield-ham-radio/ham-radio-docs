@@ -4,7 +4,7 @@ The **Radio** page programs clone-style and live-CAT memories. Live VFO, mode, p
 
 ## Your radios
 
-Add each radio you use under **Preferences → Radios**. Give it a name, then choose the manufacturer, model, baud rate when the driver lists more than one, and the serial port that cable usually uses. Install the model first under **Preferences → Drivers**. When the installed driver lists transmit bands, those bands are shown under the radio. The [station log](/guide/log) offers that radio only on a band in the list. Reinstall the driver after a module update so a new band list is picked up.
+Add each radio you use under **Preferences → Radios**. Give it a name, then choose the manufacturer, model, baud rate when the driver lists more than one, the serial port that cable usually uses, and its usual transmit power in watts. Install the model first under **Preferences → Drivers**. When the installed driver lists transmit bands, those bands are shown under the radio. The [station log](/guide/log) offers that radio only on a band in the list. Reinstall the driver after a module update so a new band list is picked up.
 
 On the Radio page, **Add radio** opens one of those radios as a card. Each card keeps its own memory. **Tabs** shows one radio at a time, with the others stacked behind the tab you pick. **Tile** places them side by side, so two radios on two serial cables can stay open together. Close a card from its header; that does not delete the radio from Preferences.
 

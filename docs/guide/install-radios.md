@@ -11,7 +11,7 @@ HamBench does not bundle every radio. You install **JSON radio modules** for the
 
 Later, open **Preferences → Drivers**. Installed and available drivers are grouped by manufacturer, with each model listed underneath. The version under an installed model is that radio's driver version. **Install** on a model adds only that radio from the manufacturer zip. Official modules show a marker when a newer zip is in the catalog; **Update** downloads that module.
 
-After a driver is installed, add the radio you own under **Preferences → Radios**: a name, that manufacturer and model, the baud rate when the driver lists more than one, and the serial port you usually use. The Radio page opens those radios as cards.
+After a driver is installed, add the radio you own under **Preferences → Radios**: a name, that manufacturer and model, the baud rate when the driver lists more than one, the serial port you usually use, and its usual transmit power in watts. The Radio page opens those radios as cards.
 
 After a driver update that adds CAT fields, **Update** (or reinstall) the module so the catalog picks up the new `cat` profile.
 

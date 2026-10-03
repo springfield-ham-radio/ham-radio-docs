@@ -1,6 +1,6 @@
 # Station log
 
-The **Log** page stores QSO contacts in the app database. Add a contact with **Add contact**, or from **Log contact** on a [CAT](/guide/cat) VFO card, which fills in frequency, mode, band, and the radio you logged from. When only one radio is saved, **Add contact** selects it. The selected station antenna is filled in when one is selected under **Preferences → Stations**. After the frequency is set, those menus list only the saved radios and station antennas configured for that band. A radio whose installed driver does not declare bands stays in the list. A selection that does not cover the band is cleared.
+The **Log** page stores QSO contacts in the app database. Add a contact with **Add contact**, or from **Log contact** on a [CAT](/guide/cat) VFO card, which fills in frequency, mode, band, and the radio you logged from. Frequency is required. When only one radio is saved, **Add contact** selects it and fills **TX power** from that radio. Choosing a radio, or **Log contact** from CAT, does the same. Clearing the radio clears that power. An existing contact keeps the power already saved on it until the radio changes. The selected station antenna is filled in when one is selected under **Preferences → Stations**. After the frequency is set, those menus list only the saved radios and station antennas configured for that band. A radio whose installed driver does not declare bands stays in the list. A selection that does not cover the band is cleared.
 
 **Import ADIF** and **Export ADIF** read and write an ADI file. Confirmed cards are `QSL_SENT` and `QSL_RCVD` set to `Y`.
 
@@ -27,13 +27,13 @@ A panel on the left counts the contacts in the table:
 | Call | Callsign |
 | Band | ADIF band, such as `40M` or `70CM`. Filled from the frequency when the band is empty. |
 | Mode | Mode, with submode after a slash when one is set |
-| Freq | Frequency in MHz |
+| Freq | Frequency in MHz. Required when logging a contact. |
 | RST | RST sent and received |
 | Name | Name |
 | POTA | Park reference |
 | QRZ | A check when the contact is uploaded to QRZ.com, or `M` when it changed after upload |
 | Notes | Comment |
-| Radio | Saved radio used for the contact. The menu lists saved radios configured for this band. |
+| Radio | Saved radio used for the contact. The menu lists saved radios configured for this band. Choosing one fills TX power from that radio. |
 | Antenna | Station antenna used for the contact. The menu lists station antennas configured for this band. |
 | Card | QSL card state, same colors as the map |
 
