@@ -6,7 +6,7 @@ It ships a generic serial driver. Per-radio support comes from **radio modules**
 
 ## What you can do
 
-- **Read and write memory** on the Radio page (Import / Write), or open and save JSON memory files
+- **Read and write memory** on the Radio page (Read / Write), or open and save JSON memory files
 - **Edit channels** in the loaded image, and keep a portable **channel library**
 - **Live CAT** on radios that declare it (Kenwood TH-F6, TH-D74, TM-D710A): frequency, mode, power, PTT
 - Keep a **[station log](/guide/log)** of QSOs, with a world map of grid squares, QSL card status, and configured stations

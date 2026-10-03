@@ -29,7 +29,7 @@ Import and export follow the open tab. **All** imports and exports the whole lib
 
 ## Add to a radio
 
-1. On the Radio page, open the radio and load its memory (open a memory file or [import from the radio](/guide/radio)). Each open radio keeps its own memory.
+1. On the Radio page, open the radio and load its memory (open a memory file or [read from the radio](/guide/radio)). Each open radio keeps its own memory.
 2. On **Channels**, select one or more rows.
 3. Choose **Add to radio**, then pick the radio. HamBench fills unused slots on that radio in order. A radio with no loaded memory, or with no unused slots, cannot be selected.
 4. Use **Write** on that radio's card to program the device.
