@@ -4,6 +4,35 @@ The **Log** page stores QSO contacts in the app database. Add a contact with **A
 
 **Import ADIF** and **Export ADIF** read and write an ADI file. Confirmed cards are `QSL_SENT` and `QSL_RCVD` set to `Y`.
 
+## Summary
+
+A panel on the left counts the contacts in the table:
+
+| Count | Meaning |
+| --- | --- |
+| QSOs | Contacts listed |
+| Unique Calls | Distinct callsigns |
+| POTA | Contacts with a park reference |
+| QRZ | Contacts uploaded to QRZ.com |
+
+**Bands** and **Modes** list how many contacts used each one, busiest first. A POTA contact is one whose ADIF record has `SIG` `POTA` and `SIG_INFO`, `MY_SIG` `POTA` and `MY_SIG_INFO`, or `POTA_REF` / `MY_POTA_REF`. QRZ counts `QRZCOM_QSO_UPLOAD_STATUS` of `Y` (uploaded) or `M` (uploaded, then edited). Search limits these counts to the contacts that match.
+
+## Table
+
+| Column | Contents |
+| --- | --- |
+| Local Time | Start time in the computer's timezone. Click the heading to reverse the order. Stored and exported times stay UTC. |
+| Call | Their callsign |
+| Band | ADIF band, such as `40M` or `70CM`. Filled from the frequency when the band is empty. |
+| Mode | Mode, with submode after a slash when one is set |
+| Freq | Frequency in MHz |
+| RST | RST sent and received |
+| Name | Their name |
+| POTA | Park reference |
+| QRZ | A check when the contact is uploaded to QRZ.com, or `M` when it changed after upload |
+| Notes | Comment |
+| Card | QSL card state, same colors as the map |
+
 ## Map
 
 **Map** shows a world map above the table. Drag the bar between the map and the table to make the map taller or shorter. That size is remembered. Tiles come from [OpenFreeMap](https://openfreemap.org/), which serves OpenStreetMap data with no account and no API key. The map needs a network connection. MapLibre draws the OpenFreeMap and OpenStreetMap attribution on the map.
