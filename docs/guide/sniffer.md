@@ -32,4 +32,4 @@ Disconnect [CAT](/guide/cat) on a port before sniffing that same serial device.
 
 ## Capture files
 
-Saved captures use kind `springfield-ham-radio-sniffer-capture` and include port metadata, coalesced UI frames, and a `log` array in the same `SEND` / `RECV` shape as Radio import/write logs. Prefer `log` when comparing a sniffer capture to a driver serial log.
+Saved captures use kind `springfield-ham-radio-sniffer-capture` and include port metadata, coalesced UI frames, and a `log` array in the same `SEND` / `RECV` shape as Radio read/write logs. Prefer `log` when comparing a sniffer capture to a driver serial log.

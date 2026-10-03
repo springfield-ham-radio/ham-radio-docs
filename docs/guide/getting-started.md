@@ -49,13 +49,13 @@ A programming cable shows up as `/dev/ttyUSB0`, or another `ttyUSB` or `ttyACM` 
 sudo usermod -aG dialout "$USER"
 ```
 
-Reboot so the desktop session picks up the new group. Plug the cable in again, then select that port for Import or Write.
+Reboot so the desktop session picks up the new group. Plug the cable in again, then select that port for Read or Write.
 
 ## First launch
 
 1. Open HamBench.
 2. If no drivers are installed, **Install radios** opens so you can pick official modules. Later, manage them under **Preferences → Drivers**.
-3. Add each radio you own under **Preferences → Radios**, then open it on the Radio page and use **Import** or **Open** to load memory. To clone a radio you have not added yet, use **Import from Radio** on the empty Radio page.
+3. Add each radio you own under **Preferences → Radios**, then open it on the Radio page and use **Read** or **Open** to load memory. To clone a radio you have not added yet, use **Read from Radio** on the empty Radio page, or **Radio → Read from Radio…** when no card is open.
 
 See [Install radios](/guide/install-radios) and [Read and write memory](/guide/radio).
 

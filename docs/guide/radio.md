@@ -8,31 +8,33 @@ Add each radio you use under **Preferences → Radios**. Give it a name, then ch
 
 On the Radio page, **Add radio** opens one of those radios as a card. Each card keeps its own memory. **Tabs** shows one radio at a time, with the others stacked behind the tab you pick. **Tile** places them side by side, so two radios on two serial cables can stay open together. Close a card from its header; that does not delete the radio from Preferences.
 
-When no card is open, **Import from Radio** clones a connected radio without adding it under Preferences. Choose the installed model, the baud rate when the driver lists more than one, and the serial port. The memory opens on a card for this session. **Save** keeps the memory file. Closing the card, or quitting the app, drops that clone.
+When no card is open, **Read from Radio** clones a connected radio without adding it under Preferences. The same dialog opens from the button on the empty Radio page and from **Radio → Read from Radio…**. Choose the installed model, the baud rate when the driver lists more than one, and the serial port. The memory opens on a card for this session. **Save** keeps the memory file. Closing the card, or quitting the app, drops that clone.
 
-Import and Write use the radio on that card. The **CAT** tab is on that card only when its driver supports live control. The connect dialog starts on the saved serial port. Pick another port if this cable is plugged into a different adapter. The saved port does not change.
+Read and Write use the radio on that card. The **CAT** tab is on that card only when its driver supports live control. The connect dialog starts on the saved serial port. Pick another port if this cable is plugged into a different adapter. The saved port does not change.
 
-## Import and write
+## Read and write
 
-- **Import** reads memory from a connected radio.
+- **Read** reads memory from a connected radio.
 - **Write** programs the loaded image back to the radio.
 - **Open** and **Save** work with JSON memory files. Save writes the current file when one is open; **File → Save As…** always asks for a destination. Shortcuts: `⌘O` / `Ctrl+O`, `⌘S` / `Ctrl+S`, `⇧⌘S` / `Ctrl+Shift+S`.
 
-Until a memory is loaded, a radio card offers **Import from Radio** and **Open Memory**.
+**File** keeps **Open Memory…**, **Save**, **Save As…**, and **Show Backups**. **Radio**, the menu after File, has **Read from Radio…** (`⇧⌘D` / `Ctrl+Shift+D`) and **Write to Radio…** (`⇧⌘U` / `Ctrl+Shift+U`).
 
-Write uses the radio on that card. Import and Write open on the card's saved serial port and let you choose a different one. Baud rate comes from the radio in Preferences. File → Import and File → Write use the card you last clicked.
+Until a memory is loaded, a radio card offers **Read from Radio** and **Open Memory**.
+
+Write uses the radio on that card. Read and Write open on the card's saved serial port and let you choose a different one. Baud rate comes from the radio in Preferences. **Radio → Read from Radio…** and **Radio → Write to Radio…** use the card you last clicked. With no card open, **Read from Radio…** opens the temporary clone dialog above.
 
 On Linux, select `/dev/ttyUSB0` after a reboot that puts your user in the `dialout` group. See [Linux serial port](/guide/getting-started#linux-serial-port).
 
-**Preferences → Serial ports** hides common macOS system devices from port lists. You can add extra names to hide. You can also give a system port a name, such as `usbserial-A50285BI` as "Kenwood cable". Import, Write, CAT, saved radios, and Sniffer show that name in the serial port selector. The system name stays on the menu item so you can still tell adapters apart.
+**Preferences → Serial ports** hides common macOS system devices from port lists. You can add extra names to hide. You can also give a system port a name, such as `usbserial-A50285BI` as "Kenwood cable". Read, Write, CAT, saved radios, and Sniffer show that name in the serial port selector. The system name stays on the menu item so you can still tell adapters apart.
 
 ## CAT-busy ports
 
-While a [CAT](/guide/cat) session holds a serial port, Import and Write will not use that port. The dialogs label CAT-busy ports. Disconnect that session, or pick another adapter.
+While a [CAT](/guide/cat) session holds a serial port, Read and Write will not use that port. The dialogs label CAT-busy ports. Disconnect that session, or pick another adapter.
 
 ## Debug
 
-Every import and write captures serial bytes. Inspect traffic on the **Debug** tab, or **Save serial log** if the transfer fails.
+Every read and write captures serial bytes. Inspect traffic on the **Debug** tab, or **Save serial log** if the transfer fails.
 
 The **Driver** tab shows the read/write protocol as a sequence diagram (or syntax-highlighted JSON) and the channel/settings memory maps.
 

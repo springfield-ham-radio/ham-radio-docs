@@ -1,6 +1,6 @@
 # Live CAT
 
-The **CAT** tab on a [Radio](/guide/radio) card is live computer control for that radio when its module sets `capabilities.liveControl` and a Kenwood `cat` block. The tab is hidden for radios that do not. It is not a memory editor. Import and Write stay on the Radio page toolbar.
+The **CAT** tab on a [Radio](/guide/radio) card is live computer control for that radio when its module sets `capabilities.liveControl` and a Kenwood `cat` block. The tab is hidden for radios that do not. It is not a memory editor. Read and Write stay on the Radio page toolbar and in the **Radio** menu.
 
 You can run more than one CAT session at once. Each serial port is its own session, so a TM-D710A on one cable and a TH-F6 on another can both stay connected.
 
@@ -26,12 +26,12 @@ Each connected radio has a panel with VFO cards. Edit the MHz field and press En
 
 ## Disconnect
 
-**Disconnect** on that radio’s panel leaves other CAT sessions up. Disconnect a port before Import, Write, or Sniffer on **that** serial port. Import and Write label CAT-busy ports and will not use them.
+**Disconnect** on that radio’s panel leaves other CAT sessions up. Disconnect a port before Read, Write, or Sniffer on **that** serial port. Read and Write label CAT-busy ports and will not use them.
 
 ## Debug
 
 The **Debug** tab shows SEND/RECV bytes. Capture is **off** by default so a long session does not fill memory. Connect still records the handshake (wake CR, `ID`, VFO reads), including failed connects. Turn **Capture** on to record live poll and command traffic; turning it off stops recording but keeps what is already on screen. **Clear** drops the buffer without disconnecting.
 
-When more than one session is open, choose the radio (or **Last failed connect**) in the menu. Each frame is hex plus an ASCII preview. **Save serial log** writes the same JSON shape as Radio import/write logs.
+When more than one session is open, choose the radio (or **Last failed connect**) in the menu. Each frame is hex plus an ASCII preview. **Save serial log** writes the same JSON shape as Radio read/write logs.
 
 A good TM-D710 connect shows `ID\r` → `ID TM-D710\r`, then `BC\r`, `FO 0\r`, and `FO 1\r`. No reply after `ID` usually means the wrong jack, baud, or serial device. Modules that set `wakeCr` also show a wake CR first.

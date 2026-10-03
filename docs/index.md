@@ -18,7 +18,7 @@ hero:
 
 features:
   - title: Desktop app
-    details: Import and write memory, edit channels, keep a portable channel library, and log contacts.
+    details: Read and write memory, edit channels, keep a portable channel library, and log contacts.
   - title: Radio modules
     details: Install JSON modules from GitHub Releases. HamBench ships a generic driver; you add radios as you need them.
   - title: Live CAT
