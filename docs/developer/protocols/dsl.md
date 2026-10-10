@@ -50,7 +50,7 @@ Protocol steps live on the radio config next to serial and memory settings:
 
 ## Exchange
 
-An exchange has optional `send`, optional `expect`, optional `setBaudRate`, and optional `description` / `timeout` (milliseconds, default 5000). At least one of `send`, `expect`, or `setBaudRate` is required.
+An exchange has optional `send`, optional `expect`, optional `setBaudRate`, optional `delay` (milliseconds to wait after `send`, before waiting on `expect`), and optional `description` / `timeout` (milliseconds, default 5000). At least one of `send`, `expect`, or `setBaudRate` is required.
 
 ```json
 {
@@ -85,7 +85,6 @@ In `send` and `expect` arrays:
 | `"$block"` | Current chunk **index** (`floor(byteAddress / chunkSize)`), same width/endianness as `$address`. Kenwood TH-D74 clone headers use this. |
 | `"$chunkSize"` | Current chunk size as one byte (`write.chunkSize` or `memoryConfig.chunkSize`) |
 | `"$length"` | Current chunk length as one byte |
-
 | `"$data"` | Chunk payload (see read/write) |
 
 JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` / `83`.
@@ -99,6 +98,7 @@ JSON cannot use `0x50` as a number. Prefer `"0x50"` or `"S"` over decimal `80` /
 | `6` or `"0x06"` | Exact 1-byte match (ACK) |
 | `[6, 0]` or `["0x06", "0x00"]` | Exact multi-byte match |
 | `{ "bytes": 8 }` | Any 8 bytes (radio ID, opaque blob) |
+| `{ "until": "0x0D" }` | Read until delimiter byte; delimiter is not included (Kenwood CAT CR) |
 | `["X", "$address", "$length", "$data"]` | Framed reply: literals must match; `$…` are slots |
 
 `$length` in `expect` is a 1-byte length prefix used to size `$data`. If `$length` is omitted, `$data` uses the current chunk size.

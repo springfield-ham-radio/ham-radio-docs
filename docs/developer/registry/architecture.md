@@ -1,29 +1,27 @@
 # Registry Architecture
 
+> **Superseded for module distribution:** Official HamBench radio modules install from GitHub Release zips listed in [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog), not from npm. See [ADR 0005](../adr/0005-module-distribution-github-catalog.md). The diagrams and `NpmClient` sections below describe the **Node** `NpmBasedConfigRegistry` workspace scanner and legacy hooks, not the desktop installer.
+
 > **Note**: This document focuses specifically on the Registry module architecture. For a high-level overview of the entire architecture, see the [Architecture Overview](/developer/architecture).
 
 The Ham Radio Registry is built with a modular, extensible architecture that supports both official and third-party radio modules. This page explains the technical design and how the registry components work together.
 
 ## System Overview
 
-The registry consists of several key components that work together to provide a unified interface for discovering and managing radio configurations:
+At a high level:
 
 ```mermaid
 graph TB
     A[Application] --> B[Registry]
-    B --> C[NPM Modules]
-    B --> D[NPM Registry]
+    B --> C[Installed JSON catalog / cloned module repo]
+    B --> D[Node: node_modules scan]
     
     A --> |UI/CLI/API| B
-    B --> |Discovery| C
-    B --> |Validation| D
+    B --> |Desktop: catalog zip| C
+    B --> |Node tooling| D
     
-    C --> |Configs| B
-    C --> |Shared Components| B
-    C --> |Codecs| B
-    
-    D --> |Package Info| B
-    D --> |Search Results| B
+    C --> |configs/*.json| B
+    D --> |configs/*.json| B
     
     style A fill:#e1f5fe
     style B fill:#f3e5f5
@@ -58,7 +56,7 @@ interface RadioConfigRegistry {
 
 ### 2. **NpmBasedConfigRegistry Implementation**
 
-The main implementation that handles npm-based discovery:
+The Node implementation that scans installed packages in `node_modules` (HamBench uses the catalog path instead for official modules):
 
 ```typescript
 class NpmBasedConfigRegistry implements RadioConfigRegistry {
@@ -88,7 +86,7 @@ interface SharedComponentManager {
 
 ### 4. **NPM Client**
 
-Interfaces with the npm registry for package discovery and validation:
+Optional npm registry client for Node tooling (`getPackageInfo`, search). Desktop module install does not use it; see [ADR 0005](../adr/0005-module-distribution-github-catalog.md).
 
 ```typescript
 interface NpmClient {

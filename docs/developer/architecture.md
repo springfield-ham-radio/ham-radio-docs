@@ -133,13 +133,12 @@ export class ProtocolInterpreter {
 }
 ```
 
-**Step Executors**:
-- `SendExecutor`: Sends data to radio
-- `ReceiveExecutor`: Receives data from radio
-- `ReadSegmentExecutor`: Reads memory segments
-- `WriteSegmentExecutor`: Writes memory segments
-- `SetVariableExecutor`: Sets protocol variables
-- `SendReceiveExecutor`: Combined send/receive operations
+**Step Executors** (see [ADR 0002](./adr/0002-protocol-dsl.md)):
+- `CatReadExecutor`: Live CAT memory read loops
+- `CatWriteExecutor`: Live CAT memory write loops
+- `ReadExecutor`: Chunked memory read
+- `WriteExecutor`: Chunked memory write
+- `ExchangeExecutor`: Send / expect / baud / delay exchanges
 
 **Dependencies**: `@springfield/ham-radio-api`, `@springfield/ham-radio-utils`, `serialport`, `loglayer`
 
@@ -199,9 +198,9 @@ export interface UILogger {
 
 **Core Components**:
 - **RadioConfigRegistry**: Main interface for configuration management
-- **NpmBasedConfigRegistry**: Implementation using npm for module discovery
+- **NpmBasedConfigRegistry**: Node implementation that scans workspace `node_modules` for `springfield.pluginType: "radio-module"` (not how HamBench installs official modules; see [ADR 0005](./adr/0005-module-distribution-github-catalog.md))
 - **SharedComponentManager**: Manages shared schemas, protocols, and codecs
-- **NpmClient**: Interfaces with npm registry for package information
+- **NpmClient**: Optional npm registry client used by Node tooling (package metadata), not desktop module install
 
 **Key Features**:
 ```typescript
@@ -357,7 +356,7 @@ export interface RadioProgressIndicator {
 
 ### 1. **Plugin Validation**
 - All plugins are validated against schemas before loading
-- Package integrity is verified through npm
+- Official module zip integrity is verified with SHA-256 from the catalog ([ADR 0005](./adr/0005-module-distribution-github-catalog.md))
 - Codec execution is sandboxed where possible
 
 ### 2. **Type Safety**
