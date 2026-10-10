@@ -103,7 +103,7 @@ uiLogger.startCommand(0, 5, 'readMemory', step);
 **Purpose**: Discover and manage radio module plugins.
 
 **Key Principles**:
-- HamBench installs official modules from the GitHub catalog ([ADR 0005](/developer/adr/0005-module-distribution-github-catalog)); Node tools may scan workspace `node_modules` via `NpmBasedConfigRegistry`
+- HamBench installs official modules from the GitHub catalog ([ADR 0005](./adr/0005-module-distribution-github-catalog.md)); Node tools may scan workspace `node_modules` via `NpmBasedConfigRegistry`
 - Validate configurations before loading
 - Manage shared components
 - Provide caching for performance

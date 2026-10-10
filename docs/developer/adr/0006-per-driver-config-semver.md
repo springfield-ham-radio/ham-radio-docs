@@ -5,7 +5,7 @@
 
 ## Context
 
-A manufacturer zip may contain several radios (`configs/*.json`). Each file has its own protocol, memory map, and schemas via `$ref`. Users care about the version of the **driver** they installed for a given model, while the catalog advertises a single **zip** version per module ([ADR 0005](/developer/adr/0005-module-distribution-github-catalog)).
+A manufacturer zip may contain several radios (`configs/*.json`). Each file has its own protocol, memory map, and schemas via `$ref`. Users care about the version of the **driver** they installed for a given model, while the catalog advertises a single **zip** version per module ([ADR 0005](./0005-module-distribution-github-catalog.md)).
 
 CI in module repos enforces that edits to a driver file bump its semver. Rules live in [ham-radio-ops `driver-file-version.mdc`](https://github.com/springfield-ham-radio/ham-radio-ops/blob/main/.cursor/rules/driver-file-version.mdc) and `scripts/check-driver-versions.mjs` in each module.
 

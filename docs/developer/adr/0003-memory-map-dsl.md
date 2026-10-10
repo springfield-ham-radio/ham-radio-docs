@@ -21,7 +21,7 @@ CHIRP and other tools use different on-disk image layouts for some models. HamBe
 
 **Portable channel vs EEPROM.** `channelBindings` project decode output onto `RadioChannel` (frequencies in Hz, tones). Duplex, repeater offset, and tone *mode* on that portable model are derived in the UI when needed—they are not required EEPROM fields. Individual radios may still store offset or shift in VFO or settings structs (for example UV-5R VFO fields in [`uv5r-settings.json`](https://github.com/springfield-ham-radio/radio-module-baofeng/blob/main/src/shared/memory-maps/uv5r-settings.json)).
 
-**Adding a radio.** Author protocol segments, a memory map, and `codec.type: "memoryMap"` in the config. Validate with `SchemaValidator.validateMemoryMap`. No per-radio codec TypeScript in the module ([ADR 0004](/developer/adr/0004-radio-modules-json-only)).
+**Adding a radio.** Author protocol segments, a memory map, and `codec.type: "memoryMap"` in the config. Validate with `SchemaValidator.validateMemoryMap`. No per-radio codec TypeScript in the module ([ADR 0004](./0004-radio-modules-json-only.md)).
 
 ## Options considered
 
@@ -35,5 +35,5 @@ CHIRP and other tools use different on-disk image layouts for some models. HamBe
 
 - Memory-map changes are reviewed against the schema and round-trip tests in module repos.
 - UI Settings and Channels columns are driven from map `ui` and `channelBindings` without per-radio forms in ham-radio-ui.
-- CHIRP source remains reference-only for layout understanding ([ADR 0007](/developer/adr/0007-mit-license-no-chirp-code)).
+- CHIRP source remains reference-only for layout understanding ([ADR 0007](./0007-mit-license-no-chirp-code.md)).
 - Incorrect Chirp-to-radio conversion in prose tables is fixed in the protocol docs when found; this ADR does not duplicate every address example.

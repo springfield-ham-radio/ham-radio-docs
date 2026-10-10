@@ -5,7 +5,7 @@
 
 ## Context
 
-Dozens of repositories share libraries, the desktop app, radio modules, and docs. Hand-edited versions and changelogs diverge quickly. Branch protection on `main` blocks pushes from the default `GITHUB_TOKEN` during semantic-release.
+About a dozen repositories share libraries, the desktop app, radio modules, and docs. Hand-edited versions and changelogs diverge quickly. Branch protection on `main` blocks pushes from the default `GITHUB_TOKEN` during semantic-release.
 
 Org practice is documented in [ham-radio-ops semantic-release and conventional-commits rules](https://github.com/springfield-ham-radio/ham-radio-ops/tree/main/.cursor/rules) and implemented in per-repo CI.
 
@@ -17,7 +17,7 @@ Org practice is documented in [ham-radio-ops semantic-release and conventional-c
 
 **GitHub App token.** Release jobs mint a token with `actions/create-github-app-token` using `RELEASE_APP_ID` and `RELEASE_APP_PRIVATE_KEY` so the GitHub App **springfield-ham-radio-release** can push release commits and tags past branch protection. semantic-release and asset upload steps use that token as `GITHUB_TOKEN` / `GH_TOKEN`. See merged `ci: release via GitHub App token` PRs (for example ham-radio-ui #53, ham-radio-api #15, radio-module-baofeng #17).
 
-**Scope.** This ADR covers org release mechanics. Library layering and npm publication of `@springfield/*` packages are documented elsewhere; radio modules use the same release tooling but publish zips, not npm ([ADR 0005](/developer/adr/0005-module-distribution-github-catalog)).
+**Scope.** This ADR covers org release mechanics. Library layering and npm publication of `@springfield/*` packages are documented elsewhere; radio modules use the same release tooling but publish zips, not npm ([ADR 0005](./0005-module-distribution-github-catalog.md)).
 
 **Stale ops notes.** Some ham-radio-ops cursor rules still mention GitLab CI; those are corrected in a separate ham-radio-ops change, not in this docs PR.
 
@@ -34,4 +34,4 @@ Org practice is documented in [ham-radio-ops semantic-release and conventional-c
 - Contributors use conventional commit types (`feat`, `fix`, `docs`, `ci`, etc.) so releases stay predictable.
 - Beta consumers install prerelease builds from the `beta` branch workflow where published.
 - New releasable repos copy the same `release` job pattern and org secrets.
-- ham-radio-docs itself is private and not on semantic-release; versioned ADRs use acceptance dates instead.
+- ham-radio-docs is not published to npm (`private: true` in `package.json`) and is not on semantic-release; versioned ADRs use acceptance dates instead.

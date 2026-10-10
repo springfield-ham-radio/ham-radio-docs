@@ -9,7 +9,7 @@ HamBench talks to radios over serial using a shared driver. Each radio describes
 
 The step vocabulary, schema, and interpreter already exist across [ham-radio-api](https://github.com/springfield-ham-radio/ham-radio-api) (`RadioProtocolStep` in [`src/radio/protocol.ts`](https://github.com/springfield-ham-radio/ham-radio-api/blob/main/src/radio/protocol.ts)), [ham-radio-utils](https://github.com/springfield-ham-radio/ham-radio-utils) ([`radio-protocol-schema.json`](https://github.com/springfield-ham-radio/ham-radio-utils/blob/main/src/schemas/radio-protocol-schema.json)), and [ham-radio-driver](https://github.com/springfield-ham-radio/ham-radio-driver) ([`protocol-interpreter.ts`](https://github.com/springfield-ham-radio/ham-radio-driver/blob/main/src/protocol-interpreter.ts) and [`src/executors/`](https://github.com/springfield-ham-radio/ham-radio-driver/tree/main/src/executors)). Shipped configs include Baofeng UV-5R, Kenwood TH-F6, TH-D74, and TM-D710A.
 
-[ham-radio-ui#60](https://github.com/springfield-ham-radio/ham-radio-ui/issues/60) (Icom IC-2730A) needs behavior the current step union cannot express: unsolicited streamed frames after clone-out, per-frame checksums, and high-speed baud changes. That work is not implemented yet; this ADR records the DSL we use today and how to extend it.
+[ham-radio-ui#60](https://github.com/springfield-ham-radio/ham-radio-ui/issues/60) (Icom IC-2730A) needs behavior the current step union cannot express: an unsolicited frame stream after clone-out, per-frame checksums, and high-bit encoding. Mid-session baud changes are already covered by `setBaudRate` on exchange steps. That work is not implemented yet; this ADR records the DSL we use today and how to extend it.
 
 Authoritative operator and field reference: [Protocol DSL](/developer/protocols/dsl) and [Protocols overview](/developer/protocols/).
 
@@ -34,7 +34,7 @@ Authoritative operator and field reference: [Protocol DSL](/developer/protocols/
 
 **Text grammar or per-radio driver code.** Rejected. Every new radio would fork serial logic instead of editing JSON.
 
-**Per-module TypeScript executors.** Rejected for distribution. Modules are JSON-only ([ADR 0004](/developer/adr/0004-radio-modules-json-only)).
+**Per-module TypeScript executors.** Rejected for distribution. Modules are JSON-only ([ADR 0004](./0004-radio-modules-json-only.md)).
 
 **Model new protocols only as another packer.** Rejected when the wire shape is not “one CAT command → one line.” Streamed clone protocols need a dedicated step type.
 
@@ -45,4 +45,4 @@ Authoritative operator and field reference: [Protocol DSL](/developer/protocols/
 - New radios extend existing step types where possible; otherwise the org ships a library release with the new step before a module can use it.
 - Documentation and the protocol editor stay aligned with `radio-protocol-schema.json`, not with ad hoc executor names.
 - Icom IC-2730A and similar radios are tracked as new step work ([issue #60](https://github.com/springfield-ham-radio/ham-radio-ui/issues/60)), not as module-only changes.
-- CAT timeout defaults (2000 ms in driver helpers) and exchange timeout defaults (5000 ms in [`protocol-operations.ts`](https://github.com/springfield-ham-radio/ham-radio-driver/blob/main/src/utils/protocol-operations.ts)) remain implementation details documented in the Protocol DSL page, not duplicated here.
+- Exchange step timeout defaults to 5000 ms, documented in [Protocol DSL](../protocols/dsl.md); implementation is in [`protocol-operations.ts`](https://github.com/springfield-ham-radio/ham-radio-driver/blob/main/src/utils/protocol-operations.ts). CAT memory loops default to 2000 ms via `catTimeoutMs` in [`cat-packers.ts`](https://github.com/springfield-ham-radio/ham-radio-driver/blob/main/src/utils/cat-packers.ts), not on the Protocol DSL page.

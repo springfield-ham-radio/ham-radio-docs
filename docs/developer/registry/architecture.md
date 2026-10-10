@@ -1,6 +1,6 @@
 # Registry Architecture
 
-> **Superseded for module distribution:** Official HamBench radio modules install from GitHub Release zips listed in [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog), not from npm. See [ADR 0005](/developer/adr/0005-module-distribution-github-catalog). The diagrams and `NpmClient` sections below describe the **Node** `NpmBasedConfigRegistry` workspace scanner and legacy hooks, not the desktop installer.
+> **Superseded for module distribution:** Official HamBench radio modules install from GitHub Release zips listed in [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog), not from npm. See [ADR 0005](../adr/0005-module-distribution-github-catalog.md). The diagrams and `NpmClient` sections below describe the **Node** `NpmBasedConfigRegistry` workspace scanner and legacy hooks, not the desktop installer.
 
 > **Note**: This document focuses specifically on the Registry module architecture. For a high-level overview of the entire architecture, see the [Architecture Overview](/developer/architecture).
 
@@ -86,7 +86,7 @@ interface SharedComponentManager {
 
 ### 4. **NPM Client**
 
-Optional npm registry client for Node tooling (`getPackageInfo`, search). Desktop module install does not use it; see [ADR 0005](/developer/adr/0005-module-distribution-github-catalog).
+Optional npm registry client for Node tooling (`getPackageInfo`, search). Desktop module install does not use it; see [ADR 0005](../adr/0005-module-distribution-github-catalog.md).
 
 ```typescript
 interface NpmClient {

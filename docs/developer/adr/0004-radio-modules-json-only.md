@@ -16,7 +16,7 @@ Official and third-party radio support is packaged as a **manufacturer module**:
 - `configs/*.json` — protocol, serial, memory segments, schemas, and memory-map `$ref`s.
 - `src/shared/schemas/*.json` and `src/shared/memory-maps/*.json` — referenced from configs.
 
-Encode and decode use `MemoryMapRadioCodec` via `createMemoryMapCodec()` in ham-radio-utils when `codec.type` is `"memoryMap"` (or implied by a resolved memory map). The generic driver runs the Protocol DSL ([ADR 0002](/developer/adr/0002-protocol-dsl)).
+Encode and decode use `MemoryMapRadioCodec` via `createMemoryMapCodec()` in ham-radio-utils when `codec.type` is `"memoryMap"` (or implied by a resolved memory map). The generic driver runs the Protocol DSL ([ADR 0002](./0002-protocol-dsl.md)).
 
 **Not in the release zip.** TypeScript tests, `scripts/`, and devDependencies stay in the git repo. `yarn pack:release` archives JSON paths only.
 
@@ -26,7 +26,7 @@ Encode and decode use `MemoryMapRadioCodec` via `createMemoryMapCodec()` in ham-
 
 ## Options considered
 
-**npm package with compiled codec per manufacturer.** Superseded for distribution ([ADR 0005](/developer/adr/0005-module-distribution-github-catalog)).
+**npm package with compiled codec per manufacturer.** Superseded for distribution ([ADR 0005](./0005-module-distribution-github-catalog.md)).
 
 **Shared codec referenced from each module’s TypeScript.** Rejected for new work.
 

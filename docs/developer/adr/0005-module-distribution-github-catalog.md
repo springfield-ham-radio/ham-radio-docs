@@ -17,9 +17,9 @@ The registry proposal [`radio-configuration-discovery-proposal.md`](https://gith
 
 **Catalog fields.** Each module entry includes `version` (zip / package release), `downloadUrl`, `integrity` (`sha256:` + 64 hex), `minApiVersion`, `radios` (from `configs/*.json`), and `supportedRadios`. The `package` string is a developer name (`@springfield/radio-module-baofeng`), not an npm install coordinate.
 
-**HamBench install (official).** The app fetches the catalog, checks `minApiVersion` against the compile-time constant `APP_HAM_RADIO_API_VERSION` in [`radio-module-install.ts`](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/app/utils/radio-module-install.ts) (distinct from the `@springfield/ham-radio-api` version in `package.json`), downloads over HTTPS from an allowlisted host set (`github.com`, GitHub release asset hosts, and `springfield-ham-radio.github.io`), verifies SHA-256, and extracts **only** `.json` files into app data `radio-modules/<moduleId>/<version>/`. See [`radio_modules.rs`](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/src-tauri/src/radio_modules.rs).
+**HamBench install (official).** The app fetches the catalog, checks `minApiVersion` against `APP_HAM_RADIO_API_VERSION` (the literal `'17.3.0'` in [`radio-module-install.ts`](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/app/utils/radio-module-install.ts)), which is separate from the app’s `@springfield/ham-radio-api` dependency (`^18.0.1` in `package.json`). Downloads use HTTPS only from `github.com`, `objects.githubusercontent.com`, `release-assets.githubusercontent.com`, or `springfield-ham-radio.github.io`. The installer verifies the zip against the catalog `integrity` (`sha256:` + hex digest of the zip bytes; `catalog.json` itself is not signed), then extracts **only** `.json` files into app data `radio-modules/<moduleId>/<version>/`. See [`radio_modules.rs`](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/src-tauri/src/radio_modules.rs).
 
-**Updates.** The preferences UI compares catalog `version` to the installed zip directory version ([`radio-module-listing.ts`](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/app/utils/radio-module-listing.ts)), not each config’s driver `version` ([ADR 0006](/developer/adr/0006-per-driver-config-semver)).
+**Updates.** The preferences UI compares catalog `version` to the installed zip directory version ([`radio-module-listing.ts`](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/app/utils/radio-module-listing.ts)), not each config’s driver `version` ([ADR 0006](./0006-per-driver-config-semver.md)).
 
 **Local zip.** Users may install a local zip without catalog integrity; that path is explicitly unverified.
 
@@ -29,7 +29,7 @@ The registry proposal [`radio-configuration-discovery-proposal.md`](https://gith
 
 **Publish `radio-module-*` to npm and discover with `NpmClient`.** Superseded. Module `package.json` keeps `npmPublish: false`.
 
-**GitHub Release zip + signed catalog index.** Accepted.
+**GitHub Release zip + catalog index with per-zip SHA-256 integrity.** Accepted.
 
 ## Consequences
 

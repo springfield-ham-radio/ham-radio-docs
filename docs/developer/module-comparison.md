@@ -9,7 +9,7 @@ This document provides a quick reference comparison of all modules in the HamBen
 | `@springfield/ham-radio-api` | Core type definitions and interfaces | `RadioDriver`, `RadioCodec`, branded types, `RadioStation`, `StationAntenna` | `loglayer`, `ts-brand` | Core API |
 | `@springfield/ham-radio-driver` | Protocol interpreter and serial communication | `RadioDriver`, `ProtocolInterpreter` | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils`, `serialport` | Driver |
 | `@springfield/ham-radio-utils` | Shared utilities and helper functions | `SegmentedMemory`, `UILogger`, validation functions | `@springfield/ham-radio-api`, `ajv`, `fishery` | Utilities |
-| `@springfield/ham-radio-registry` | Plugin discovery and management | `RadioConfigRegistry`, `NpmBasedConfigRegistry` (Node workspace scan; official modules use [ADR 0005](/developer/adr/0005-module-distribution-github-catalog)) | `@springfield/ham-radio-api`, `loglayer` | Registry |
+| `@springfield/ham-radio-registry` | Plugin discovery and management | `RadioConfigRegistry`, `NpmBasedConfigRegistry` (Node workspace scan; official modules use [ADR 0005](./adr/0005-module-distribution-github-catalog.md)) | `@springfield/ham-radio-api`, `loglayer` | Registry |
 | `radio-module-baofeng` | Baofeng radio-specific implementation | JSON configs + memory maps | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils` | Radio Module |
 | `radio-module-kenwood` | Kenwood TH-F6 (live CAT memories), TH-D74 (clone + CAT), TM-D710A (clone + CAT) | JSON configs + memory maps | `@springfield/ham-radio-api`, `@springfield/ham-radio-utils` | Radio Module |
 
@@ -70,7 +70,7 @@ This document provides a quick reference comparison of all modules in the HamBen
 
 **Key Responsibilities**:
 - Provide Baofeng UV-5R specific configuration
-- Ship memory-map JSON decoded by `createMemoryMapCodec()` ([ADR 0004](/developer/adr/0004-radio-modules-json-only))
+- Ship memory-map JSON decoded by `createMemoryMapCodec()` ([ADR 0004](./adr/0004-radio-modules-json-only.md))
 - Define memory layout and protocols in JSON
 - Rely on the shared Protocol DSL driver for serial I/O
 
@@ -129,15 +129,8 @@ const program = codec.decode(memory);
 ```
 
 #### Radio Module Development
-```typescript
-// 1. Depend on core API
-import type { RadioCodec, RadioModelId } from '@springfield/ham-radio-api';
 
-// 2. Use utilities for common operations
-import { SegmentedMemory, validateSchema } from '@springfield/ham-radio-utils';
-
-// 3. Reference memory-map JSON and codec.type "memoryMap" (no per-radio TypeScript codec)
-```
+Ship `configs/*.json`, schemas, and memory maps with `codec.type: "memoryMap"`. See [Create a radio module](./radio-module-dev.md) and [ADR 0004](./adr/0004-radio-modules-json-only.md) (no per-radio TypeScript codec).
 
 ## Module Selection Guide
 
@@ -154,13 +147,13 @@ import { SegmentedMemory, validateSchema } from '@springfield/ham-radio-utils';
 4. **Register with ham-radio-registry** - Make your module discoverable
 
 ### For Driver Extensions
-1. **Extend the Protocol DSL in libraries** — New step types ship in ham-radio-api, ham-radio-utils, and ham-radio-driver together ([ADR 0002](/developer/adr/0002-protocol-dsl)); JSON modules do not register custom executors
+1. **Extend the Protocol DSL in libraries** — New step types ship in ham-radio-api, ham-radio-utils, and ham-radio-driver together ([ADR 0002](./adr/0002-protocol-dsl.md)); JSON modules do not register custom executors
 2. **Use ham-radio-utils** - For logging and progress reporting
 3. **Follow existing executor patterns** - Maintain consistency with core driver
 
 ## Version Compatibility
 
-Libraries use semantic versioning on npm (`@springfield/*`). Radio modules declare `minApiVersion` in the catalog against the API surface HamBench was built for. Pin versions in your app or workspace; see each package `package.json` and [ADR 0008](/developer/adr/0008-versioning-and-releases).
+Libraries use semantic versioning on npm (`@springfield/*`). HamBench compares catalog `minApiVersion` to `APP_HAM_RADIO_API_VERSION` (`'17.3.0'` in ham-radio-ui) while depending on `@springfield/ham-radio-api` `^18.0.1`. Pin versions in your app or workspace; see [ADR 0008](./adr/0008-versioning-and-releases.md).
 
 ## Performance Characteristics
 

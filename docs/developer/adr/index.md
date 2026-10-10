@@ -4,14 +4,14 @@ Decisions that change a layer, a runtime, or a public contract live here. Each r
 
 | Record | Status | Decision |
 | --- | --- | --- |
-| [ADR 0001](/developer/adr/0001-rewrite-sniffer-in-rust) | Accepted | Rewrite the sniffer in Rust |
-| [ADR 0002](/developer/adr/0002-protocol-dsl) | Accepted | Protocol DSL (JSON serial steps) |
-| [ADR 0003](/developer/adr/0003-memory-map-dsl) | Accepted | Memory-Map DSL |
-| [ADR 0004](/developer/adr/0004-radio-modules-json-only) | Accepted | Radio modules are JSON only |
-| [ADR 0005](/developer/adr/0005-module-distribution-github-catalog) | Accepted | Module distribution via GitHub catalog |
-| [ADR 0006](/developer/adr/0006-per-driver-config-semver) | Accepted | Per-driver config semver |
-| [ADR 0007](/developer/adr/0007-mit-license-no-chirp-code) | Accepted | MIT license; no copied CHIRP code |
-| [ADR 0008](/developer/adr/0008-versioning-and-releases) | Accepted | Versioning and releases |
+| [ADR 0001](./0001-rewrite-sniffer-in-rust.md) | Accepted | Rewrite the sniffer in Rust |
+| [ADR 0002](./0002-protocol-dsl.md) | Accepted | Protocol DSL (JSON serial steps) |
+| [ADR 0003](./0003-memory-map-dsl.md) | Accepted | Memory-Map DSL |
+| [ADR 0004](./0004-radio-modules-json-only.md) | Accepted | Radio modules are JSON only |
+| [ADR 0005](./0005-module-distribution-github-catalog.md) | Accepted | Module distribution via GitHub catalog |
+| [ADR 0006](./0006-per-driver-config-semver.md) | Accepted | Per-driver config semver |
+| [ADR 0007](./0007-mit-license-no-chirp-code.md) | Accepted | MIT license; no copied CHIRP code |
+| [ADR 0008](./0008-versioning-and-releases.md) | Accepted | Versioning and releases |
 
 ## Repository ADRs
 

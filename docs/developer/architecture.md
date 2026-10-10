@@ -133,7 +133,7 @@ export class ProtocolInterpreter {
 }
 ```
 
-**Step Executors** (see [ADR 0002](/developer/adr/0002-protocol-dsl)):
+**Step Executors** (see [ADR 0002](./adr/0002-protocol-dsl.md)):
 - `CatReadExecutor`: Live CAT memory read loops
 - `CatWriteExecutor`: Live CAT memory write loops
 - `ReadExecutor`: Chunked memory read
@@ -198,7 +198,7 @@ export interface UILogger {
 
 **Core Components**:
 - **RadioConfigRegistry**: Main interface for configuration management
-- **NpmBasedConfigRegistry**: Node implementation that scans workspace `node_modules` for `springfield.pluginType: "radio-module"` (not how HamBench installs official modules; see [ADR 0005](/developer/adr/0005-module-distribution-github-catalog))
+- **NpmBasedConfigRegistry**: Node implementation that scans workspace `node_modules` for `springfield.pluginType: "radio-module"` (not how HamBench installs official modules; see [ADR 0005](./adr/0005-module-distribution-github-catalog.md))
 - **SharedComponentManager**: Manages shared schemas, protocols, and codecs
 - **NpmClient**: Optional npm registry client used by Node tooling (package metadata), not desktop module install
 
@@ -356,7 +356,7 @@ export interface RadioProgressIndicator {
 
 ### 1. **Plugin Validation**
 - All plugins are validated against schemas before loading
-- Official module zip integrity is verified with SHA-256 from the catalog ([ADR 0005](/developer/adr/0005-module-distribution-github-catalog))
+- Official module zip integrity is verified with SHA-256 from the catalog ([ADR 0005](./adr/0005-module-distribution-github-catalog.md))
 - Codec execution is sandboxed where possible
 
 ### 2. **Type Safety**
