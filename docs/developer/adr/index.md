@@ -12,6 +12,7 @@ Decisions that change a layer, a runtime, or a public contract live here. Each r
 | [ADR 0006](./0006-per-driver-config-semver.md) | Accepted | Per-driver config semver |
 | [ADR 0007](./0007-mit-license-no-chirp-code.md) | Accepted | MIT license; no copied CHIRP code |
 | [ADR 0008](./0008-versioning-and-releases.md) | Accepted | Versioning and releases |
+| [ADR 0009](./0009-per-radio-modules.md) | Proposed | One installable package per radio |
 
 ## Repository ADRs
 
