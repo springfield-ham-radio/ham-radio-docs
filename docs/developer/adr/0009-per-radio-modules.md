@@ -1,6 +1,6 @@
 # ADR 0009: One installable package per radio
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-13
 
 ## Context
