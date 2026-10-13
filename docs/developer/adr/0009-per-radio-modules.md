@@ -42,7 +42,15 @@ Registry 1.7.3 already accepts schema version 2 as an alias of version 1. This c
 
 **HamBench.** Download, integrity, and JSON-only extraction stay as in [ADR 0005](./0005-module-distribution-github-catalog.md). The install directory is `radio-modules/<modelId>/<configVersion>/`. A zip with anything other than one `configs/*.json` is refused. Install of a catalog entry installs that radio. Update is per radio. Remove deletes that radio's catalog row and that radio's version directory.
 
-**Cutover.** The first launch of the HamBench build that implements this ADR deletes official installs of the bundled modules and does not read them. It removes app-data directories `radio-modules/kenwood/` and `radio-modules/baofeng/`, and it deletes `radio_models` rows whose `source_path` is under those directories. The operator reinstalls the radios they want from the new catalog. Saved radios (`ham-radio-saved-radios`), channel library, station log, stations, antennas, and image backups stay. Local user JSON (`source` `user`, path ending in `.json`) stays. There is no reader for schema version 1, for `supportedRadios`-only entries, or for short model ids such as `uv5r`.
+**Cutover.** The first launch of the HamBench build that implements this ADR deletes official installs of the bundled modules and does not read them. It removes app-data directories `radio-modules/kenwood/` and `radio-modules/baofeng/`, and it deletes `radio_models` rows whose `source_path` is under those directories. HamBench does **not** auto-reinstall those drivers. The operator reinstalls manually from the new catalog. Saved radios (`ham-radio-saved-radios`), channel library, station log, stations, antennas, and image backups stay. Local user JSON (`source` `user`, path ending in `.json`) stays. There is no reader for schema version 1, for `supportedRadios`-only entries, or for short model ids such as `uv5r`.
+
+**Updates in the UI.** Update is per radio. The manufacturer name is a grouping heading only; there is no manufacturer-wide Update that installs one shared zip.
+
+**`minApiVersion` on configs.** Every current shipping config sets top-level `minApiVersion` to `18.0.1`.
+
+**Package naming.** Repo `package.json` `name` stays manufacturer-scoped (`@springfield/radio-module-kenwood` / `@springfield/radio-module-baofeng`). Catalog `package` is per radio (`@springfield/radio-module-<modelId>`).
+
+**Stable catalog only.** Catalog sync continues to skip prereleases when resolving release assets. There is no separate beta catalog.
 
 **How this fixes #116.** TH-F6 and TH-D74 no longer share a `sourcePath` or a version directory. `uninstallRadioCatalogRecord` removes the row for `kenwood-th-f6`. `uninstall_radio_module` removes `radio-modules/kenwood-th-f6/<version>/` only.
 
@@ -70,7 +78,7 @@ Breaking changes, all intentional:
 4. **Artifact version.** Catalog `version` is the radio config version. It is no longer the manufacturer `package.json` version or the git tag. A Release tag may differ from every asset version it carries.
 5. **Release assets.** A manufacturer Release attaches one zip per radio that changed. Catalog sync selects assets by model id across releases. It no longer assumes the latest tag has a single zip whose tag is the module version.
 6. **Zip layout.** A release zip contains one config and the files it `$ref`s. Multi-config zips, including local installs of today's manufacturer zips, are refused.
-7. **Installed modules on disk.** The new HamBench deletes `radio-modules/kenwood/`, `radio-modules/baofeng/`, and the `radio_models` rows that point at them. Operators reinstall. Saved radios, channels, the log, stations, antennas, and image backups remain. User-installed JSON files remain.
+7. **Installed modules on disk.** The new HamBench deletes `radio-modules/kenwood/`, `radio-modules/baofeng/`, and the `radio_models` rows that point at them. It does not auto-reinstall removed drivers. Operators reinstall manually. Saved radios, channels, the log, stations, antennas, and image backups remain. User-installed JSON files remain.
 8. **Model id matching.** Short catalog ids (`uv5r` matching `baofeng-uv5r`) are not accepted. `id` is the config `id.model`.
 9. **`minApiVersion`.** Each config declares it. The pack default `17.3.0` is removed. The cutover value is `18.0.1`, matching the API version current HamBench embeds. A radio can later raise its own floor without republishing siblings.
 10. **Update control.** The manufacturer-group Update action that installs one shared entry goes away. Each radio updates from its own catalog entry.
@@ -118,7 +126,7 @@ Same pack change in both repos. Kenwood is the multi-radio case. Baofeng has one
 - `scripts/check-driver-versions.mjs` stays. A shared schema edit fails CI until every referencing config version increases. `pack:release` emits a zip only for configs whose version is new relative to the previous Release's assets for that model. Unchanged radios are left on their existing Release asset.
 - Do not add a Yarn workspace package per radio.
 
-First per-radio Release assets, using versions in the repos at the time of this ADR (confirm before tagging):
+First per-radio Release assets use each config's `version` in the manufacturer repos at the time of this ADR:
 
 | Asset | Config version |
 | --- | --- |
@@ -127,13 +135,15 @@ First per-radio Release assets, using versions in the repos at the time of this 
 | `radio-module-kenwood-tm-d710a-1.11.0.zip` | `1.11.0` |
 | `radio-module-baofeng-uv5r-3.7.0.zip` | `3.7.0` |
 
+Those config versions are lower than today's bundled catalog pins (Kenwood zip `1.11.2`, Baofeng `3.7.2`). That is acceptable: catalog and install `version` follow [ADR 0006](./0006-per-driver-config-semver.md) driver semver, not the retired manufacturer zip version.
+
 Those first assets ship on the next manufacturer git tag. They replace the combined zip. Older tags keep the historical combined zips; the new catalog does not link to them.
 
 ### 4. radio-module-catalog
 
 - Set `schemaVersion` to 3. Replace the two module objects with four radio entries from the table in Decision.
 - Rewrite `catalog.schema.json`. Required fields are `id`, `package`, `manufacturer`, `name`, `version`, `config`, `minApiVersion`, `downloadUrl`, `integrity`. Remove `radios` and `supportedRadios`.
-- Rewrite `scripts/update-catalog.mjs`. For each entry, resolve the GitHub repo from `downloadUrl`. List published Releases, skip drafts and prereleases, and consider every asset named `radio-module-<id>-<semver>.zip`. Choose the highest semver. Download it, require the release digest to match the bytes, require exactly one `configs/*.json`, and require `id.model` to equal the catalog `id`. Set `version`, `name`, `config`, `minApiVersion`, `downloadUrl`, and `integrity` from that asset. Leave `package`, `manufacturer`, and `description` as maintained in `catalog.json` unless the zip's config name changes.
+- Rewrite `scripts/update-catalog.mjs`. For each entry, resolve the GitHub repo from `downloadUrl`. List published Releases, skip drafts and prereleases (no beta catalog; stable sync only), and consider every asset named `radio-module-<id>-<semver>.zip`. Choose the highest semver. Download it, require the release digest to match the bytes, require exactly one `configs/*.json`, and require `id.model` to equal the catalog `id`. Set `version`, `name`, `config`, `minApiVersion`, `downloadUrl`, and `integrity` from that asset. Leave `package`, `manufacturer`, and `description` as maintained in `catalog.json` unless the zip's config name changes.
 - The latest Release is allowed to omit a radio. Absence means "no new asset", not "remove the catalog entry".
 - Extend `scripts/update-catalog.test.mjs` with a Kenwood fixture whose latest Release contains only one of the three zips.
 - Merge this to `main` in the same window as the HamBench release below. GitHub Pages will serve schema version 3 as soon as it merges, and current HamBench will reject that document.
@@ -158,11 +168,3 @@ No release. Radio config types stay. `minApiVersion` on the JSON is read by the 
 ### 7. ham-radio-driver
 
 No release. `catRead` / `catWrite` and the Kenwood `cat` block stay here and inside each radio config. Shared manufacturer behavior that is JSON moves by `$ref` inside the manufacturer repo, then into each zip.
-
-## Open questions
-
-1. Cutover deletes official driver installs and leaves reinstall to the operator. Confirm that HamBench should not auto-download the model ids that were just removed.
-2. Confirm `minApiVersion` `18.0.1` on every current config. A lower floor would still be rejected by schema version 3 on older apps. A higher floor waits for a future API.
-3. Confirm Update is per radio only, with the manufacturer name as a heading.
-4. Confirm the repo `package.json` name stays `@springfield/radio-module-kenwood` / `@springfield/radio-module-baofeng` while catalog `package` is per radio.
-5. Stable catalog sync keeps skipping prereleases. Confirm there is no separate beta catalog to update.
