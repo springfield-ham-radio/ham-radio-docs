@@ -24,6 +24,7 @@ export default withMermaid(defineConfig({
             { text: 'Overview', link: '/guide/' },
             { text: 'Install HamBench', link: '/guide/getting-started' },
             { text: 'Install radios', link: '/guide/install-radios' },
+            { text: 'Install a beta driver', link: '/guide/beta-driver' },
             { text: 'Read and write memory', link: '/guide/radio' },
             { text: 'Live CAT', link: '/guide/cat' },
             { text: 'Station log', link: '/guide/log' },
@@ -52,7 +53,8 @@ export default withMermaid(defineConfig({
             { text: 'Create a module', link: '/developer/radio-module-dev' },
             { text: 'Driver editor', link: '/developer/driver-editor' },
             { text: 'Configuration format', link: '/developer/configuration' },
-            { text: 'Publish a module', link: '/developer/publishing-modules' }
+            { text: 'Publish a module', link: '/developer/publishing-modules' },
+            { text: 'Build a beta driver', link: '/developer/beta-driver' }
           ]
         },
         {

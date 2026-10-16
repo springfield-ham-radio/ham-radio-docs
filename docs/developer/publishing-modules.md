@@ -14,3 +14,7 @@ Do not list radios that are not files in `configs/`. If two marketing names shar
 ## Local development
 
 Clone the module repo and load `configs/*.json` (resolve `$ref`s). You do not need the catalog zip until you ship.
+
+## Beta handoff (no release)
+
+To email one radio zip to a tester without publishing a Release or touching the catalog, use [Build a beta driver](/developer/beta-driver) (`yarn pack:beta <modelId>` in the manufacturer repo).

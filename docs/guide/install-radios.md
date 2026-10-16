@@ -21,6 +21,8 @@ After a driver update that adds CAT fields, **Update** (or reinstall) the module
 
 The app shows an **at your own risk** warning. Local installs are source `user`, labeled **Unverified**, and are not updated from the official catalog. This still works if the official catalog is unreachable.
 
+For a zip an author built with `pack:beta` (version like `1.11.2-beta.1`), see [Install a beta driver](/guide/beta-driver). Those installs show a **Beta** badge and use a SHA-256 check instead of catalog integrity.
+
 ## Supported models
 
 | Module | Radios | Memory | Live CAT |
