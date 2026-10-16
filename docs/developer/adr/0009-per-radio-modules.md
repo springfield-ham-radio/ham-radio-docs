@@ -50,7 +50,7 @@ Registry 1.7.3 already accepts schema version 2 as an alias of version 1. This c
 
 **Package naming.** Repo `package.json` `name` stays manufacturer-scoped (`@springfield/radio-module-kenwood` / `@springfield/radio-module-baofeng`). Catalog `package` is per radio (`@springfield/radio-module-<modelId>`).
 
-**Stable catalog only.** Catalog sync continues to skip prereleases when resolving release assets. There is no separate beta catalog.
+**Stable catalog only.** Catalog sync continues to skip prereleases when resolving release assets. There is no separate beta catalog. Hand-built beta zips for testers are [ADR 0010](./0010-local-beta-driver-zips.md); they are not catalog entries.
 
 **How this fixes #116.** TH-F6 and TH-D74 no longer share a `sourcePath` or a version directory. `uninstallRadioCatalogRecord` removes the row for `kenwood-th-f6`. `uninstall_radio_module` removes `radio-modules/kenwood-th-f6/<version>/` only.
 
