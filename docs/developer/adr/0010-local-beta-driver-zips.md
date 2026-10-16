@@ -19,9 +19,10 @@ HamBench already installs a local zip without catalog integrity ([ADR 0005](./00
 - Working-tree `configs/<modelId>.json` `version` stays strict `major.minor.patch` ([ADR 0006](./0006-per-driver-config-semver.md)). The command refuses a working-tree prerelease.
 - Packed version is `<config.version>-beta.<n>` in both the zip filename (`radio-module-<modelId>-<version>.zip`) and the config JSON inside the zip. The working tree is not modified; the suffix is applied when copying the `$ref` closure into a temp tree before zipping.
 - Build metadata in the version (`+sha` or similar) is rejected.
-- Output includes zip path, byte size, `sha256:` digest, and short git commit when available. The digest is for the email body, not part of the version string.
+- Output includes zip path, byte size, `sha256:` digest, and short git commit when available. The digest is for the email body, not part of the version string. The zip is written under `dist-release/` (same directory as `pack:release`).
 - The command does not call GitHub, does not write catalog entries, does not upload, and fails if the zip exceeds 1 MiB (closure error signal).
-- Same validation and `$ref` closure rules as `pack:release` for that model.
+- `$ref` closure matches `pack:release` for that one model (shared schemas and memory maps that the config reaches; sibling radios stay out). It does not use the release filter that skips a config already published on GitHub, and it does not invoke `gh`.
+- `minApiVersion` on the config must be strict `major.minor.patch`. That is stricter than today's Kenwood `pack:release` check, which only requires a non-empty string. Baofeng `pack:release` already requires `major.minor.patch`.
 
 Authors bump config `version` in git when driver bits change. `pack:beta` does not bump for them. A beta built from the same `major.minor.patch` as the catalog is **older** than that catalog entry under semver precedence below.
 
@@ -29,7 +30,7 @@ Authors bump config `version` in git when driver bits change. `pack:beta` does n
 
 - `1.11.1-beta.1` is **older** than catalog `1.11.1` → offer **Update** to official when the catalog `minApiVersion` fits the app.
 - `1.11.2-beta.1` is **newer** than catalog `1.11.1` → keep the beta; no automatic replace.
-- Among betas, compare the numeric `n` (`2` &lt; `10`).
+- Among betas, compare the numeric `n` (`2` is less than `10`).
 
 `@springfield/ham-radio-registry` `compareSemver` remains numeric-only for strict `x.y.z` catalog strings. HamBench implements prerelease compare for local install paths; no registry release for this ADR.
 
@@ -40,9 +41,10 @@ Authors bump config `version` in git when driver bits change. `pack:beta` does n
 - Beta installs stay `source: user` with badge **Beta** (not **Unverified**).
 - Install dialog for `*-beta.<n>.zip`: no catalog integrity hash; show file `sha256:` and ask the tester to compare with the value from the author. Confirm label **Install beta**.
 - When catalog version is greater and compatible: **Update** replaces the beta with the official zip (existing verified install path), deletes the beta version directory, badge becomes **Official**.
-- When catalog version is lower than the installed beta: no **Update**; optional **Replace with official vX.Y.Z…** with a confirm that names both versions (explicit downgrade).
+- When catalog version is lower than the installed beta: no **Update**, no per-radio **Switch to verified**, and the row is left out of **Switch all to verified**. Optional **Replace with official vX.Y.Z…** with a confirm that names both versions (explicit downgrade).
 - **Remove** is per radio: delete catalog row and `radio-modules/<modelId>/<beta version>/` only ([ADR 0009](./0009-per-radio-modules.md)).
-- Installing another local zip for the same model removes the previous module install directory after the new catalog row succeeds; loose user `.json` paths are not deleted.
+- Installing another local zip for the same model removes the previous module install directory after the new catalog row succeeds. Reinstalling the same `-beta.<n>` replaces that directory in place. Loose user `.json` paths are not deleted.
+- A missing or non-`major.minor.patch` `minApiVersion` in a local zip fails the install.
 
 **Non-beta local zips** keep today's **Unverified** dialog and behavior except the shared `minApiVersion` block and directory cleanup on replace.
 
@@ -66,3 +68,22 @@ Authors bump config `version` in git when driver bits change. `pack:beta` does n
 - HamBench changes version parsing, listing, install dialog, and replace/downgrade actions per above.
 - Breaking: zip versions with `-beta.<n>` use full string as install directory; local install enforces `minApiVersion`; replacing a local module removes the prior install directory.
 - Registry `compareSemver` unchanged.
+
+## Migration
+
+Already true, and unchanged by this record:
+
+- Catalog sync skips drafts and prereleases and only selects `radio-module-<id>-<major.minor.patch>.zip`.
+- **Preferences → Drivers → Install from file…** installs a local zip as source `user` with badge **Unverified**. The dialog is **Install unverified module?** / **Install anyway**. It does not show a SHA-256. Local zip install does not read `minApiVersion`.
+- `versionFromZipName` keeps only `major.minor.patch` up to the first hyphen, so a file named `…-1.11.2-beta.1.zip` is stored as directory version `1.11.2` today.
+- Official catalog install already blocks when `minApiVersion` is newer than `APP_HAM_RADIO_API_VERSION`.
+- Remove of one radio deletes that catalog row and, when `sourcePath` is an install directory, only that `radio-modules/<modelId>/<version>/` tree.
+- `@springfield/ham-radio-registry` `compareSemver` compares numeric segments. It does not implement prerelease precedence. `parseInt` of a segment like `1-beta` is `1`, so it must not be used to order beta install directories.
+
+Follow-up pull requests, in order. None of this behavior exists until those merge:
+
+1. **radio-module-kenwood** — add `yarn pack:beta`.
+2. **radio-module-baofeng** — the same command.
+3. **ham-radio-ui** — keep `-beta.<n>` in the install directory, **Beta** badge and SHA-256 dialog, block local zips on `minApiVersion`, **Update** / keep / **Replace with official**, and delete the previous module directory after a successful local replace.
+
+`yarn pack:release` is not a stand-in. It may list GitHub releases to skip already published versions, and it deletes existing `dist-release/radio-module-*.zip` files before writing new ones.

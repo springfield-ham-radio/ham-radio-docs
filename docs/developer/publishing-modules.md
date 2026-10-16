@@ -17,4 +17,4 @@ Clone the module repo and load `configs/*.json` (resolve `$ref`s). You do not ne
 
 ## Beta handoff (no release)
 
-To email one radio zip to a tester without publishing a Release or touching the catalog, use [Build a beta driver](/developer/beta-driver) (`yarn pack:beta <modelId>` in the manufacturer repo).
+To email one radio zip to a tester without publishing a Release or touching the catalog, see [Build a beta driver](/developer/beta-driver). The `yarn pack:beta <modelId>` command is specified there and is **not in the manufacturer repos yet**; it lands in later pull requests to radio-module-kenwood and radio-module-baofeng.

@@ -1,33 +1,40 @@
 # Install a beta driver
 
-A **beta driver** is a single-radio zip a module author built on their machine and sent you (email, chat, USB). It is **not** in the official catalog. HamBench does not have a catalog integrity hash for it; you compare a SHA-256 digest instead. See [ADR 0010](/developer/adr/0010-local-beta-driver-zips).
+A **beta driver** is a single-radio zip a module author built on their machine and sent you (email, chat, or USB). It is not in the official catalog. Official installs stay on [Install radios](/guide/install-radios). The contract is [ADR 0010](/developer/adr/0010-local-beta-driver-zips).
 
-Official installs are unchanged: [Install radios](/guide/install-radios).
+**This flow is not in HamBench yet.** It lands in a later ham-radio-ui pull request. The buttons and badges below are that change, not the app you have today.
 
-## What you need
+## What the app does today
 
-- A HamBench build that supports beta installs (once the feature ships in ham-radio-ui).
-- The zip file, for example `radio-module-kenwood-th-d74-1.11.2-beta.1.zip`.
-- The `sha256:` value from the author’s `pack:beta` output (paste it into your notes so you can compare in the dialog).
+**Preferences → Drivers → Install from file…** still installs any local zip as **Unverified**:
 
-## Install
+- The dialog title is **Install unverified module?** and the confirm button is **Install anyway**. It does not show a SHA-256.
+- The install version is only `major.minor.patch` up to the first hyphen. `radio-module-kenwood-th-d74-1.11.2-beta.1.zip` is stored as version `1.11.2`, not `1.11.2-beta.1`.
+- Local zips are not checked against `minApiVersion`.
+- There is no **Update** on an unverified row. If that model is in the catalog and this HamBench is new enough, **Switch to verified** replaces it with the official zip without comparing a beta suffix.
+
+Wait for the HamBench build that includes the beta install change before you treat an emailed zip as a beta.
+
+## After that HamBench change
+
+You need the zip (for example `radio-module-kenwood-th-d74-1.11.2-beta.1.zip`) and the `sha256:` line from the author’s `pack:beta` output. `pack:beta` itself is added in the manufacturer repos in separate pull requests; see [Build a beta driver](/developer/beta-driver).
 
 1. Open **Preferences → Drivers**.
 2. Click **Install from file…** and choose the beta zip.
-3. Read the **Install beta driver?** dialog. It explains that Springfield did not publish this file and shows the file’s SHA-256. Confirm it matches what the author sent.
+3. Read **Install beta driver?**. It says this file is not in the official catalog, that HamBench has no catalog integrity hash for it, and it shows the file’s SHA-256. Confirm that digest matches the one the author sent.
 4. Click **Install beta**.
 
-If install fails because the driver needs a newer HamBench than yours, update the app and try again. The beta is not left half-installed.
+If `minApiVersion` in the zip is newer than this HamBench, install stops and the new files are removed. Update HamBench and try again.
 
-On success the radio appears with a **Beta** badge and a version like `v1.11.2-beta.1 · kenwood-th-d74`.
+On success the row shows a **Beta** badge and a version like `v1.11.2-beta.1 · kenwood-th-d74`.
 
-## While the beta is installed
+### While the beta is installed
 
-- HamBench does not auto-update betas from the catalog in the background.
-- If the **official catalog version is newer** than your beta (for example catalog `1.11.2` and beta `1.11.2-beta.1`), use **Update** to switch to the official driver. That removes the beta files and shows **Official**.
-- If your beta is **newer** than the catalog (for example beta `1.11.2-beta.1` and catalog `1.11.1`), keep testing. You can use **Replace with official…** only when you explicitly want to go back to the catalog version; the app asks you to confirm both versions.
-- **Remove** deletes only that radio’s beta install directory. Other radios you installed stay.
+- Nothing replaces a beta in the background.
+- If the official catalog version is **newer** than the beta (catalog `1.11.2`, beta `1.11.2-beta.1`) and this app can run that catalog entry, **Update** switches to the official driver, deletes the beta directory, and the badge becomes **Official**.
+- If the beta is **newer** than the catalog (beta `1.11.2-beta.1`, catalog `1.11.1`), there is no **Update** and no **Switch to verified** (including **Switch all to verified**). **Replace with official vX.Y.Z…** is the explicit way back; the confirm names both versions.
+- **Remove** deletes that radio’s beta directory only. Other installed radios stay.
 
-## Not a beta zip
+## Other local files
 
-**Install from file…** still accepts other local zips and single JSON configs. Those stay **Unverified** with the general at-your-own-risk warning, not the beta SHA-256 flow.
+**Install from file…** still accepts zips that are not `major.minor.patch-beta.<n>` and single JSON configs. Those stay **Unverified**, with the at-your-own-risk dialog, including after the HamBench change.
