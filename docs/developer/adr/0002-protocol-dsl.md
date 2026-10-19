@@ -30,6 +30,8 @@ Authoritative operator and field reference: [Protocol DSL](/developer/protocols/
 
 **Packers (named code exception).** Live CAT memory loops may set `pack` on `catRead` / `catWrite`. Only [`kenwood-th-f6`](https://github.com/springfield-ham-radio/ham-radio-driver/blob/main/src/utils/cat-packers.ts) is implemented today. Packers turn CAT line replies into a fixed memory-map record; they are not a substitute for a new clone step type (for example Icom streamed frames).
 
+**Error cleanup (not a step type).** Optional per-operation `onError` exchange lists run after failure or cancel; see [ADR 0011](./0011-protocol-onerror.md).
+
 ## Options considered
 
 **Text grammar or per-radio driver code.** Rejected. Every new radio would fork serial logic instead of editing JSON.
