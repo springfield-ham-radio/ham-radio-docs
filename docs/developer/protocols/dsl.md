@@ -40,9 +40,15 @@ Protocol steps live on the radio config next to serial and memory settings:
     }
   },
   "readMemory": [],
-  "writeMemory": []
+  "writeMemory": [],
+  "onError": {
+    "readMemory": [],
+    "writeMemory": []
+  }
 }
 ```
+
+`onError` is optional. Omit it or leave a key as `[]` for no cleanup (see [onError](#onerror) below).
 
 `addressSize` and `addressEndianness` control how `$address` is encoded on the wire.
 
@@ -65,8 +71,7 @@ Kenwood TH-D74 clone mode enters programming at 9600 baud then transfers at 5760
 ```json
 {
   "description": "Switch to clone baud",
-  "setBaudRate": 57600,
-  "expect": { "bytes": 1 }
+  "setBaudRate": 57600
 }
 ```
 
@@ -177,6 +182,48 @@ The TH-F6 handshake is ordinary exchanges (`ID`, `AI 0`). Memories then loop per
 
 HamBench still uses a separate `cat` block (and `capabilities.liveControl`) for the live VFO page. That is independent of `catRead` / `catWrite`.
 
+## `onError`
+
+After a step in `readMemory` or `writeMemory` fails, or the operator cancels, the driver may run a separate list of **exchange** steps from `onError.readMemory` or `onError.writeMemory`. Cleanup does not run on success (the normal last-step `E` is enough). It is skipped when the serial port is already closed. Failures inside cleanup are logged and ignored; the original error is rethrown. The whole list is capped at **1500 ms**.
+
+Each cleanup step uses the port’s current baud unless the step sets `setBaudRate`. Use literals only (`"E"`, baud numbers); do not use `$address`, `$block`, or `$data` in cleanup lists. Nested `read`, `write`, `catRead`, and `catWrite` are not allowed in `onError`.
+
+Kenwood **TM-D710A** (clone stays at open baud):
+
+```json
+"onError": {
+  "readMemory": [
+    {
+      "description": "Leave programming mode after error",
+      "send": ["E"]
+    }
+  ],
+  "writeMemory": [
+    {
+      "description": "Leave programming mode after error",
+      "send": ["E"]
+    }
+  ]
+}
+```
+
+Kenwood **TH-D74** forces clone baud before `E` so the radio sees exit even when failure happens after `0M PROGRAM` but before the success-path baud switch:
+
+```json
+"onError": {
+  "readMemory": [
+    { "description": "Match clone baud for exit", "setBaudRate": 57600 },
+    { "description": "Leave programming mode after error", "send": ["E"] }
+  ],
+  "writeMemory": [
+    { "description": "Match clone baud for exit", "setBaudRate": 57600 },
+    { "description": "Leave programming mode after error", "send": ["E"] }
+  ]
+}
+```
+
+TH-F6 and other live-CAT radios omit `onError`. Contract details: [ADR 0011](/developer/adr/0011-protocol-onerror.md). Requires ham-radio-api **18.3.0** and ham-radio-driver **3.6.0**.
+
 ## Baofeng UV-5R
 
 ### Read
@@ -265,7 +312,7 @@ Handshake is three exchanges. Memory transfer is one `read` (64-byte `S` blocks)
 The TH-D74 is a 256-byte block clone, not a Baofeng-style `S`/`X` dump:
 
 1. ASCII `0M PROGRAM\r` at 9600 baud; radio replies `0M\r`.
-2. Switch to 57600 baud and discard one sync byte.
+2. Switch to 57600 baud (`setBaudRate` with no `expect`).
 3. Read: send `R` + `$block` + `0x0000`, expect `W` + `$block` + `0x0000` + 256 data bytes, then ACK `0x06`/`0x06`.
 4. Write: send `W` + `$block` + `0x0000` + 256 data bytes, expect `0x06`. Skip the last two blocks.
 5. Send `E` to leave programming mode.
