@@ -98,30 +98,21 @@ const uiLogger = createUILogger();
 uiLogger.startCommand(0, 5, 'readMemory', step);
 ```
 
-### 4. Registry Module (@springfield/ham-radio-registry)
+### 4. Registry library (@springfield/ham-radio-registry)
 
-**Purpose**: Discover and manage radio module plugins.
+**Purpose**: Parse the GitHub catalog and validate a radio config. HamBench uses the browser-safe entry (`parseModuleCatalog`, `validateConfiguration`). It does not discover npm plugins, and it does not build a codec with `getCodec()`.
 
-**Key Principles**:
-- HamBench installs official modules from the GitHub catalog ([ADR 0005](./adr/0005-module-distribution-github-catalog.md)); Node tools may scan workspace `node_modules` via `NpmBasedConfigRegistry`
-- Validate configurations before loading
-- Manage shared components
-- Provide caching for performance
+**Key principles**:
+- Official modules come from [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog) ([ADR 0005](./adr/0005-module-distribution-github-catalog.md), [ADR 0009](./adr/0009-per-radio-modules.md)).
+- Encode and decode go through `createMemoryMapCodec()` in `@springfield/ham-radio-utils`.
+- `@springfield/ham-radio-registry/node` (`createRegistry`, `NpmBasedConfigRegistry`) is a Node workspace helper. The desktop app does not install radios with it.
 
-**Example Usage**:
+**Example**:
 ```typescript
-import { createRegistry } from '@springfield/ham-radio-registry';
+import { parseModuleCatalog, validateConfiguration } from '@springfield/ham-radio-registry';
 
-const registry = createRegistry(logger);
-
-// Discover available configurations
-const configs = await registry.discoverConfigurations();
-
-// Get specific configuration
-const config = await registry.getConfiguration('baofeng-uv5r');
-
-// Get codec for radio model
-const codec = await registry.getCodec('baofeng-uv5r');
+const catalog = parseModuleCatalog(catalogJson);
+const result = validateConfiguration(radioConfig);
 ```
 
 ### 5. Radio Module (radio-module-*)
@@ -270,23 +261,17 @@ const memory = new SegmentedMemory(segments);
 ```
 
 ### Caching
-Implement caching for expensive operations:
+Keep an in-memory map for an expensive parse you repeat in one process:
 
 ```typescript
-class CachedRegistry {
-  private configCache = new Map<string, RegistryRadio>();
-  
-  async getConfiguration(id: string): Promise<RegistryRadio | null> {
-    if (this.configCache.has(id)) {
-      return this.configCache.get(id)!;
-    }
-    
-    const config = await this.loadConfiguration(id);
-    if (config) {
-      this.configCache.set(id, config);
-    }
-    return config;
-  }
+const parsed = new Map<string, RadioConfig>();
+
+function loadConfig(id: string, read: () => RadioConfig): RadioConfig {
+  const cached = parsed.get(id);
+  if (cached) return cached;
+  const config = read();
+  parsed.set(id, config);
+  return config;
 }
 ```
 

@@ -6,63 +6,34 @@ This document provides a comprehensive technical reference for the HamBench soft
 
 ## System Overview
 
-The HamBench ecosystem is designed as a modular, extensible platform for amateur radio programming and management. It consists of five core modules that work together to provide a complete solution for radio configuration, communication, and data management.
+HamBench is a desktop app plus a set of libraries. Radio support is a JSON module listed in the GitHub catalog. There is no CLI product and no HTTP API server in this architecture.
 
 ```mermaid
-graph TB
-    subgraph "Core API Layer"
-        API[ham-radio-api]
-    end
-    
-    subgraph "Driver Layer"
-        DRIVER[ham-radio-driver]
-    end
-    
-    subgraph "Utilities Layer"
-        UTILS[ham-radio-utils]
-    end
-    
-    subgraph "Registry Layer"
-        REGISTRY[ham-radio-registry]
-    end
-    
-    subgraph "Radio Modules"
-        BAOFENG[radio-module-baofeng]
-        OTHER[Other Radio Modules...]
-    end
-    
-    subgraph "Applications"
-        UI[ham-radio-ui]
-        CLI[CLI Tools]
-        API_SERVER[API Server]
-    end
-    
-    API --> DRIVER
-    API --> UTILS
-    API --> REGISTRY
-    API --> BAOFENG
-    
-    DRIVER --> API
-    UTILS --> API
-    REGISTRY --> API
-    BAOFENG --> API
-    
-    UI --> API
-    CLI --> API
-    API_SERVER --> API
-    
-    REGISTRY --> BAOFENG
-    REGISTRY --> OTHER
-    
-    style API fill:#e3f2fd
-    style DRIVER fill:#f3e5f5
-    style UTILS fill:#e8f5e8
-    style REGISTRY fill:#fff3e0
-    style BAOFENG fill:#fce4ec
-    style OTHER fill:#fce4ec
-    style UI fill:#f1f8e9
-    style CLI fill:#f1f8e9
-    style API_SERVER fill:#f1f8e9
+flowchart TB
+  subgraph apps ["Applications"]
+    UI["HamBench ham-radio-ui"]
+    SNIFF["ham-radio-sniffer"]
+  end
+  subgraph dist ["Distribution"]
+    CAT["radio-module-catalog"]
+    MOD["Per-radio JSON modules"]
+  end
+  subgraph libs ["Libraries"]
+    API["ham-radio-api"]
+    DRIVER["ham-radio-driver"]
+    UTILS["ham-radio-utils"]
+    REG["ham-radio-registry"]
+  end
+  UI --> CAT
+  CAT --> MOD
+  UI --> REG
+  UI --> DRIVER
+  UI --> UTILS
+  DRIVER --> API
+  UTILS --> API
+  REG --> API
+  DRIVER --> UTILS
+  SNIFF --> API
 ```
 
 ## Module Analysis
@@ -185,216 +156,126 @@ export interface UILogger {
 
 **Dependencies**: `@springfield/ham-radio-api`, `ajv`, `fishery`, `loglayer`, `sprintf-js`
 
-### 4. **@springfield/ham-radio-registry** - Module Discovery and Management
+### 4. **@springfield/ham-radio-registry** - Catalog and config checks
 
-**Purpose**: Loads radio JSON configs for the desktop catalog and for Node tooling.
+**Purpose**: Parse and validate radio JSON and the official catalog. HamBench calls this library. It does not load a radio by scanning npm.
 
-**Key Responsibilities**:
-- Discover radio configurations from installed modules (GitHub catalog in the app; `node_modules` in Node)
-- Validate and load radio configurations
-- Manage shared components across modules
-- Handle plugin installation and updates
-- Provide codec factory management
+**Key responsibilities**:
+- `parseModuleCatalog` reads a schema version 3 catalog. One entry is one radio.
+- `validateConfiguration` checks the radio config HamBench is about to use.
+- `isApiVersionCompatible` compares the app's `@springfield/ham-radio-api` version with the module's `minApiVersion`.
 
-**Core Components**:
-- **RadioConfigRegistry**: Main interface for configuration management
-- **NpmBasedConfigRegistry**: Node implementation that scans workspace `node_modules` for `springfield.pluginType: "radio-module"` (not how HamBench installs official modules; see [ADR 0005](./adr/0005-module-distribution-github-catalog.md))
-- **SharedComponentManager**: Manages shared schemas, protocols, and codecs
-- **NpmClient**: Optional npm registry client used by Node tooling (package metadata), not desktop module install
+**What HamBench does not do with this package**:
+- It does not call `discoverConfigurations()`, `installPlugin()`, or `getCodec()`.
+- It does not resolve a `codecFactory` path inside a module zip.
+- Official zips are not npm packages. See [ADR 0005](./adr/0005-module-distribution-github-catalog.md) and [ADR 0009](./adr/0009-per-radio-modules.md).
 
-**Key Features**:
-```typescript
-export interface RadioConfigRegistry {
-  discoverConfigurations(): Promise<RegistryRadio[]>
-  getConfiguration(configId: string): Promise<RegistryRadio | null>
-  installPlugin(moduleId: string): Promise<void>
-  getCodec(modelId: RadioModelId): Promise<RadioCodec | null>
-  validateConfiguration(config: RegistryRadio): ValidationResult
-}
-```
-
-**Plugin Discovery Process**:
-1. Load configs from an installed JSON catalog (desktop) or scan workspace / `node_modules` packages with `springfield.pluginType: "radio-module"` (Node)
-2. Load configuration files from `configs/` directory
-3. Validate configurations against schemas
-4. Resolve shared components and dependencies
-5. Cache configurations for fast access
+`@springfield/ham-radio-registry/node` still exports `NpmBasedConfigRegistry` for Node workspace experiments. That entry scans `node_modules` for `springfield.pluginType`. The desktop app does not use it to install radios.
 
 **Dependencies**: `@springfield/ham-radio-api`, `loglayer`
 
-Official modules are installed from the GitHub catalog. See [Publish a module](/developer/publishing-modules) and [ADR 0009](./adr/0009-per-radio-modules.md).
+### 5. **radio-module-catalog** and the JSON modules
 
-### 5. **radio-module-baofeng** - Radio-Specific Implementation
+**Purpose**: Publish one zip per radio and an index HamBench can download.
 
-**Purpose**: JSON radio module for Baofeng UV-5R series radios.
+The catalog repo holds `catalog-entries.json` (schema version 3). Each entry names a `radio-module-<modelId>-<version>.zip` on GitHub Releases, plus a SHA-256 integrity hash. Manufacturer repos such as `radio-module-baofeng` are where the JSON is written. The catalog `package` name (`@springfield/radio-module-baofeng-uv5r`) is an identifier, not an npm coordinate.
 
-**Key Responsibilities**:
-- Provide radio-specific protocol, serial, and memory JSON
-- Point `codec.type` at `"memoryMap"` and `$ref` a memory-map JSON
-- Define channel/settings schemas
+**What a module contains**:
+- `configs/<modelId>.json` with the protocol, serial settings, and a `codec` object
+- Shared channel and settings schemas
+- A memory map referenced by `memoryMap.$ref`
 
-**Module Structure**:
-```
-radio-module-baofeng/
-├── configs/
-│   └── baofeng-uv5r.json
-├── src/shared/
-│   ├── schemas/
-│   │   ├── channel-schema.json
-│   │   └── settings-schema.json
-│   └── memory-maps/
-│       └── uv5r-settings.json
-```
+`codec.type` in every shipping Baofeng and Kenwood config is `"memoryMap"`. [ADR 0004](./adr/0004-radio-modules-json-only) requires that for new modules. `radio-protocol-schema.json` does not declare `codec` and does not set `additionalProperties: false`, so Ajv does not require the field and does not limit it to an enum. HamBench still treats `"memoryMap"` as the signal to call `createMemoryMapCodec()` in `@springfield/ham-radio-utils`. Older registry types also mention `"shared"` and `"inline"`. New modules must not use those.
 
-Encode/decode is `createMemoryMapCodec()` in `@springfield/ham-radio-utils`. This package ships **JSON only**.
+Encode and decode is not code in the module. The generic driver in `@springfield/ham-radio-driver` runs the protocol steps.
 
-**Dependencies** (dev, for tests): `@springfield/ham-radio-api`, `@springfield/ham-radio-utils`
+## Data flow
 
-## Data Flow Architecture
-
-### 1. **Radio Memory Read Operation**
+### Read memory
 
 ```mermaid
 sequenceDiagram
-    participant App as Application
-    participant Registry as Registry
-    participant Driver as Driver
-    participant Codec as Codec
-    participant Radio as Radio
-    
-    App->>Registry: getConfiguration(modelId)
-    Registry-->>App: radioConfig
-    App->>Registry: getCodec(modelId)
-    Registry-->>App: codec
-    
-    App->>Driver: readRadio(port, progress)
-    Driver->>Driver: executeProtocol(readMemory)
-    Driver->>Radio: send commands
-    Radio-->>Driver: memory data
-    Driver-->>App: raw memory data
-    
-    App->>Codec: decode(memory)
-    Codec-->>App: program data
+  participant App as HamBench
+  participant Cat as Catalog
+  participant Reg as ham-radio-registry
+  participant Driver as ham-radio-driver
+  participant Codec as createMemoryMapCodec
+  participant Radio as Radio
+  App->>Cat: download zip for modelId
+  Cat-->>App: JSON config and memory map
+  App->>Reg: validateConfiguration
+  Reg-->>App: ok
+  App->>Driver: readRadio
+  Driver->>Radio: readMemory steps
+  Radio-->>Driver: bytes
+  Driver-->>App: memory
+  App->>Codec: decode
+  Codec-->>App: channels and settings
 ```
 
-### 2. **Radio Memory Write Operation**
+### Write memory
 
 ```mermaid
 sequenceDiagram
-    participant App as Application
-    participant Codec as Codec
-    participant Driver as Driver
-    participant Radio as Radio
-    
-    App->>Codec: encode(program, memory)
-    Codec-->>App: encoded memory data
-    
-    App->>Driver: writeRadio(port, data, progress)
-    Driver->>Driver: executeProtocol(writeMemory)
-    Driver->>Radio: send commands
-    Radio-->>Driver: confirmation
-    Driver-->>App: success
+  participant App as HamBench
+  participant Codec as createMemoryMapCodec
+  participant Driver as ham-radio-driver
+  participant Radio as Radio
+  App->>Codec: encode
+  Codec-->>App: memory bytes
+  App->>Driver: writeRadio
+  Driver->>Radio: writeMemory steps
+  Radio-->>Driver: result
+  Driver-->>App: done
 ```
 
-### 3. **Plugin Discovery and Loading**
+### Install a module
 
 ```mermaid
 sequenceDiagram
-    participant App as Application
-    participant Registry as Registry
-    participant NPM as NPM Registry
-    participant FS as File System
-    
-    App->>Registry: discoverConfigurations()
-    Registry->>FS: scan node_modules
-    FS-->>Registry: plugin modules
-    Registry->>FS: read config files
-    FS-->>Registry: configurations
-    Registry->>Registry: validate configurations
-    Registry->>Registry: resolve shared components
-    Registry-->>App: configurations[]
+  participant App as HamBench
+  participant Cat as radio-module-catalog
+  participant Rel as GitHub Releases
+  participant Reg as ham-radio-registry
+  App->>Cat: fetch catalog-entries.json
+  Cat-->>App: schema version 3 entries
+  App->>Reg: parseModuleCatalog
+  App->>Rel: download radio zip
+  Rel-->>App: zip bytes
+  App->>App: check SHA-256 from the catalog
+  App->>Reg: validateConfiguration
+  Note over App: Keep JSON only. Do not import module code.
 ```
 
-## Design Patterns
+## How the libraries fit together
 
-### 1. **Factory Pattern**
-Used extensively for creating codec instances and managing shared components:
-```typescript
-export interface CodecFactory {
-  createCodec(modelId: RadioModelId, config: any, logger: ILogLayer): Promise<RadioCodec>
-}
-```
+The driver selects a step executor for each protocol step ([ADR 0002](./adr/0002-protocol-dsl.md)): `CatReadExecutor`, `CatWriteExecutor`, `ReadExecutor`, `WriteExecutor`, and `ExchangeExecutor`. Those executors live in ham-radio-driver. A module cannot register another one.
 
-### 2. **Registry Pattern**
-The registry module implements the registry pattern for discovering and managing radio configurations:
-```typescript
-export interface RadioConfigRegistry {
-  discoverConfigurations(): Promise<RegistryRadio[]>
-  getConfiguration(configId: string): Promise<RegistryRadio | null>
-}
-```
+`createMemoryMapCodec()` is the only codec a new module uses. There is no `CodecFactory` in the module zip.
 
-### 3. **Strategy Pattern**
-The protocol interpreter uses the strategy pattern with different step executors:
-```typescript
-class StepExecutorRegistry {
-  registerExecutor(executor: StepExecutor): void
-  executeStep(step: any, context: ProtocolContext): Promise<void>
-}
-```
+Progress reporting uses `RadioProgressIndicator` (`setValue`, `isCanceled`) from the API. The driver checks it between steps.
 
-### 4. **Observer Pattern**
-Progress tracking and UI logging use observer patterns:
-```typescript
-export interface RadioProgressIndicator {
-  setValue(value: number): void
-  isCanceled: boolean
-}
-```
+## Security
 
-## Security Considerations
+- HamBench validates a config with `validateConfiguration` before use.
+- The catalog entry carries a SHA-256 integrity hash. The app checks the zip before install ([ADR 0005](./adr/0005-module-distribution-github-catalog.md)).
+- A module zip is JSON. The app does not execute it.
+- Branded types in ham-radio-api keep frequencies, channel ids, and model ids distinct. External JSON is still checked at runtime.
 
-### 1. **Plugin Validation**
-- All plugins are validated against schemas before loading
-- Official module zip integrity is verified with SHA-256 from the catalog ([ADR 0005](./adr/0005-module-distribution-github-catalog.md))
-- Codec execution is sandboxed where possible
+## Performance
 
-### 2. **Type Safety**
-- Extensive use of branded types prevents type confusion
-- Strict TypeScript configuration ensures compile-time safety
-- Runtime validation of all external data
-
-### 3. **Error Handling**
-- Comprehensive error handling throughout the stack
-- Graceful degradation when plugins fail to load
-- Detailed logging for debugging and monitoring
-
-## Performance Considerations
-
-### 1. **Caching**
-- Registry caches configurations and codecs
-- Driver caches protocol interpreters
-- Memory operations are optimized for large data sets
-
-### 2. **Lazy Loading**
-- Codecs are loaded only when needed
-- Shared components are resolved on demand
-- Protocol steps are executed incrementally
-
-### 3. **Memory Management**
-- Segmented memory allows efficient handling of large radio memories
-- Progress indicators support cancellation of long-running operations
-- Proper cleanup of serial connections and resources
+- Protocol steps run one at a time against the open serial port. The driver can cancel when the progress indicator says so.
+- Segmented memory keeps large radio images addressable without copying the whole image for every step.
+- The app holds the parsed config for the installed radio. It does not re-download the catalog on every read.
 
 ## Extensibility
 
-The architecture is designed for maximum extensibility:
+1. **New radio**: Add a JSON module and a catalog entry. Start from [radio-module-template](https://github.com/springfield-ham-radio/radio-module-template). See [Build a radio driver](/developer/build-a-radio-driver).
+2. **New protocol step kind**: Add an executor in ham-radio-driver and ship it with the app. Modules only name steps the driver already knows.
+3. **Third-party modules**: Same zip layout as official modules ([ADR 0012](./adr/0012-community-drivers)). They are not npm plugins.
 
-1. **New Radio Models**: Create new radio modules following the established pattern
-2. **Custom Protocols**: Extend the protocol interpreter with custom step executors
-3. **Shared Components**: Reuse schemas, protocols, and codecs across related models
-4. **Plugin Ecosystem**: Third-party developers can create and distribute radio modules
+## See also
 
-## Conclusion
-
-The HamBench ecosystem provides a robust, extensible platform for amateur radio programming. The modular architecture allows for easy addition of new radio models while maintaining type safety and performance. The registry system enables a rich ecosystem of third-party modules, while the driver layer provides reliable communication with physical radio hardware. 
+- [Architecture overview](/developer/architecture-overview)
+- [Module layout](/developer/radio-module-dev)
+- [Publish a module](/developer/publishing-modules) 

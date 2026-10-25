@@ -5,6 +5,24 @@ export default withMermaid(defineConfig({
   srcDir: "docs",
   base: "/ham-radio-docs/",
 
+  // Mermaid 12 defaults layout to "elk". Under Vite, elkjs's CJS bundle has no
+  // default export, so render() throws. The plugin calls render() without a
+  // container, and on that throw Mermaid leaves a "Syntax error in text" SVG
+  // on document.body. VitePress keeps body nodes across client navigations, so
+  // the SVG shows up on every later page. dagre skips that import.
+  // suppressErrorRendering removes the temporary body node if a diagram still
+  // fails. The vp-mermaid class is not ".mermaid", so startOnLoad cannot pick
+  // up the empty placeholder before the Vue component renders.
+  mermaid: {
+    startOnLoad: false,
+    suppressErrorRendering: true,
+    securityLevel: 'loose',
+    layout: 'dagre',
+  },
+  mermaidPlugin: {
+    class: 'vp-mermaid',
+  },
+
   title: "HamBench",
   description: "Documentation for HamBench",
 
