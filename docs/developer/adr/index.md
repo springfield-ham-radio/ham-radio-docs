@@ -15,6 +15,7 @@ Decisions that change a layer, a runtime, or a public contract live here. Each r
 | [ADR 0009](./0009-per-radio-modules.md) | Accepted | One installable package per radio |
 | [ADR 0010](./0010-local-beta-driver-zips.md) | Accepted | Local beta driver zips |
 | [ADR 0011](./0011-protocol-onerror.md) | Accepted | Protocol `onError` cleanup steps |
+| [ADR 0012](./0012-community-drivers.md) | Accepted | Community drivers: catalog review, labels, DCO |
 
 ## Repository ADRs
 

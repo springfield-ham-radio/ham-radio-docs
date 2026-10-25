@@ -71,19 +71,19 @@ Authors bump config `version` in git when driver bits change. `pack:beta` does n
 
 ## Migration
 
-Already true, and unchanged by this record:
+`yarn pack:beta` is in radio-module-kenwood and radio-module-baofeng (`scripts/pack-beta-zip.mjs`). HamBench shows a **Beta** badge for a user install whose version is `x.y.z-beta.n`, **Beta installed** on the catalog row, and **Install beta driver?** with the file SHA-256. Author steps: [Build a beta driver](/developer/beta-driver). Operator steps: [Install a beta driver](/guide/beta-driver).
+
+A shared `ham-radio-pack-beta` bin is draft [ham-radio-utils#35](https://github.com/springfield-ham-radio/ham-radio-utils/pull/35), expected in `@springfield/ham-radio-utils` 4.17.0. The module scripts keep calling `scripts/pack-beta-zip.mjs` until they switch.
+
+The bullets below described HamBench before that UI landed. They are not the current install path.
+
+Already true at the time of this record:
 
 - Catalog sync skips drafts and prereleases and only selects `radio-module-<id>-<major.minor.patch>.zip`.
 - **Preferences → Drivers → Install from file…** installs a local zip as source `user` with badge **Unverified**. The dialog is **Install unverified module?** / **Install anyway**. It does not show a SHA-256. Local zip install does not read `minApiVersion`.
-- `versionFromZipName` keeps only `major.minor.patch` up to the first hyphen, so a file named `…-1.11.2-beta.1.zip` is stored as directory version `1.11.2` today.
+- `versionFromZipName` kept only `major.minor.patch` up to the first hyphen, so a file named `…-1.11.2-beta.1.zip` was stored as directory version `1.11.2`.
 - Official catalog install already blocks when `minApiVersion` is newer than `APP_HAM_RADIO_API_VERSION`.
 - Remove of one radio deletes that catalog row and, when `sourcePath` is an install directory, only that `radio-modules/<modelId>/<version>/` tree.
 - `@springfield/ham-radio-registry` `compareSemver` compares numeric segments. It does not implement prerelease precedence. `parseInt` of a segment like `1-beta` is `1`, so it must not be used to order beta install directories.
 
-Follow-up pull requests, in order. None of this behavior exists until those merge:
-
-1. **radio-module-kenwood** — add `yarn pack:beta`.
-2. **radio-module-baofeng** — the same command.
-3. **ham-radio-ui** — keep `-beta.<n>` in the install directory, **Beta** badge and SHA-256 dialog, block local zips on `minApiVersion`, **Update** / keep / **Replace with official**, and delete the previous module directory after a successful local replace.
-
-`yarn pack:release` is not a stand-in. It may list GitHub releases to skip already published versions, and it deletes existing `dist-release/radio-module-*.zip` files before writing new ones.
+Those three follow-ups have landed: Kenwood `yarn pack:beta`, Baofeng `yarn pack:beta`, and the HamBench beta install UI. `yarn pack:release` is still not a stand-in. It may list GitHub releases to skip already published versions, and it deletes existing `dist-release/radio-module-*.zip` files before writing new ones.

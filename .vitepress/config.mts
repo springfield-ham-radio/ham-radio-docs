@@ -5,6 +5,24 @@ export default withMermaid(defineConfig({
   srcDir: "docs",
   base: "/ham-radio-docs/",
 
+  // Mermaid 12 defaults layout to "elk". Under Vite, elkjs's CJS bundle has no
+  // default export, so render() throws. The plugin calls render() without a
+  // container, and on that throw Mermaid leaves a "Syntax error in text" SVG
+  // on document.body. VitePress keeps body nodes across client navigations, so
+  // the SVG shows up on every later page. dagre skips that import.
+  // suppressErrorRendering removes the temporary body node if a diagram still
+  // fails. The vp-mermaid class is not ".mermaid", so startOnLoad cannot pick
+  // up the empty placeholder before the Vue component renders.
+  mermaid: {
+    startOnLoad: false,
+    suppressErrorRendering: true,
+    securityLevel: 'loose',
+    layout: 'dagre',
+  },
+  mermaidPlugin: {
+    class: 'vp-mermaid',
+  },
+
   title: "HamBench",
   description: "Documentation for HamBench",
 
@@ -13,6 +31,7 @@ export default withMermaid(defineConfig({
   themeConfig: {
     nav: [
       { text: 'User Guide', link: '/guide/' },
+      { text: 'Manufacturers', link: '/developer/for-manufacturers' },
       { text: 'Developer', link: '/developer/' }
     ],
 
@@ -40,9 +59,9 @@ export default withMermaid(defineConfig({
           text: 'Start here',
           items: [
             { text: 'Overview', link: '/developer/' },
+            { text: 'For radio manufacturers', link: '/developer/for-manufacturers' },
             { text: 'Architecture overview', link: '/developer/architecture-overview' },
             { text: 'Architecture reference', link: '/developer/architecture' },
-            { text: 'Modules', link: '/developer/module-comparison' },
             { text: 'Development guide', link: '/developer/development-guide' },
             { text: 'Architecture decisions', link: '/developer/adr/' }
           ]
@@ -50,11 +69,14 @@ export default withMermaid(defineConfig({
         {
           text: 'Radio modules',
           items: [
-            { text: 'Create a module', link: '/developer/radio-module-dev' },
+            { text: 'Build a radio driver', link: '/developer/build-a-radio-driver' },
+            { text: 'Module layout', link: '/developer/radio-module-dev' },
             { text: 'Driver editor', link: '/developer/driver-editor' },
-            { text: 'Configuration format', link: '/developer/configuration' },
+            { text: 'Config reference', link: '/developer/config-reference' },
+            { text: 'Test a driver', link: '/developer/testing-a-radio-driver' },
             { text: 'Publish a module', link: '/developer/publishing-modules' },
-            { text: 'Build a beta driver', link: '/developer/beta-driver' }
+            { text: 'Build a beta driver', link: '/developer/beta-driver' },
+            { text: 'Third-party drivers', link: '/developer/third-party-drivers' }
           ]
         },
         {
@@ -64,19 +86,6 @@ export default withMermaid(defineConfig({
             { text: 'Overview', link: '/developer/protocols/' },
             { text: 'Protocol DSL', link: '/developer/protocols/dsl' },
             { text: 'Memory-map DSL', link: '/developer/protocols/memory-map' }
-          ]
-        },
-        {
-          text: 'Registry',
-          collapsed: true,
-          items: [
-            { text: 'Overview', link: '/developer/registry/' },
-            { text: 'Why a registry?', link: '/developer/registry/why-registry' },
-            { text: 'Architecture', link: '/developer/registry/architecture' },
-            { text: 'Getting started', link: '/developer/registry/getting-started' },
-            { text: 'Plugin development', link: '/developer/registry/plugin-development' },
-            { text: 'API reference', link: '/developer/registry/api-reference' },
-            { text: 'Examples', link: '/developer/registry/examples' }
           ]
         },
         {

@@ -13,6 +13,9 @@ hero:
       text: Developer Docs
       link: /developer/
     - theme: alt
+      text: For manufacturers
+      link: /developer/for-manufacturers
+    - theme: alt
       text: GitHub
       link: https://github.com/springfield-ham-radio
 

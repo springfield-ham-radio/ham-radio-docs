@@ -1,0 +1,604 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Radio Protocol DSL Schema",
+  "description": "Schema for defining radio communication protocols as send/expect exchanges",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "description",
+    "serialConfig",
+    "memoryConfig",
+    "settingsSchema",
+    "readMemory",
+    "writeMemory"
+  ],
+  "properties": {
+    "id": {
+      "type": "object",
+      "description": "Radio identification information",
+      "required": [
+        "model",
+        "name",
+        "manufacturer"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "Radio model identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable radio name"
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Radio manufacturer name"
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the radio configuration",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the radio configuration"
+    },
+    "settingsSchema": {
+      "type": "object",
+      "description": "Schema definitions for radio settings and channels",
+      "required": [
+        "model",
+        "settingsSchema",
+        "channelSchema"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "Radio model identifier"
+        },
+        "settingsSchema": {
+          "type": "object",
+          "description": "JSON schema for radio settings"
+        },
+        "channelSchema": {
+          "type": "object",
+          "description": "JSON schema for radio channels"
+        }
+      }
+    },
+    "serialConfig": {
+      "type": "object",
+      "description": "Serial port configuration",
+      "required": [
+        "baudRate"
+      ],
+      "properties": {
+        "baudRate": {
+          "type": "integer",
+          "description": "Default serial baud rate used to open the programming port. Must be included in baudRates when that list is present.",
+          "minimum": 1200,
+          "maximum": 115200
+        },
+        "baudRates": {
+          "type": "array",
+          "description": "Baud rates the radio programming port accepts. Omit when only baudRate is valid. The HamBench import and write dialogs show a selector when more than one value is listed.",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1200,
+            "maximum": 115200
+          }
+        },
+        "dataBits": {
+          "type": "integer",
+          "description": "Number of data bits",
+          "enum": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "default": 8
+        },
+        "stopBits": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "enum": [
+                1,
+                2
+              ]
+            },
+            {
+              "type": "number",
+              "enum": [
+                1.5
+              ]
+            }
+          ],
+          "description": "Number of stop bits",
+          "default": 1
+        },
+        "parity": {
+          "type": "string",
+          "enum": [
+            "none",
+            "even",
+            "odd"
+          ],
+          "default": "none"
+        },
+        "rtscts": {
+          "type": "boolean",
+          "description": "Hardware RTS/CTS flow control (Kenwood TH-D74 clone on macOS)"
+        },
+        "rts": {
+          "type": "boolean",
+          "description": "RTS line after open. TH-F6 live CAT needs false"
+        },
+        "dtr": {
+          "type": "boolean",
+          "description": "DTR line after open"
+        }
+      }
+    },
+    "memoryConfig": {
+      "type": "object",
+      "description": "Memory configuration for radio segments",
+      "required": [
+        "chunkSize",
+        "addressSize",
+        "addressEndianness",
+        "segments"
+      ],
+      "properties": {
+        "chunkSize": {
+          "type": "integer",
+          "description": "Size of memory chunks in bytes",
+          "minimum": 1
+        },
+        "addressSize": {
+          "type": "integer",
+          "description": "Size of addresses in bytes for memory operations",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "addressEndianness": {
+          "type": "string",
+          "description": "Byte order for address values in memory operations",
+          "enum": [
+            "big",
+            "little"
+          ]
+        },
+        "segments": {
+          "type": "object",
+          "description": "Memory segment definitions",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "startAddress",
+              "endAddress"
+            ],
+            "properties": {
+              "startAddress": {
+                "type": "integer",
+                "description": "Starting address of the memory segment",
+                "minimum": 0
+              },
+              "endAddress": {
+                "type": "integer",
+                "description": "Inclusive ending address of the memory segment",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "readMemory": {
+      "type": "array",
+      "description": "Protocol steps for reading memory",
+      "items": {
+        "$ref": "#/definitions/protocolStep"
+      }
+    },
+    "writeMemory": {
+      "type": "array",
+      "description": "Protocol steps for writing memory",
+      "items": {
+        "$ref": "#/definitions/protocolStep"
+      }
+    },
+    "onError": {
+      "$ref": "#/definitions/onError",
+      "description": "Optional cleanup exchanges run after a read or write failure (or cancel)"
+    }
+  },
+  "definitions": {
+    "onError": {
+      "type": "object",
+      "description": "Per-operation cleanup steps. Items are send/expect exchanges only; no chunked read/write or CAT loops.",
+      "additionalProperties": false,
+      "properties": {
+        "readMemory": {
+          "type": "array",
+          "description": "Cleanup exchanges after a failed or cancelled readMemory",
+          "items": {
+            "$ref": "#/definitions/exchangeStep"
+          }
+        },
+        "writeMemory": {
+          "type": "array",
+          "description": "Cleanup exchanges after a failed or cancelled writeMemory",
+          "items": {
+            "$ref": "#/definitions/exchangeStep"
+          }
+        }
+      }
+    },
+    "protocolStep": {
+      "description": "A single protocol step: an exchange, a chunked read, a chunked write, or a live CAT memory loop",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/readStep"
+        },
+        {
+          "$ref": "#/definitions/writeStep"
+        },
+        {
+          "$ref": "#/definitions/catReadStep"
+        },
+        {
+          "$ref": "#/definitions/catWriteStep"
+        },
+        {
+          "$ref": "#/definitions/exchangeStep"
+        }
+      ]
+    },
+    "byteToken": {
+      "description": "A send/expect token: a byte, hex string (0x50), ASCII opcode (S), or placeholder ($address)",
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "sendData": {
+      "type": "array",
+      "description": "Bytes and placeholders to send",
+      "items": {
+        "$ref": "#/definitions/byteToken"
+      }
+    },
+    "expect": {
+      "description": "Expected serial reply: exact byte(s), opaque length, or a framed pattern",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/byteToken"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/byteToken"
+          },
+          "minItems": 1
+        },
+        {
+          "type": "object",
+          "required": [
+            "bytes"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "bytes": {
+              "type": "integer",
+              "description": "Accept any content of this many bytes",
+              "minimum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "until"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "until": {
+              "$ref": "#/definitions/byteToken",
+              "description": "Read until this delimiter byte; the delimiter is not included (Kenwood CAT CR)"
+            }
+          }
+        }
+      ]
+    },
+    "catMemory": {
+      "type": "object",
+      "description": "Live CAT memory loop over logical channel records",
+      "required": [
+        "segment",
+        "count",
+        "recordSize",
+        "pack"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "segment": {
+          "type": "string",
+          "description": "Memory segment that receives packed records"
+        },
+        "count": {
+          "type": "integer",
+          "description": "Number of channel indexes to scan",
+          "minimum": 1
+        },
+        "recordSize": {
+          "type": "integer",
+          "description": "Packed logical record size in bytes",
+          "minimum": 1
+        },
+        "pack": {
+          "type": "string",
+          "description": "CAT reply packer",
+          "enum": [
+            "kenwood-th-f6"
+          ]
+        },
+        "indexWidth": {
+          "type": "integer",
+          "description": "Zero-padded decimal width of the memory index (TH-F6 uses 3)",
+          "minimum": 1,
+          "maximum": 6,
+          "default": 3
+        },
+        "emptyByte": {
+          "type": "integer",
+          "description": "Fill byte for empty memories",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 255
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "Timeout in milliseconds for each CAT line",
+          "minimum": 1
+        },
+        "interCommandDelayMs": {
+          "type": "integer",
+          "description": "Milliseconds to wait between CAT commands",
+          "minimum": 0
+        }
+      }
+    },
+    "catReadStep": {
+      "type": "object",
+      "description": "Read memories with live CAT commands",
+      "required": [
+        "catRead"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "catRead": {
+          "$ref": "#/definitions/catMemory"
+        }
+      }
+    },
+    "catWriteStep": {
+      "type": "object",
+      "description": "Write memories with live CAT commands",
+      "required": [
+        "catWrite"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "catWrite": {
+          "$ref": "#/definitions/catMemory"
+        }
+      }
+    },
+    "exchangeStep": {
+      "type": "object",
+      "description": "Send bytes and/or wait for a reply",
+      "anyOf": [
+        {
+          "required": [
+            "send"
+          ]
+        },
+        {
+          "required": [
+            "expect"
+          ]
+        },
+        {
+          "required": [
+            "setBaudRate"
+          ]
+        }
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the step"
+        },
+        "send": {
+          "$ref": "#/definitions/sendData"
+        },
+        "expect": {
+          "$ref": "#/definitions/expect"
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "Timeout in milliseconds",
+          "minimum": 1,
+          "default": 5000
+        },
+        "delay": {
+          "type": "integer",
+          "description": "Milliseconds to wait after send",
+          "minimum": 0
+        },
+        "setBaudRate": {
+          "type": "integer",
+          "description": "Switch serial baud rate before send/expect (TH-D74 clone transfers at 57600)",
+          "minimum": 1200,
+          "maximum": 115200
+        }
+      }
+    },
+    "readStep": {
+      "type": "object",
+      "description": "Chunked memory read",
+      "required": [
+        "read"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the step"
+        },
+        "read": {
+          "type": "object",
+          "required": [
+            "segments",
+            "send",
+            "expect"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "segments": {
+              "type": "array",
+              "description": "Memory segment names to read",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            "send": {
+              "$ref": "#/definitions/sendData"
+            },
+            "expect": {
+              "$ref": "#/definitions/expect"
+            },
+            "ack": {
+              "$ref": "#/definitions/exchangeStep",
+              "description": "Optional exchange after each chunk"
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "Timeout in milliseconds for each chunk exchange",
+              "minimum": 1
+            },
+            "delay": {
+              "type": "integer",
+              "description": "Milliseconds to wait after each accepted chunk, including after ack",
+              "minimum": 0
+            },
+            "ready": {
+              "$ref": "#/definitions/byteToken",
+              "description": "Byte prefixed to the next chunk when ack.expect times out. UV-5R clone uses 0x06 with ack.timeout 50 so a silent radio is not held until it answers 0xFE."
+            }
+          }
+        }
+      }
+    },
+    "writeStep": {
+      "type": "object",
+      "description": "Chunked memory write",
+      "required": [
+        "write"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the step"
+        },
+        "write": {
+          "type": "object",
+          "required": [
+            "segments",
+            "send",
+            "expect"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "segments": {
+              "type": "array",
+              "description": "Memory segment names to write",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            "send": {
+              "$ref": "#/definitions/sendData"
+            },
+            "expect": {
+              "$ref": "#/definitions/expect"
+            },
+            "chunkSize": {
+              "type": "integer",
+              "description": "Override memoryConfig.chunkSize for this write (UV-5R clone writes 16-byte blocks)",
+              "minimum": 1
+            },
+            "delay": {
+              "type": "integer",
+              "description": "Milliseconds to wait after each accepted block (UV-5R clone waits 50ms)",
+              "minimum": 0
+            },
+            "skip": {
+              "type": "array",
+              "description": "Inclusive radio-address ranges that must not be uploaded",
+              "items": {
+                "type": "object",
+                "required": [
+                  "startAddress",
+                  "endAddress"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "startAddress": {
+                    "type": "integer",
+                    "description": "Inclusive start address of a skipped range",
+                    "minimum": 0
+                  },
+                  "endAddress": {
+                    "type": "integer",
+                    "description": "Inclusive end address of a skipped range",
+                    "minimum": 0
+                  }
+                }
+              }
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "Timeout in milliseconds for each chunk exchange",
+              "minimum": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

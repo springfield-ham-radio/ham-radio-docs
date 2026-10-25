@@ -6,10 +6,10 @@ HamBench does not bundle every radio. You install **JSON radio modules** for the
 
 1. On first launch (empty catalog), the app opens **Install radios**.
 2. It fetches the official catalog from GitHub Pages: `https://springfield-ham-radio.github.io/radio-module-catalog/catalog.json`
-3. Select modules and click **Install**.
-4. The app downloads each module zip from GitHub Releases, checks `sha256:…` integrity, extracts JSON under the app data directory, and adds radios to the local catalog as source `installed`.
+3. Select radios and click **Install**.
+4. The app downloads that radio's zip from GitHub Releases, checks `sha256:…` integrity, extracts JSON under the app data directory, and adds the radio to the local catalog as source `installed`.
 
-Later, open **Preferences → Drivers**. Installed and available drivers are grouped by manufacturer, with each model listed underneath. The version under an installed model is that radio's driver version. **Install** on a model adds only that radio from the manufacturer zip. Official modules show a marker when a newer zip is in the catalog; **Update** downloads that module.
+Later, open **Preferences → Drivers**. Installed and available drivers are grouped by manufacturer, with each model listed underneath. The version under an installed model is that radio's driver version. **Install** downloads that radio's zip. Official modules show a marker when a newer catalog version is available; **Update** downloads that radio's zip.
 
 After a driver is installed, add the radio you own under **Preferences → Radios**: a name, that manufacturer and model, the baud rate when the driver lists more than one, the serial port you usually use, and its usual transmit power in watts. The Radio page opens those radios as cards.
 
@@ -19,9 +19,9 @@ After a driver update that adds CAT fields, **Update** (or reinstall) the module
 
 **Install from file…** accepts a module zip (same layout as GitHub Release assets) or a single radio config JSON (with sibling `$ref` files).
 
-The app shows an **at your own risk** warning. Local installs are source `user`, labeled **Unverified**, and are not updated from the official catalog. This still works if the official catalog is unreachable.
+A zip whose name ends in `-beta.<n>` opens **Install beta driver?** and shows the file SHA-256. After install the row is **Beta**. See [Install a beta driver](/guide/beta-driver).
 
-A later HamBench change will label a `major.minor.patch-beta.<n>` zip as **Beta** and show a SHA-256 in the install dialog. That behavior is not in the app yet. See [Install a beta driver](/guide/beta-driver). Until it ships, every local file stays **Unverified**.
+Any other local zip or JSON uses **Install unverified module?**. Those rows are source `user`, labeled **Unverified**, and are not updated from the official catalog. This still works if the official catalog is unreachable.
 
 ## Supported models
 

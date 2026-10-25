@@ -1,3 +1,13 @@
+.vp-mermaid {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+}
+
+.vp-mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
 :root {
   /* VitePress 2 layout width customization */
   --vp-layout-max-width: 100%;

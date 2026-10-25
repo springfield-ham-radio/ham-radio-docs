@@ -41,4 +41,4 @@ Placeholders:
 
 ## Publish
 
-Export the protocol JSON into a module's `configs/` directory. Copy the channel schema and the memory map from their tabs into the files beside it, and point the Setup paths at those files. Then follow [Create a radio module](/developer/radio-module-dev) and [Publish a module](/developer/publishing-modules).
+Export the protocol JSON into a module's `configs/` directory. Copy the channel schema and the memory map from their tabs into the files beside it, and point the Setup paths at those files. Then follow [Build a radio driver](/developer/build-a-radio-driver) and [Publish a module](/developer/publishing-modules).

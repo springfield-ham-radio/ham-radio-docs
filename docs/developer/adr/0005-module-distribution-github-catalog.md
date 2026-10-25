@@ -3,6 +3,8 @@
 - **Status:** Accepted
 - **Date:** 2026-10-10
 
+**Later decision.** [ADR 0009](./0009-per-radio-modules.md) replaces the one-zip-per-manufacturer catalog described below (`radios`, `supportedRadios`, one zip per manufacturer). Author steps follow [Publish a module](/developer/publishing-modules). This record stays as the decision to leave npm.
+
 ## Context
 
 HamBench must install official radios without publishing module bytes to npm. Libraries (`@springfield/ham-radio-api`, `@springfield/ham-radio-utils`, `@springfield/ham-radio-driver`, `@springfield/ham-radio-registry`) remain public npm packages for application and tool development. **Radio modules** are a separate artifact: a JSON zip on GitHub Releases, indexed by [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog).

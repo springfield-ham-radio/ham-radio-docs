@@ -35,5 +35,5 @@ Encode and decode use `MemoryMapRadioCodec` via `createMemoryMapCodec()` in ham-
 ## Consequences
 
 - Module CI focuses on schema validation, driver-version checks, and codec round-trips over JSON fixtures.
-- Documentation for [Create a radio module](/developer/radio-module-dev) and [Plugin development](/developer/registry/plugin-development) describes JSON layout only.
+- Documentation for [Create a radio module](/developer/radio-module-dev) and [Build a radio driver](/developer/build-a-radio-driver) describes JSON layout only.
 - Any new escape hatch from JSON (new step type or packer) is a library change, not a module script.

@@ -4,6 +4,7 @@ VitePress documentation for [HamBench](https://github.com/springfield-ham-radio)
 
 - User guide: <https://springfield-ham-radio.github.io/ham-radio-docs/guide/>
 - Developer docs: <https://springfield-ham-radio.github.io/ham-radio-docs/developer/>
+- Radio manufacturers: <https://springfield-ham-radio.github.io/ham-radio-docs/developer/for-manufacturers.html>
 
 ## Develop
 
