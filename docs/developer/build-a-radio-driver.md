@@ -4,6 +4,10 @@ This is the path from a radio on the bench to a HamBench module. The example is 
 
 A module is JSON only ([ADR 0004](/developer/adr/0004-radio-modules-json-only)). Encode and decode go through `createMemoryMapCodec()` in `@springfield/ham-radio-utils`. The generic driver in `@springfield/ham-radio-driver` runs the protocol steps. HamBench does not import TypeScript from the zip.
 
+## Start from the template
+
+Create your repository from [radio-module-template](https://github.com/springfield-ham-radio/radio-module-template). On GitHub, choose **Use this template**. The steps below use the shipping UV-5R module as the example of a finished driver. Put your radio's JSON in the repository you created from the template.
+
 ## Prerequisites
 
 - A radio you are allowed to read and write, and its programming cable. The hardware checklist in [Test a radio driver](/developer/testing-a-radio-driver) assumes you can put the original memories back.
@@ -117,4 +121,4 @@ The zip must contain exactly one `configs/*.json`. Add the radio under **Prefere
 
 When the hardware checklist passes, publish through [Publish a module](/developer/publishing-modules). A manufacturer Release attaches one zip per radio whose config version increased. The catalog entry's `version` is that config version, not the git tag. Users install from **Preferences → Drivers**.
 
-Official listing of a repository the catalog does not already track is not decided. See [Third-party and manufacturer drivers](/developer/third-party-drivers).
+If the repository is not a Springfield module, open a pull request on [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog) instead of waiting for the hourly sync. Bryan Hunt approves it. The entry is pinned to that release and its SHA-256. The review, the **Community, by &lt;publisher&gt;** label, and the MIT or Apache-2.0 license are [Third-party and manufacturer drivers](/developer/third-party-drivers). Commits carry a DCO `Signed-off-by` line.

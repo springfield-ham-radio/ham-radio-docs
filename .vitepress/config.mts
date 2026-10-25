@@ -58,7 +58,7 @@ export default withMermaid(defineConfig({
             { text: 'Test a driver', link: '/developer/testing-a-radio-driver' },
             { text: 'Publish a module', link: '/developer/publishing-modules' },
             { text: 'Build a beta driver', link: '/developer/beta-driver' },
-            { text: 'Third-party drivers (draft)', link: '/developer/third-party-drivers' }
+            { text: 'Third-party drivers', link: '/developer/third-party-drivers' }
           ]
         },
         {

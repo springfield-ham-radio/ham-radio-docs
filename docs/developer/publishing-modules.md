@@ -98,4 +98,8 @@ The app fetches the Pages catalog. Install of an entry downloads that entry's zi
 
 HamBench on `@springfield/ham-radio-registry` 2.x reads schema version 3 only.
 
-Listing a repository that is not already in `catalog.json` is an open question. See [Third-party and manufacturer drivers](/developer/third-party-drivers).
+## Community listing
+
+An outside author keeps the driver in their own repository and opens a pull request on [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog). Bryan Hunt approves it. That entry is pinned to one release and its SHA-256. A newer zip waits for another reviewed pull request. The hourly sync above is for Springfield modules already in the catalog.
+
+Review, the **Community, by &lt;publisher&gt;** label, upkeep, and the MIT or Apache-2.0 license are [Third-party and manufacturer drivers](/developer/third-party-drivers) ([ADR 0012](/developer/adr/0012-community-drivers)). HamBench does not show **Community** yet. A file install stays **Unverified**.

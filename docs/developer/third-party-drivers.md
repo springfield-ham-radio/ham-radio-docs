@@ -1,26 +1,45 @@
 # Third-party and manufacturer drivers
 
-**Proposed, pending maintainer decision.** This page is not a policy. The first section is what the repositories and the app do today. The second section is unanswered. Do not treat an open question as a rule you can follow.
+Accepted in [ADR 0012](/developer/adr/0012-community-drivers). Springfield radios stay on [Publish a module](/developer/publishing-modules). A new repository starts from [radio-module-template](https://github.com/springfield-ham-radio/radio-module-template) (**Use this template**). The walkthrough is [Build a radio driver](/developer/build-a-radio-driver).
 
-## What is true today
+## Listing
 
-- A radio module is JSON: `configs/*.json`, schemas, and memory maps. HamBench does not run code from the zip ([ADR 0004](/developer/adr/0004-radio-modules-json-only)).
-- The official index is [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog) `catalog.json`, schema version 3. Each entry is one radio zip on a GitHub Release ([Publish a module](/developer/publishing-modules), [ADR 0009](/developer/adr/0009-per-radio-modules)).
-- The entries on `main` today are the Springfield manufacturer repos already listed there: Baofeng UV-5R, Kenwood TH-F6, TH-D74, and TM-D710A. The sync job updates those entries from the GitHub repo encoded in each `downloadUrl`. It does not discover new repositories.
-- Official install checks `minApiVersion` and the catalog `integrity` string, then extracts JSON. The local catalog row is source `installed`.
-- **Preferences → Drivers → Install from file…** installs a zip or a config JSON as source `user`. The app labels that row **Unverified**. It does not update the row from the catalog. The dialog warns that this is at your own risk ([Install radios](/guide/install-radios)).
-- [ADR 0007](/developer/adr/0007-mit-license-no-chirp-code) applies to source and fixtures committed in these repositories: MIT, no copied CHIRP code, fixtures from rights-clear captures.
+The author keeps the driver in their own Git repository. To list it, they open a pull request on [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog). Bryan Hunt approves that pull request.
 
-[ADR 0004](/developer/adr/0004-radio-modules-json-only) says official and third-party radio support is packaged as that JSON. It does not say how a repository outside the current catalog becomes an official entry, and it does not define a review.
+The entry is pinned to one release asset and the SHA-256 of that zip. Shipping a newer zip does not move the catalog entry. The author opens another pull request, and that pull request is reviewed the same way.
 
-## Open questions
+Springfield modules already in the catalog still follow the hourly sync. That sync is not how an outside repository is added.
 
-These need a maintainer decision. This page does not answer them.
+## Review
 
-1. **Listing an outside repository.** Can a GitHub repo that springfield-ham-radio does not own be added to `catalog.json`? Who opens that pull request, and who merges it? The sync job only refreshes entries that are already in the file.
-2. **Review criteria.** If an outside module can be listed, what must a reviewer check? Candidates a reviewer would have to choose among, not a checklist that is in force: protocol and memory map validated against the utils schemas, `minApiVersion` set, one config per zip, hardware notes, fixture provenance under [ADR 0007](/developer/adr/0007-mit-license-no-chirp-code), and no executable files in the zip. None of these are adopted here as acceptance rules.
-3. **Official and Unverified.** Today **Unverified** means a local file install (source `user`), and a catalog install is the official path. It is not decided whether a reviewed third-party catalog entry would look like today's official rows, stay **Unverified**, or use some other label. It is not decided whether "official" means "in the catalog" or "published by springfield-ham-radio".
-4. **Who ships updates.** It is not decided who keeps an outside entry's `downloadUrl`, tag, and integrity current if the author stops publishing, or whether the sync job is allowed to follow a fork.
-5. **License and contributor agreements.** It is not decided whether a module in the catalog must be MIT, or whether authors sign a CLA or use a DCO. The same question is open for this docs repo in [CONTRIBUTING.md](https://github.com/springfield-ham-radio/ham-radio-docs/blob/main/CONTRIBUTING.md). [ADR 0007](/developer/adr/0007-mit-license-no-chirp-code) states the license of the org repositories as they are now. It does not set a contribution agreement.
+The catalog pull request shows all of the following:
 
-Until those are decided, a radio you built with [Build a radio driver](/developer/build-a-radio-driver) can be installed from the zip on your own machine. That install is **Unverified**. Putting the zip on the public catalog is not a step this page can authorize.
+- Schema checks and CI pass. The config and memory map validate with `SchemaValidator` in `@springfield/ham-radio-utils` ([Radio config reference](/developer/config-reference)).
+- Tests are from the author's own radio dumps. The driver contains no CHIRP code ([ADR 0007](/developer/adr/0007-mit-license-no-chirp-code.md), [Test a radio driver](/developer/testing-a-radio-driver)).
+- A hardware test report: read, write, and restore on a real radio. The checklist on the testing page is the coverage that report needs.
+- A named maintainer.
+- An allowed license: MIT or Apache-2.0.
+
+## Labels
+
+| What the user has | Label |
+| --- | --- |
+| Published by springfield-ham-radio | **Official** |
+| Reviewed driver from another publisher | **Community, by &lt;publisher&gt;** |
+| Zip or JSON installed from a file | **Unverified** |
+
+**Official** means published by springfield-ham-radio. A reviewed outside driver is not Official.
+
+HamBench and the catalog schema do not store the **Community** label yet. That is follow-up work ([ADR 0012](/developer/adr/0012-community-drivers)). Until it ships, a catalog install still shows **Official** in the app. A file install already shows **Unverified** ([Install radios](/guide/install-radios)). A beta file install shows **Beta** ([Install a beta driver](/guide/beta-driver)).
+
+## Upkeep
+
+The author maintains the driver. If it breaks with a new API version, or nobody responds for about 90 days, the entry is marked **Deprecated** and removed later. The catalog schema has no Deprecated value yet; the same follow-up that adds **Community** is where that mark will live. Because the driver is MIT or Apache-2.0, the project may take it over.
+
+## Licensing
+
+A listed driver may be MIT or Apache-2.0.
+
+Contributions require a `Signed-off-by` line under the [Developer Certificate of Origin](https://developercertificate.org/). There is no CLA. See [CONTRIBUTING.md](https://github.com/springfield-ham-radio/ham-radio-docs/blob/main/CONTRIBUTING.md) for the line itself.
+
+Manufacturers do not have to publish confidential specifications. The driver that is listed has to be publishable under MIT or Apache-2.0.
