@@ -1,0 +1,284 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Radio Memory-Map DSL Schema",
+  "description": "Schema for defining radio EEPROM settings layout as JSON (Chirp MEM_FORMAT as data)",
+  "type": "object",
+  "required": ["structs"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Optional map version"
+    },
+    "description": {
+      "type": "string"
+    },
+    "structs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/struct"
+      }
+    },
+    "channelBindings": {
+      "$ref": "#/definitions/channelBindings"
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/group"
+      }
+    }
+  },
+  "definitions": {
+    "seek": {
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "string", "pattern": "^(0[xX][0-9a-fA-F]+|[0-9]+)$" }
+      ]
+    },
+    "channelBindings": {
+      "type": "object",
+      "required": ["records", "receiveFrequency", "transmitFrequency", "receiveTone", "transmitTone"],
+      "properties": {
+        "records": { "type": "string", "minLength": 1 },
+        "names": { "type": "string", "minLength": 1 },
+        "nameField": { "type": "string", "minLength": 1 },
+        "receiveFrequency": { "type": "string", "minLength": 1 },
+        "transmitFrequency": { "type": "string", "minLength": 1 },
+        "receiveTone": { "type": "string", "minLength": 1 },
+        "transmitTone": { "type": "string", "minLength": 1 },
+        "extras": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "emptyWhen": {
+      "type": "object",
+      "required": ["equals"],
+      "properties": {
+        "equals": { "type": "integer", "minimum": 0, "maximum": 255 }
+      },
+      "additionalProperties": false
+    },
+    "group": {
+      "type": "object",
+      "required": ["id", "label"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "icon": { "type": "string", "minLength": 1 },
+        "warning": {
+          "type": "object",
+          "required": ["title", "description"],
+          "properties": {
+            "title": { "type": "string", "minLength": 1 },
+            "description": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        },
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/subgroup" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "subgroup": {
+      "type": "object",
+      "required": ["id", "label"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "ui": {
+      "type": "object",
+      "required": ["group", "label", "widget"],
+      "properties": {
+        "group": { "type": "string" },
+        "subgroup": { "type": "string", "minLength": 1 },
+        "label": { "type": "string" },
+        "widget": {
+          "type": "string",
+          "enum": ["integer", "select", "switch", "text", "number"]
+        },
+        "description": { "type": "string" },
+        "menu": {
+          "type": "object",
+          "required": ["number"],
+          "properties": {
+            "number": { "type": "integer", "minimum": 0 },
+            "code": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        },
+        "writable": { "type": "boolean" },
+        "order": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind"],
+          "properties": {
+            "kind": { "const": "integer" },
+            "min": { "type": "number" },
+            "max": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind"],
+          "properties": {
+            "kind": { "const": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "values"],
+          "properties": {
+            "kind": { "const": "enum" },
+            "values": {
+              "type": "array",
+              "items": { "type": "string" },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "length"],
+          "properties": {
+            "kind": { "const": "ascii" },
+            "length": { "type": "integer", "minimum": 1 },
+            "pad": { "type": "integer", "minimum": 0, "maximum": 255 }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "length"],
+          "properties": {
+            "kind": { "const": "digits" },
+            "length": { "type": "integer", "minimum": 1 },
+            "scale": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "length"],
+          "properties": {
+            "kind": { "const": "dtmf" },
+            "length": { "type": "integer", "minimum": 1 },
+            "charset": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "length"],
+          "properties": {
+            "kind": { "const": "bbcd" },
+            "length": { "type": "integer", "minimum": 1 }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "length"],
+          "properties": {
+            "kind": { "const": "lbcd" },
+            "length": { "type": "integer", "minimum": 1 },
+            "scale": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "values"],
+          "properties": {
+            "kind": { "const": "tone" },
+            "values": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "minItems": 1
+            },
+            "ctcssMin": { "type": "integer" },
+            "reverseOffset": { "type": "integer" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "values"],
+          "properties": {
+            "kind": { "const": "ctcss-index" },
+            "values": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "values"],
+          "properties": {
+            "kind": { "const": "dcs-index" },
+            "values": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "field": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": {
+          "type": "string",
+          "enum": ["u8", "u16", "u32", "bits", "char"]
+        },
+        "width": { "type": "integer", "minimum": 1, "maximum": 8 },
+        "reserved": { "type": "boolean" },
+        "value": { "$ref": "#/definitions/value" },
+        "ui": { "$ref": "#/definitions/ui" }
+      },
+      "additionalProperties": false
+    },
+    "struct": {
+      "type": "object",
+      "required": ["id", "seek", "fields"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "seek": { "$ref": "#/definitions/seek" },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/field" }
+        },
+        "count": { "type": "integer", "minimum": 1 },
+        "stride": { "type": "integer", "minimum": 1 },
+        "groupSize": { "type": "integer", "minimum": 1 },
+        "groupPad": { "type": "integer", "minimum": 0 },
+        "emptyWhen": { "$ref": "#/definitions/emptyWhen" },
+        "clearEmpty": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

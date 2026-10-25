@@ -4,7 +4,7 @@ This guide provides practical information for developers working with the HamBen
 
 ## Getting Started
 
-Before diving into development, we recommend reading the [Architecture Overview](/developer/architecture) to understand the overall system design and the [Module Comparison](/developer/module-comparison) to understand the purpose of each module.
+Radio module authors start at [For radio manufacturers](/developer/for-manufacturers) and [Build a radio driver](/developer/build-a-radio-driver). This page is background for the TypeScript packages. The package table is on [Developer docs](/developer/).
 
 ## Development Environment Setup
 
@@ -118,10 +118,10 @@ const registry = createRegistry(logger);
 const configs = await registry.discoverConfigurations();
 
 // Get specific configuration
-const config = await registry.getConfiguration('baofeng:uv5r');
+const config = await registry.getConfiguration('baofeng-uv5r');
 
 // Get codec for radio model
-const codec = await registry.getCodec('baofeng:uv5r');
+const codec = await registry.getCodec('baofeng-uv5r');
 ```
 
 ### 5. Radio Module (radio-module-*)
@@ -147,8 +147,10 @@ radio-module-manufacturer/
 
 ## Testing Patterns
 
+Radio modules use Vitest. See [Test a radio driver](/developer/testing-a-radio-driver). The snippets below are an older library style.
+
 ### Unit Testing
-All modules use the Node.js native test runner with chai assertions:
+Some library repos use the Node.js test runner with chai assertions:
 
 ```typescript
 import { describe, it } from 'node:test';
@@ -329,16 +331,9 @@ function processChannel(id: RadioChannelId, freq: Frequency) {
 }
 ```
 
-### Sandboxing
-Sandbox plugin execution where possible:
+### Radio modules are data
 
-```typescript
-// Validate plugin before loading
-const validation = await validatePlugin(moduleId);
-if (!validation.isValid) {
-  throw new Error(`Plugin validation failed: ${validation.errors.join(', ')}`);
-}
-```
+A radio module zip is JSON. HamBench does not execute it. Validate the config with `SchemaValidator` from `@springfield/ham-radio-utils` ([Radio config reference](/developer/config-reference)).
 
 ## Deployment Considerations
 
@@ -356,15 +351,8 @@ Use yarn for consistent dependency management:
 ```
 
 ### Version Compatibility
-Maintain compatibility within major versions:
 
-```json
-{
-  "dependencies": {
-    "@springfield/ham-radio-api": "^16.0.0"
-  }
-}
-```
+Radio configs set `minApiVersion`. HamBench compares it with the installed `@springfield/ham-radio-api` version. See [API version compatibility](/developer/config-reference#api-version-compatibility). The floor for a new module is `18.0.1` unless the protocol needs a newer API.
 
 ### Build Process
 Ensure proper build configuration:
@@ -400,7 +388,7 @@ Ensure proper build configuration:
 
 ## Resources
 
-- [Architecture Overview](/developer/architecture) - Complete system architecture
-- [Module Comparison](/developer/module-comparison) - Quick reference for all modules
-- [Registry Documentation](/developer/registry/) - Plugin system details
-- [Registry Examples](/developer/registry/examples) - Code examples and patterns 
+- [Architecture Overview](/developer/architecture) - System architecture
+- [Build a radio driver](/developer/build-a-radio-driver) - Module authoring
+- [Radio config reference](/developer/config-reference) - Config fields
+- [Publish a module](/developer/publishing-modules) - Catalog schema version 3 

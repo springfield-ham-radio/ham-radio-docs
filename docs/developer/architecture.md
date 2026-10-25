@@ -222,7 +222,7 @@ export interface RadioConfigRegistry {
 
 **Dependencies**: `@springfield/ham-radio-api`, `loglayer`
 
-For detailed registry architecture information, see the [Registry Architecture](/developer/registry/architecture) documentation.
+Official modules are installed from the GitHub catalog. See [Publish a module](/developer/publishing-modules) and [ADR 0009](./adr/0009-per-radio-modules.md).
 
 ### 5. **radio-module-baofeng** - Radio-Specific Implementation
 

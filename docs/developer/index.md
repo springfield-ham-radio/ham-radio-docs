@@ -12,12 +12,14 @@ HamBench is a set of TypeScript packages plus JSON radio modules. The desktop ap
 | [`ham-radio-sniffer`](https://github.com/springfield-ham-radio/ham-radio-sniffer) | Headless serial bridge. [ADR 0001](/developer/adr/0001-rewrite-sniffer-in-rust) accepts a Rust rewrite |
 | [`radio-module-baofeng`](https://github.com/springfield-ham-radio/radio-module-baofeng) / [`radio-module-kenwood`](https://github.com/springfield-ham-radio/radio-module-kenwood) | JSON radio modules |
 
-Official modules are **JSON zips on GitHub Releases**, listed in [`radio-module-catalog`](https://github.com/springfield-ham-radio/radio-module-catalog). They are not published to npm.
+Official modules are **JSON zips on GitHub Releases**, one radio per zip, listed in [`radio-module-catalog`](https://github.com/springfield-ham-radio/radio-module-catalog) (schema version 3). They are not published to npm.
 
 ## Start here
 
+Radio manufacturers: [For radio manufacturers](/developer/for-manufacturers), then [Build a radio driver](/developer/build-a-radio-driver).
+
 1. [Architecture](/developer/architecture-overview)
-2. [Create a radio module](/developer/radio-module-dev)
+2. [Build a radio driver](/developer/build-a-radio-driver)
 3. [Driver editor](/developer/driver-editor) in the desktop app
 4. [Protocol DSL](/developer/protocols/dsl) and [Memory-map DSL](/developer/protocols/memory-map)
 5. [Publish a module](/developer/publishing-modules)

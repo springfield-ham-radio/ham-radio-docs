@@ -15,7 +15,8 @@
   },
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build",
+    "build": "node scripts/render-config-reference.mjs --check && vitepress build",
+    "check:config-reference": "node scripts/render-config-reference.mjs --check",
     "prepare": "yarn build",
     "preview": "vitepress preview"
   }

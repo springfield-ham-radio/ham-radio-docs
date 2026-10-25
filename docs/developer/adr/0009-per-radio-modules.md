@@ -3,6 +3,8 @@
 - **Status:** Accepted
 - **Date:** 2026-10-13
 
+The author and operator pages named under Consequences now describe per-radio zips and catalog schema version 3. This record is unchanged as the decision.
+
 ## Context
 
 Each manufacturer repository ships one JSON zip that contains every radio from that manufacturer. [radio-module-kenwood](https://github.com/springfield-ham-radio/radio-module-kenwood) puts TH-D74, TH-F6, and TM-D710A in `radio-module-kenwood-<version>.zip`. [radio-module-baofeng](https://github.com/springfield-ham-radio/radio-module-baofeng) puts the UV-5R config (the same file covers UV-5RE Plus) in `radio-module-baofeng-<version>.zip`. [radio-module-catalog](https://github.com/springfield-ham-radio/radio-module-catalog) lists one catalog entry per zip (`id` `kenwood` and `baofeng`). HamBench extracts that zip to `radio-modules/<moduleId>/<version>/` and stores every radio from it with the same `sourcePath`.

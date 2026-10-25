@@ -3,6 +3,8 @@
 - **Status:** Accepted
 - **Date:** 2026-10-10
 
+**Later decision.** The bump rules below still apply. [ADR 0009](./0009-per-radio-modules.md) makes the catalog `version`, the zip filename, and the install directory version the same value as this config `version`. They are no longer a separate manufacturer-zip version.
+
 ## Context
 
 A manufacturer zip may contain several radios (`configs/*.json`). Each file has its own protocol, memory map, and schemas via `$ref`. Users care about the version of the **driver** they installed for a given model, while the catalog advertises a single **zip** version per module ([ADR 0005](./0005-module-distribution-github-catalog.md)).

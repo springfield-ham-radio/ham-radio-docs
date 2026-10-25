@@ -9,8 +9,8 @@ The ecosystem is organized into several key layers:
 - **Core API Layer**: Defines foundational types and interfaces for all modules.
 - **Driver Layer**: Implements generic radio communication using a protocol DSL.
 - **Utilities Layer**: Provides shared utilities, data structures, and helpers.
-- **Registry Layer**: Discovers, validates, and manages radio module plugins.
-- **Radio Modules**: Individual radio model support, distributed as plugins.
+- **Registry Layer**: Loads and validates radio JSON. The desktop app installs official modules from the GitHub catalog.
+- **Radio Modules**: One JSON package per radio (protocol, schemas, memory map).
 - **Applications**: User interfaces, CLI tools, and API servers built on top of the core layers.
 
 ## High-Level Architecture Diagram
@@ -62,13 +62,13 @@ graph TB
 - **Driver Layer**: Uses the API to communicate with radios using protocol definitions.
 - **Utilities Layer**: Shared helpers for memory, schema validation, logging, and more.
 - **Registry Layer**: Discovers and manages radio modules, codecs, and shared components.
-- **Radio Modules**: Add support for specific radios via configuration and codecs.
+- **Radio Modules**: Add a radio by shipping JSON. `codec.type` is `"memoryMap"`.
 - **Applications**: UI, CLI, and servers use the API to interact with radios and modules.
 
 ## Why This Architecture?
 
 - **Modularity**: Each layer has a clear responsibility and can be developed independently.
-- **Extensibility**: New radios, codecs, and features can be added as plugins.
+- **Extensibility**: New radios are JSON modules. The generic driver and memory-map codec stay in the libraries.
 - **Maintainability**: Shared types and utilities reduce duplication and bugs.
 - **Community**: Third-party developers can contribute new radio modules easily.
 

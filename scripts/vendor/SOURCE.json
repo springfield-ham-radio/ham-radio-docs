@@ -1,0 +1,9 @@
+{
+  "repository": "springfield-ham-radio/ham-radio-utils",
+  "commit": "9477e28b27a671db52869db8f3dde3c867b7c896",
+  "files": [
+    "radio-protocol-schema.json",
+    "radio-memory-map-schema.json"
+  ],
+  "note": "Vendored so the config reference can be checked without a network call. Regenerate with scripts/render-config-reference.mjs after updating these files."
+}
