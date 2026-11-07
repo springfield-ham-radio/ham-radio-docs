@@ -9,7 +9,7 @@ Radio module authors start at [For radio manufacturers](/developer/for-manufactu
 ## Development Environment Setup
 
 ### Prerequisites
-- Node.js 26.10.0 (see each repo’s `.nvmrc`)
+- Node.js 26.13.0 (see `.nvmrc`)
 - Yarn package manager
 - TypeScript knowledge
 - Familiarity with amateur radio concepts
