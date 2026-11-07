@@ -22,6 +22,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
+      # Node.js 26+ does not ship Corepack. 0.36.0 is the registry release that activates Yarn 4.6.0.
+      - run: npm install --global corepack@0.36.0
       - run: corepack enable
       - run: yarn install --immutable
       - uses: actions/configure-pages@v6

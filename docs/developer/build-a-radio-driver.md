@@ -13,7 +13,7 @@ Create your repository from [radio-module-template](https://github.com/springfie
 - A radio you are allowed to read and write, and its programming cable. The hardware checklist in [Test a radio driver](/developer/testing-a-radio-driver) assumes you can put the original memories back.
 - [HamBench](/guide/getting-started) installed, so you can use the Driver editor and **Install from file**.
 - [ham-radio-sniffer](https://github.com/springfield-ham-radio/ham-radio-sniffer) when you need a byte capture. The app can install that binary. See [Sniffer](/guide/sniffer).
-- Node.js 26.10.0 (the `.nvmrc` in `radio-module-baofeng`, `radio-module-kenwood`, and `ham-radio-utils`) and Yarn. Module repos set `packageManager` in `package.json`.
+- Node.js 26.13.0 (the `.nvmrc` in `radio-module-baofeng`, `radio-module-kenwood`, and `ham-radio-utils`) and Yarn. Module repos set `packageManager` in `package.json`.
 
 Read [ADR 0007](/developer/adr/0007-mit-license-no-chirp-code) before you look at another project's driver for ideas. Springfield modules are MIT. Do not paste CHIRP or other GPL source into the repo, and do not commit CHIRP's image files as test fixtures. Re-express a layout you understand as JSON. Captures you commit must be your own dumps, or another contributor's rights-clear captures.
 

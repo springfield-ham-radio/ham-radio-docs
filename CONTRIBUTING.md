@@ -22,9 +22,11 @@ Recent commits on `main` use [Conventional Commits](https://www.conventionalcomm
 
 `yarn build` checks the generated [radio config reference](docs/developer/config-reference.md) against the vendored schemas in `scripts/vendor/`, then runs VitePress. VitePress fails the build on a dead internal link. [Documentation standards](docs/developer/documentation.md) say where a new page belongs.
 
-Local preview:
+Local preview uses Node.js from [`.nvmrc`](.nvmrc). Node.js 26 does not ship Corepack, which this repo uses to run the Yarn 4.6.0 pin in `package.json`:
 
 ```bash
+npm install --global corepack@0.36.0
+corepack enable
 yarn install
 yarn dev
 ```
