@@ -11,7 +11,7 @@
   "devDependencies": {
     "happy-dom": "^21.0.4",
     "mermaid": "^12.3.0",
-    "playwright": "^1.65.0",
+    "playwright": "^1.65.1",
     "vitepress": "^2.0.0-alpha.21",
     "vitepress-plugin-mermaid": "^2.0.17"
   },
