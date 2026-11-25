@@ -15,6 +15,11 @@
     "vitepress": "^2.0.0-alpha.21",
     "vitepress-plugin-mermaid": "^2.0.17"
   },
+  "resolutions": {
+    "glob": "14.0.6",
+    "minimatch": "11.0.9",
+    "picomatch": "4.0.7"
+  },
   "scripts": {
     "dev": "vitepress dev",
     "build": "node scripts/render-config-reference.mjs --check && node scripts/check-mermaid.mjs && vitepress build",
