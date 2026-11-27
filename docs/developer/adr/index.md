@@ -19,8 +19,9 @@ Decisions that change a layer, a runtime, or a public contract live here. Each r
 
 ## Repository ADRs
 
-Some decisions apply to a single repository rather than the whole ecosystem. Those records live in that repo under `docs/adr/`, not in this catalog.
+Some decisions apply to a single repository rather than the whole ecosystem. Those records live in that repo under `docs/adr/`, not in this catalog. Each repository lists its full set in `docs/adr/README.md`.
 
 | Repository | Example |
 | --- | --- |
-| [ham-radio-ui](https://github.com/springfield-ham-radio/ham-radio-ui) | [ADR 0001: Location model](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/docs/adr/0001-location-model.md) (lands with [PR #84](https://github.com/springfield-ham-radio/ham-radio-ui/pull/84); the link is the expected path on `main`) |
+| [ham-radio-registry](https://github.com/springfield-ham-radio/ham-radio-registry) | [ADR 0001: Band-indexed CAT fields](https://github.com/springfield-ham-radio/ham-radio-registry/blob/v2.2.0/docs/adr/0001-band-indexed-cat-fields.md) (accepted in 2.2.0) |
+| [ham-radio-ui](https://github.com/springfield-ham-radio/ham-radio-ui) | [ADR 0001: Location model](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/docs/adr/0001-location-model.md) |

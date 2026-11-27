@@ -412,13 +412,44 @@ Present when `capabilities.liveControl` is `true`. HamBench uses it for the live
 | `frequencyCommands` | Frequency commands to try in order, for example `["FQ", "FO"]` |
 | `frequencyWidth` | Digit width of the frequency field |
 | `vfoChannel` | Frequency command is a multi-field VFO channel. Omit a separate `modeCommand` when this is true |
+| `bandIndexed` | `FQ`, `MD`, and `PC` take a band index first (Kenwood TH-D74). Do not set when `vfoChannel` is true |
+| `bandModes` | Mode names available per band index. The CAT code is still the index into `modes` |
+| `vfoModeCommand` | Command that reads VFO or memory activity, for example `"VM"` |
+| `vfoModes` | Names indexed by that command's value, for example `["VFO", "Memory", "Call", "DV"]` |
 | `modes` | Mode names in CAT code order |
 | `powers` | Power names in CAT code order, as shown on the radio |
 | `modeCommand` | Separate mode command, for example `"MD"` |
 | `powerBandIndex` | Pass the band index to `PC` |
 | `bandControl` | Read `BC` for CTRL/PTT band |
 
-TH-D74 sets `protocol`, `vfoCount`, `frequencyCommands`, `frequencyWidth`, `modes`, `powers`, `modeCommand`, `bandControl`, and `powerBandIndex`. Copy a block from the Kenwood config for a Kenwood-family radio. A new command family needs a driver change in `@springfield/ham-radio-driver`, not a new key invented in the module.
+The four fields after `vfoChannel` are optional and ship with `@springfield/ham-radio-registry` 2.2.0 ([registry ADR 0001](https://github.com/springfield-ham-radio/ham-radio-registry/blob/v2.2.0/docs/adr/0001-band-indexed-cat-fields.md), [PR #48](https://github.com/springfield-ham-radio/ham-radio-registry/pull/48)). TM-D710A (`vfoChannel`) and TH-F6 omit them and stay valid. `bandModes` names must appear in `modes`. HamBench rejects `bandIndexed` together with `vfoChannel`. Session behavior is [ham-radio-ui ADR 0022](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/docs/adr/0022-kenwood-band-indexed-cat.md). Copy a `cat` block from the Kenwood module config for the model you match.
+
+#### TH-D74 `cat` example
+
+From [`configs/kenwood-th-d74.json`](https://github.com/springfield-ham-radio/radio-module-kenwood/blob/main/configs/kenwood-th-d74.json) at driver version `1.28.0`. `modes` index is the `MD` code. `bandModes[0]` and `bandModes[1]` are band indices 0 and 1.
+
+```json
+{
+  "protocol": "kenwood",
+  "vfoCount": 2,
+  "frequencyCommands": ["FQ"],
+  "frequencyWidth": 10,
+  "modes": ["FM", "DV", "AM", "LSB", "USB", "CW", "NFM", "DR", "WFM", "R-CW"],
+  "bandModes": [
+    ["FM", "DV", "AM", "NFM", "DR", "WFM"],
+    ["FM", "DV", "AM", "LSB", "USB", "CW", "NFM", "DR", "WFM", "R-CW"]
+  ],
+  "powers": ["H", "M", "L", "EL"],
+  "modeCommand": "MD",
+  "bandControl": true,
+  "bandIndexed": true,
+  "powerBandIndex": true,
+  "vfoModeCommand": "VM",
+  "vfoModes": ["VFO", "Memory", "Call", "DV"]
+}
+```
+
+A new command family needs a driver change in `@springfield/ham-radio-driver`, not a new key invented in the module.
 
 ### `readMessage` and `writeMessage`
 
