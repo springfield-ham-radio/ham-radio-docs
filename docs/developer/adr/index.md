@@ -16,6 +16,7 @@ Decisions that change a layer, a runtime, or a public contract live here. Each r
 | [ADR 0010](./0010-local-beta-driver-zips.md) | Accepted | Local beta driver zips |
 | [ADR 0011](./0011-protocol-onerror.md) | Accepted | Protocol `onError` cleanup steps |
 | [ADR 0012](./0012-community-drivers.md) | Accepted | Community drivers: catalog review, labels, DCO |
+| [ADR 0013](./0013-memory-map-special-channels.md) | Proposed | Memory-map `channelBindings.specials` for trailing scan edges and Pri |
 
 ## Repository ADRs
 
