@@ -18,7 +18,9 @@
   "resolutions": {
     "glob": "14.0.6",
     "minimatch": "11.0.9",
-    "picomatch": "4.0.7"
+    "picomatch": "4.0.7",
+    "socks": "2.8.11",
+    "ip-address": "10.7.6"
   },
   "scripts": {
     "dev": "vitepress dev",
