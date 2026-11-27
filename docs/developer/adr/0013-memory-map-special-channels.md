@@ -5,7 +5,7 @@
 
 ## Context
 
-[ADR 0003](./0003-memory-map-dsl.md) defines `channelBindings` on a memory map so HamBench can decode and edit a repeating channel struct array as portable `RadioChannel` records. Some clone radios keep **special** memories in the **same** struct array immediately after the regular programmable channels. The row count in the map (`count` on the binding or the bound segment) therefore spans both regular channels and specials, but only the regular slots are meant for add, drag-reorder, and slot-shift.
+[ADR 0003](./0003-memory-map-dsl.md) defines `channelBindings` on a memory map so HamBench can decode and edit a repeating channel struct array as portable `RadioChannel` records. Some clone radios keep **special** memories in the **same** struct array immediately after the regular programmable channels. The `count` on the struct named by `channelBindings.records` therefore spans both regular channels and specials, but only the regular slots are meant for add, drag-reorder, and slot-shift.
 
 **Kenwood TH-D74** is the motivating model:
 
@@ -16,7 +16,7 @@
 | 1100 | Pri (priority channel) |
 | 1101+ | Weather channels (present on the radio; not modeled in HamBench) |
 
-Before this change, HamBench treated every decoded record from index `0` through `count - 1` as a normal channel. Raising `count` to include scan edges and Pri let **Add channel** or **shift** operations write into those indices and corrupt specials on write-back.
+Before this change, HamBench treated every slot from index `0` through one less than that struct's `count` as a normal channel. Raising the records struct `count` to include scan edges and Pri let **Add channel** or **shift** operations write into those indices and corrupt specials on write-back.
 
 ## Decision
 
@@ -29,15 +29,12 @@ Before this change, HamBench treated every decoded record from index `0` through
 }
 ```
 
-- **`start`** — First memory index that is not a regular programmable channel. It is also the **regular channel capacity**: indices `0 … start - 1` are regular; indices `start … count - 1` are specials labeled by `labels`.
+- **`start`** — First memory index that is not a regular programmable channel. It is also the **regular channel capacity**: indices `0 … start - 1` are regular; indices `start …` through the end of the records struct are specials labeled by `labels`.
 - **`labels`** — One string per special index. `labels[i]` names index `start + i`.
 
-**Validation.** When `specials` is present:
+**Validation.** When `specials` is present, semantic checks (ham-radio-utils `SchemaValidator.validateMemoryMap`) require `start + labels.length` to equal the `count` of the struct named by `channelBindings.records` (struct `count` defaults to `1` when omitted). When `channelBindings.names` or `channelBindings.extras` is set, the `count` on that bound struct must match the same span directly.
 
-- `start + labels.length` must equal the channel record count (the binding `count` or the length of the decoded channel array).
-- The same equality must hold for parallel bound arrays (`names`, `extras`, or other `channelBindings` fields tied to channel rows) when those fields are present.
-
-When `specials` is absent, behavior is unchanged: every record up to the count is a regular channel.
+When `specials` is absent, behavior is unchanged: every records-struct slot is a regular channel.
 
 **Runtime and UI.**
 
@@ -53,11 +50,11 @@ When `specials` is absent, behavior is unchanged: every record up to the count i
 | [ham-radio-api](https://github.com/springfield-ham-radio/ham-radio-api) | [PR 42](https://github.com/springfield-ham-radio/ham-radio-api/pull/42) |
 | [ham-radio-utils](https://github.com/springfield-ham-radio/ham-radio-utils) | [PR 51](https://github.com/springfield-ham-radio/ham-radio-utils/pull/51) |
 
-Follow-up work: [ham-radio-ui ADR 0030](https://github.com/springfield-ham-radio/ham-radio-ui/blob/main/docs/adr/0030-memory-map-special-channels.md) (Channels UI sectioning) and the **radio-module-kenwood** TH-D74 memory map update that sets `specials` for scan edges and Pri.
+Follow-up work: **ham-radio-ui** ADR 0030 (Channels UI sectioning) and the **radio-module-kenwood** TH-D74 memory map update that sets `specials` for scan edges and Pri.
 
 ## Consequences
 
 - Maps without `specials` need no change; existing radios keep today’s channel list semantics.
 - TH-D74 (and any future radio with trailing specials in the channel array) can expose the full on-radio row count without risking silent overwrite of scan edges or Pri during regular channel maintenance.
-- Authors must keep `start`, `labels`, and record `count` aligned; schema validation fails fast on drift.
+- Authors must keep `start`, `labels`, and the records (and optional `names` / `extras`) struct `count` values aligned with `start + labels.length`; schema validation fails fast on drift.
 - Documentation for the Memory-Map DSL should describe `channelBindings.specials` once the api/utils changes merge; this ADR is the cross-repo contract record ([ADR 0003](./0003-memory-map-dsl.md) remains the parent decision for the DSL itself).
